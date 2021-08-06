@@ -2,7 +2,7 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import HomePage from 'Pages/HomePage'
 import LoginPage from 'Pages/LoginPage'
-import GlobalNavigationBar from 'Components/GlobalNavigationBar'
+import GlobalNavigationBar from 'Components/GlobalNavigationBar/GlobalNavigationBar'
 import './App.css'
 
 function App() {
