@@ -1,20 +1,24 @@
-import React, { useState } from 'react'
-import { Route } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
 import HomePage from 'Pages/HomePage'
 import LoginPage from 'Pages/LoginPage'
 import GlobalNavigationBar from 'Components/GlobalNavigationBar/GlobalNavigationBar'
 import './App.css'
 
+// NOTICE :: 백엔드 구현 전까지 백엔드와 통신이 필요한 부분은 localStorage로 대체
+
 function App() {
-  const [isLogin, setIsLogin] = useState<boolean>(false) // localStorage 또는 sessionStorage 사용
+  const [isLogin, setIsLogin] = useState<boolean>(true)
+
+  // localStorage에 저장된 로그인 상태를 조회
+  useEffect(() => {
+    localStorage.setItem('login', String(isLogin))
+  })
 
   return (
     <div className='App'>
-      <GlobalNavigationBar isLogin={ isLogin }/>
+      <GlobalNavigationBar />
       <div className='contents'>
-        {/* isLogin 값을 props로 넘겨서 해당 route에서 isLogin 여부에 따라 렌더링을 변경 */}
-        <Route exact path='/' component={LoginPage} />
-        <Route path='/home' component={HomePage} />
+        { !isLogin ? <LoginPage /> : <HomePage /> }
       </div>
     </div>
   )
