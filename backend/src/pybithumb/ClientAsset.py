@@ -28,13 +28,12 @@ class ClientAsset(Thread):
         self._ticker_dict = defaultdict(list)
 
         logging.info("Checking valid tickers (possesed tickers)...")
-        self._tickers = ['ETH']
-
-        # for ticker in tqdm(pybithumb.get_tickers()):
-        #     balance = self._client_api.get_bitumb().get_balance(ticker)
-        #     if balance[0] > 0.0:
-        #         self._ticker_dict[ticker].append(balance)
-        #         self._tickers.append(ticker)
+        self._tickers = []
+        for ticker in tqdm(pybithumb.get_tickers()):
+            balance = self._client_api.get_bitumb().get_balance(ticker)
+            if balance[0] > 0.0:
+                self._ticker_dict[ticker].append(balance)
+                self._tickers.append(ticker)
 
         # connecting websockets
         self._ws_ticker = None
@@ -42,15 +41,10 @@ class ClientAsset(Thread):
         self._ws_orderbookdepth = None
         self._connect_websockets()
 
-        # start update data
-        self.start()
-        # self._ws_thread = Thread(target=self._update_data)
-        # self._ws_thread.start()
-
     def _connect_websockets(self):
         logging.info("Connecting websockets for possesed coins...")
 
-        # pybithumb sopports only KRW market
+        # pybithumb supports only KRW market
         ws_tickers = [ticker + '_KRW' for ticker in self._tickers]
         logging.info(f"Subscribe {ws_tickers}")
         self._ws_ticker = pybithumb.WebSocketManager("ticker", ws_tickers)
@@ -65,23 +59,32 @@ class ClientAsset(Thread):
         else:
             logging.info("Websockets are connected successfully")
 
+    def get_ticker_data(self, ):
+        """
+        현재가(ticker)
 
-    def run(self) -> None:
-        while True:
-            num = input("enter to get data")
-
-            data_ticker = self._ws_ticker.get()
-            data_transaction = self._ws_transaction.get()
-            data_orderbookdepth = self._ws_orderbookdepth.get()
-
-            print("=== data ticker ====")
-            print(data_ticker); print('\n')
-
-            print("=== data transaction ====")
-            print(data_transaction); print('\n')
-
-            print("=== data orderbookdepth ====")
-            print(data_orderbookdepth); print('\n')
+        "type" : "ticker",
+	    "content" : {
+		"symbol" : "BTC_KRW",			    // 통화코드
+		"tickType" : "24H",					// 변동 기준시간- 30M, 1H, 12H, 24H, MID
+		"date" : "20200129",				// 일자
+		"time" : "121844",					// 시간
+		"openPrice" : "2302",				// 시가
+		"closePrice" : "2317",				// 종가
+		"lowPrice" : "2272",				// 저가
+		"highPrice" : "2344",				// 고가
+		"value" : "2831915078.07065789",	// 누적거래금액
+		"volume" : "1222314.51355788",	    // 누적거래량
+		"sellVolume" : "760129.34079004",	// 매도누적거래량
+		"buyVolume" : "462185.17276784",	// 매수누적거래량
+		"prevClosePrice" : "2326",			// 전일종가
+		"chgRate" : "0.65",					// 변동률
+		"chgAmt" : "15",					// 변동금액
+		"volumePower" : "60.80"			    // 체결강도
+	    }
+        """
+        data = self._ws_ticker.get()
+        return data
 
     def get_ticker(self):
         """
@@ -100,8 +103,5 @@ class ClientAsset(Thread):
 if __name__ == "__main__":
     client = ClientAsset("joono")
 
-    num = input("enter number")
-    print(num)
-
-    print(client.get_ticker())
-    print(client.get_ticker_dict())
+    while True:
+        print(client.get_ticker_data())
