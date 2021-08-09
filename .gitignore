@@ -209,4 +209,7 @@ sketch
 .history
 .ionide
 
+# by joono for mac
+.idea/
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,react,django,macosw
