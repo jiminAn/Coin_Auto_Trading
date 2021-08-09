@@ -34,3 +34,9 @@ class ClientAsset:
         :return: ticker information(Dict); {ticker : [client asset information]}
         """
         return self._ticker_dict
+
+if __name__ == "__main__":
+    client = ClientAsset()
+
+    print(client.get_ticker())
+    print(client.get_ticker_dict())
