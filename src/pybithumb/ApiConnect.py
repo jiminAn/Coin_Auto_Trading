@@ -11,11 +11,13 @@ class Connect :
         """
         initialize connect key & secret key
         """
-        with open("./key.txt", "r") as f:
+        # C:/Users/forea/PycharmProjects/coin_auto/src/pybithumb/key.txt
+
+        with open("key.txt", "r") as f:
             self._con_key = f.readline().strip()
             self._sec_key = f.readline().strip()
 
-    def get_bitumb(self):
+    def get_bithumb(self):
         """
         initialize client Bithumb instance
         :return: Bithumb instance
