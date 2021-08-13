@@ -1,0 +1,11 @@
+.loginContainer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 920px;
+    height: 610px;
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+}

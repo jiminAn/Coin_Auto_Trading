@@ -1,8 +1,12 @@
 import React from 'react'
+import LoginInfo from '../Components/LoginPage/LoginInfo'
+import './LoginPage.css'
 
 function LoginPage() {
     return (
-        <div>로그인</div>
+        <div className='loginContainer'>
+            <LoginInfo />
+        </div>
     )
 }
 
