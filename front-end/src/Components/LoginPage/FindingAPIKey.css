@@ -1,0 +1,11 @@
+.findingContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    color: #a9a9a9;
+}
+
+a {
+    color: #a9a9a9;
+    text-decoration: underline;
+}
