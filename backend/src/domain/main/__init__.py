@@ -1,7 +1,5 @@
 from flask import Flask, Blueprint
 
-from src.model.models import User
-
 api_main = Blueprint("main", __name__)
 
 
