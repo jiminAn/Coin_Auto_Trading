@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     width: 920px;
     height: 610px;
     border: 1px solid #c4c4c4;
@@ -16,6 +16,7 @@ input {
     border: 1px solid #000000;
     border-radius: 5px;
     font-size: 20px;
+    margin-bottom: 3%;
 }
 
 button {
@@ -27,6 +28,7 @@ button {
     font-size: 22px;
     font-weight: bold;
     color: #FFFFFF;
+    margin: 2% 0 5% 0;
 }
 
 button:hover {
