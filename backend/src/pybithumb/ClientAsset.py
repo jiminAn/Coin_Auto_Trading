@@ -21,6 +21,9 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO,
 class ClientAsset(Process):
     """
     load the Client Asset information
+
+    information of each type's contennt visit here
+    https://apidocs.bithumb.com/docs/websocket_public
     """
 
     def __init__(self, name):
@@ -53,8 +56,20 @@ class ClientAsset(Process):
         self.start()
 
     def run(self) -> None:
-        while True:
+        """
+        0.1초 간격으로 queue에 각 websockets으로 부터 받아온 data가 있으면 이를 가져옵니다.
+        websocket의 type의 종류에는 "ticker(현재가)", "transaction(체결)", "orderbookdepth(변경호가)"
+        의 data를 받아옵니다.
+
+        필요하신 종류의 type이 있다면 self._q[type].get() 과 같이 data를 받아올 수 있습니다.
+        Usage:
             if self._q["ticker"] and self._q["transaction"] and self._q["orderbookdepth"]:
+                for type in self._types:
+                    print(type, '\n', self._q[type].get())
+        """
+
+        while True:
+            if self._q["ticker"]:
                 for type in self._types:
                     print(type, '\n', self._q[type].get())
 
@@ -117,72 +132,6 @@ class ClientAsset(Process):
         :return: ticker information(Dict); {ticker : [client asset information]}
         """
         return self._ticker_dict
-
-    def get_ticker_data(self, ):
-        """
-        현재가(ticker)
-
-        "type" : "ticker",
-	    "content" : {
-		"symbol" : "BTC_KRW",			    // 통화코드
-		"tickType" : "24H",					// 변동 기준시간- 30M, 1H, 12H, 24H, MID
-		"date" : "20200129",				// 일자
-		"time" : "121844",					// 시간
-		"openPrice" : "2302",				// 시가
-		"closePrice" : "2317",				// 종가
-		"lowPrice" : "2272",				// 저가
-		"highPrice" : "2344",				// 고가
-		"value" : "2831915078.07065789",	// 누적거래금액
-		"volume" : "1222314.51355788",	    // 누적거래량
-		"sellVolume" : "760129.34079004",	// 매도누적거래량
-		"buyVolume" : "462185.17276784",	// 매수누적거래량
-		"prevClosePrice" : "2326",			// 전일종가
-		"chgRate" : "0.65",					// 변동률
-		"chgAmt" : "15",					// 변동금액
-		"volumePower" : "60.80"			    // 체결강도
-	    }
-        """
-        data = self._ws_ticker.get()
-        return data
-
-    def get_orderbookdepth_data(self):
-        """
-        {
-	    "type" : "orderbookdepth",
-		"content" : {
-		"list" : [
-			{
-				"symbol" : "BTC_KRW",
-				"orderType" : "ask",		// 주문타입 – bid / ask
-				"price" : "10593000",		// 호가
-				"quantity" : "1.11223318",	// 잔량
-				"total" : "3"				// 건수
-			},
-		],
-		"datetime":1580268255864325		// 일시
-	        }
-        }
-        """
-        pass
-
-    def get_transaction_data(self):
-        """
-        "type" : "transaction",
-	    "content" : {
-		    "list" : [
-                {
-                    "symbol" : "BTC_KRW",					// 통화코드
-                    "buySellGb" : "1",							// 체결종류(1:매도체결, 2:매수체결)
-                    "contPrice" : "10579000",					// 체결가격
-                    "contQty" : "0.01",							// 체결수량
-                    "contAmt" : "105790.00",					// 체결금액
-                    "contDtm" : "2020-01-29 12:24:18.830039",	// 체결시각
-                    "updn" : "dn"								// 직전 시세와 비교 : up-상승, dn-하락
-                }
-            ]
-	    }
-        """
-        pass
 
 
 
