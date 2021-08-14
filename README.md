@@ -1,3 +1,3 @@
-# Coin_Auto_Traiding
+# Coin_Auto_Trading
 
 ## Test
