@@ -209,4 +209,8 @@ sketch
 .history
 .ionide
 
+# pybithumb private
+key.txt
+
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,react,django,macosw
