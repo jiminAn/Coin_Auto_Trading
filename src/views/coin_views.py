@@ -1,13 +1,12 @@
-import datetime
 from flask import Blueprint
-import pybithumb
 from ..bitcoinAutoTrade import BitcoinAuto
-from ..pybithumb.ApiConnect import Connect
-from ..pybithumb.ClientAsset import ClientAsset
 import multiprocessing
-from ..bestk import findk
 
 bp = Blueprint('coin', __name__, url_prefix='/coin')
+
+""" 
+This is Test Page
+"""
 
 @bp.route('/start/')
 def start():

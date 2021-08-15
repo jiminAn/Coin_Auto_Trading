@@ -34,3 +34,4 @@ class ClientAsset:
         :return: ticker information(Dict); {ticker : [client asset information]}
         """
         return self._ticker_dict
+
