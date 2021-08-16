@@ -90,6 +90,11 @@ class ClientAsset(Process):
         logging.info("Websockets are connected successfully")
 
     async def __connect_websocket(self, type, symbols):
+        """
+        original code:
+            https://github.com/sharebook-kr/pybithumb/blob/master/pybithumb/websocket.py
+        """
+
         uri = "wss://pubwss.bithumb.com/pub/ws"
 
         async with websockets.connect(uri, ping_interval=None) as websocket:
@@ -132,6 +137,11 @@ class ClientAsset(Process):
         :return: ticker information(Dict); {ticker : [client asset information]}
         """
         return self._ticker_dict
+
+    def terminate(self):
+        for type in self._types:
+            self.alive[type] = False
+        super().terminate()
 
 
 
