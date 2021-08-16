@@ -17,7 +17,11 @@ class Connect :
             self.__con_key = f.readline().strip()
             self.__sec_key = f.readline().strip()
 
-        logging.info(f"Login private API with connect key: {self.__con_key}")
+        if not self.is_api_key_valid():
+            logging.error("Key is not valid")
+            raise ValueError
+        else:
+            logging.info(f"Login private API successfully")
 
     def get_bitumb(self):
         """
@@ -32,3 +36,15 @@ class Connect :
         :return: con_key (String)
         """
         return self.__con_key
+
+    def is_api_key_valid(self):
+        """
+        bithumb api에서 따로 validation 함수를 제공하지 않음
+        balance data를 요청하고 이에 대한 에러 코드를 확인하여 validation을 함
+        """
+
+        recv_data = pybithumb.Bithumb(self.__con_key, self.__sec_key).get_balance("BTC")
+        if recv_data["messge"] == "Invalid Apikey":
+            return False
+        else:
+            return True
