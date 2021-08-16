@@ -41,7 +41,7 @@ class ClientAsset(Process):
         logging.info("Checking valid tickers (possesed tickers)...")
         self._tickers = ['ETH']
         for ticker in tqdm(pybithumb.get_tickers()):
-            balance = self._client_api.get_bitumb().get_balance(ticker)
+            balance = self._client_api.get_balance(ticker)
             if balance[0] > 0.0:
                 self._ticker_dict[ticker].append(balance)
                 self._tickers.append(ticker)
@@ -140,13 +140,14 @@ class ClientAsset(Process):
 
     def terminate(self):
         for type in self._types:
-            self.alive[type] = False
+            self._alive[type] = False
         super().terminate()
 
 
 
 if __name__ == "__main__":
     client = ClientAsset('joono')
+    print(client)
 
     # check multi processing
     for i in range(1000):

@@ -1,7 +1,7 @@
 import pybithumb
 import logging
 
-class Connect :
+class Connect(pybithumb.Bithumb) :
     """
     connect client API
     """
@@ -19,9 +19,11 @@ class Connect :
 
         if not self.is_api_key_valid():
             logging.error("Key is not valid")
-            raise ValueError
+            raise ConnectionError
         else:
             logging.info(f"Login private API successfully")
+
+        super().__init__(self.__con_key, self.__sec_key)
 
     def get_bitumb(self):
         """
@@ -44,7 +46,7 @@ class Connect :
         """
 
         recv_data = pybithumb.Bithumb(self.__con_key, self.__sec_key).get_balance("BTC")
-        if recv_data["messge"] == "Invalid Apikey":
+        if recv_data["message"] == "Invalid Apikey":
             return False
         else:
             return True
