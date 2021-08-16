@@ -147,7 +147,6 @@ class ClientAsset(Process):
 
 if __name__ == "__main__":
     client = ClientAsset('joono')
-    print(client)
 
     # check multi processing
     for i in range(1000):

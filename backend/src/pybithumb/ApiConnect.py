@@ -1,6 +1,12 @@
 import pybithumb
 import logging
 
+"""
+pybithumb.Bithumb 함수들
+
+https://github.com/sharebook-kr/pybithumb/blob/master/pybithumb/client.py
+"""
+
 class Connect(pybithumb.Bithumb) :
     """
     connect client API
@@ -46,7 +52,7 @@ class Connect(pybithumb.Bithumb) :
         """
 
         recv_data = pybithumb.Bithumb(self.__con_key, self.__sec_key).get_balance("BTC")
-        if recv_data["message"] == "Invalid Apikey":
-            return False
-        else:
-            return True
+        if not isinstance(recv_data, tuple):
+            if recv_data["message"] == "Invalid Apikey":
+                return False
+        return True
