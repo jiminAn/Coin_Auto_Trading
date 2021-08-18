@@ -1,0 +1,37 @@
+.loginContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 920px;
+    height: 610px;
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+}
+
+input {
+    width: 750px;
+    height: 60px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 20px;
+    margin-bottom: 3%;
+    padding: 0 2% 0 2%;
+}
+
+button {
+    width: 400px;
+    height: 65px;
+    background: #1EC17E;
+    border: 1px solid #1EC17E;
+    border-radius: 12px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #FFFFFF;
+    margin: 2% 0 5% 0;
+}
+
+button:hover {
+    cursor: pointer;
+}
