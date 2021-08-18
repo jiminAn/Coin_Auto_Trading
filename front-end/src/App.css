@@ -12,4 +12,7 @@
 .contents {
   position: relative;
   top: 70px;
+  display: flex;
+  justify-content: center;
+  padding-top: 5%;
 }

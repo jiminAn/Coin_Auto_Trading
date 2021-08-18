@@ -7,7 +7,7 @@ import './App.css'
 // NOTICE :: 백엔드 구현 전까지 백엔드와 통신이 필요한 부분은 localStorage로 대체
 
 function App() {
-  const [isLogin, setIsLogin] = useState<boolean>(true)
+  const [isLogin, setIsLogin] = useState<boolean>(false)
 
   // localStorage에 저장된 로그인 상태를 조회
   useEffect(() => {
