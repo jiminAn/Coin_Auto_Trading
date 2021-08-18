@@ -51,7 +51,13 @@ class BitcoinAuto():
         orderbook = pybithumb.get_orderbook(ticker)
         sell_price = orderbook['asks'][0]['price']
         unit = krw / float(sell_price)
-        self._bithumb.buy_market_order(ticker, unit)
+        tmp = self._bithumb.buy_market_order(ticker, unit)
+        if isinstance(tmp, tuple):
+            print("정상적으로 매수")
+        else:
+            print("Error Code", tmp['status'], ":", tmp['message'])
+
+
 
     def sell_crypto_currency(self, ticker):
         """
@@ -60,7 +66,11 @@ class BitcoinAuto():
         :return: None
         """
         unit = self._bithumb.get_balance(ticker)[0]
-        self._bithumb.sell_market_order(ticker, unit)
+        tmp = self._bithumb.sell_market_order(ticker, unit)
+        if isinstance(tmp, tuple):
+            print("정상적으로 매도")
+        else:
+            print("Error Code", tmp['status'], ":", tmp['message'])
 
     def get_yesterday_ma5(self, ticker):
         """
@@ -75,7 +85,7 @@ class BitcoinAuto():
 
     def buy_by_condition(self, tickers):
         """
-        사용자 조건에 맞추어 비트코인 매수
+        개발자가 설정한 매수 조건에 맞추어 비트코인 매수
         :param tickers: 사용자가 가지고 있는 비트코인 정보 
         :return: None
         """
@@ -89,7 +99,7 @@ class BitcoinAuto():
 
     def sell_by_condition(self, tickers):
         """
-        사용자 조건에 맞추어 비트코인 매도
+        개발자가 설정한 매도 조건에 맞추어 비트코인 매도
         :param tickers: 사용자가 가지고 있는 비트코인 정보 
         :return: None
         """
@@ -107,6 +117,9 @@ class BitcoinAuto():
         자동매매 코드
         :return: None
         """
+        if self._my_tickers is None: # 예외
+            print("보유한 코인이 없습니다.")
+            return
 
         for ticker in self._my_tickers:
             self._k[ticker] = findk.get_max_ror_k(ticker)
