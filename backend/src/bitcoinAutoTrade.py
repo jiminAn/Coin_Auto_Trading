@@ -39,7 +39,7 @@ class BitcoinAuto():
         yesterday_high = yesterday['high']
         yesterday_low = yesterday['low']
         target = today_open + (yesterday_high - yesterday_low) * k
-        return target
+        return round(target, 1)
 
     def buy_crypto_currency(self, ticker):
         """
@@ -91,9 +91,8 @@ class BitcoinAuto():
         """
         for ticker in tickers:
             current_price = pybithumb.get_current_price(ticker)
-            print("Ticker :", ticker,", Current Price :" , current_price, ", Target Price :", self._target_price[ticker],
-                  "5일 간 이동평균" ,self._ma5[ticker], ", Money :" , self._bithumb.get_balance(ticker)[2])
-
+            print("Ticker :", ticker,"\nCurrent Price :" , current_price, "\nTarget Price :", self._target_price[ticker],
+                  "\n5일 간 이동평균 : " ,self._ma5[ticker], "\nMoney :" , self._bithumb.get_balance(ticker)[2], "\n")
             if (current_price > self._target_price[ticker]) and (current_price > self._ma5[ticker]):
                 self.buy_crypto_currency(ticker)
 
