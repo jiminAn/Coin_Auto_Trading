@@ -6,7 +6,7 @@
     padding: 0 8% 2% 8%;
 }
 
-a {
+a:link {
     color: #a9a9a9;
     text-decoration: underline;
 }
