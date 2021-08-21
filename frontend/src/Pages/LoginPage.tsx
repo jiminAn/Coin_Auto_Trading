@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-shadow */
 import React, { useState } from 'react'
@@ -18,16 +19,38 @@ function useInput(defaultValue: string) {
     return { value, onChange }
 }
 
+async function login(userInfo: any) {
+    return fetch('http://localhost:5000/login', {
+        method: 'POST',
+        body: JSON.stringify(userInfo)
+    })
+    .then(data => data.json())
+}
+
 function LoginPage() {
     const publicKey = useInput('')
     const privateKey = useInput('')
 
-    const onClick = () => {
+    // const onClick = () => {
+    //     if(publicKey.value === 'admin' && privateKey.value === 'admin') {
+    //         localStorage.setItem('login', 'true')   
+    //         window.location.href = '/'     
+    //     } else {
+    //         alert('로그인 실패')
+    //     }
+    // }
+
+    const onSubmit = async (e: any) => {
+        e.preventDefault()
+        const response = await login({
+            publicKey: publicKey.value,
+            privateKey: privateKey.value
+        })
         if(publicKey.value === 'admin' && privateKey.value === 'admin') {
-            localStorage.setItem('login', 'true')   
-            window.location.href = '/'      
+            localStorage.setItem('login', 'true')
+            window.location.href = '/'
         } else {
-            alert('로그인 실패')
+            alert('error')
         }
     }
 
@@ -38,7 +61,7 @@ function LoginPage() {
                 <input type='password' placeholder='public API key를 입력해주세요.' className='apiInput' {...publicKey}/><br/>
                 <input type='password' placeholder='private API key를 입력해주세요.' className='apiInput' {...privateKey}/>
             </form>
-            <button type='submit' onClick={ onClick }>Login</button>
+            <button type='submit' onClick={ onSubmit }>Login</button>
             <FindingAPIKey />
         </div>
     )

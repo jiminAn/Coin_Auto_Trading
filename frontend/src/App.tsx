@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Route } from 'react-router-dom' 
 import HomePage from 'Pages/HomePage'
 import LoginPage from 'Pages/LoginPage'
 import GlobalNavigationBar from 'Components/GlobalNavigationBar/GlobalNavigationBar'
@@ -17,7 +18,10 @@ function App() {
     <div className='App'>
       <GlobalNavigationBar />
       <div className='contents'>
-        { !isLogin ? <LoginPage /> : <HomePage /> }
+        { !isLogin ? 
+          <Route path='/' component={LoginPage} /> : 
+          <Route path='/' component={HomePage} /> 
+        }
       </div>
     </div>
   )
