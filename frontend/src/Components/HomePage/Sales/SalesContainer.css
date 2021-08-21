@@ -1,0 +1,74 @@
+.salesContainer {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+}
+
+.salesTitle {
+    display: inline-flex;
+    /* justify-content: flex-start; */
+    font-size: 140%;
+    font-weight: bold;
+    margin: 5% 2% 2% 3%;
+}
+
+.salesInfoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    margin: 2% 2% 10% 2%;
+}
+
+.coinInfo {
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+    padding: 0 2% 0 2%;
+}
+
+.aspectInfo {
+    font-size: 120%;
+    font-weight: bold;
+    padding: 0 1% 0 1%;
+}
+
+.salesItemContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 2% 2% 5% 2%;
+}
+
+.salesItemTitle {
+    display: inline-flex;
+    font-size: 120%;
+    font-weight: bold;
+    margin-bottom: 2%;
+    padding: 0 1% 0 1%;
+}
+
+.salesItemDescription {
+    display: inline-flex;
+    font-size: 90%;
+    color: #a9a9a9;
+    margin-bottom: 2%;
+    padding: 0 1% 0 1%;
+}
+
+.inputSales {
+    text-align: right;
+    height: 40px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    margin-bottom: 3%;
+    padding: 0 2% 0 2%;
+    font-size: 100%;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5%;
+}

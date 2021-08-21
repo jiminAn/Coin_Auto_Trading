@@ -1,0 +1,18 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.App {
+  text-align: center;
+}
+
+.contents {
+  position: relative;
+  top: 70px;
+  display: flex;
+  justify-content: center;
+  padding-top: 5%;
+}
