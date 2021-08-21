@@ -12,7 +12,7 @@ function App() {
   // localStorage에 저장된 로그인 상태를 조회
   useEffect(() => {
     localStorage.setItem('login', String(isLogin))
-  })
+  }, [])
 
   return (
     <div className='App'>

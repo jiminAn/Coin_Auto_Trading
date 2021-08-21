@@ -1,8 +1,14 @@
 import React from 'react'
+import './HomePage.css'
+import ChartContainer from 'Components/HomePage/Chart/ChartContainer'
+import SalesContainer from 'Components/HomePage/Sales/SalesContainer'
 
 function HomePage() {
     return (
-        <div>홈</div>
+        <div className='homeContainer'>
+            <ChartContainer />
+            <SalesContainer />
+        </div>
     )
 }
 

@@ -6,7 +6,7 @@ function GlobalNavigationBar() {
         <div className="NavigationContainer">
             <nav>
                 <div className='title'>
-                    <a href='/'>손절이 나의 멘탈을 지킨다.</a>
+                    <a href='/' className='logo'>손절이 나의 멘탈을 지킨다.</a>
                 </div>
                 <ul>
                     <li><div className='menu'>자동거래</div></li>

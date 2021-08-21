@@ -6,7 +6,7 @@ function FindingAPIKey() {
         <div className='findingContainer'>
             <div>bithumb API key가 기억나지 않으시나요?</div>
             <div>
-                <a href='https://apidocs.bithumb.com/'>확인하기</a>
+                <a href='https://apidocs.bithumb.com/' className='findKey'>확인하기</a>
             </div>
         </div>
     )
