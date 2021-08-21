@@ -10,7 +10,7 @@
     border-radius: 5px;
 }
 
-input {
+.apiInput {
     width: 750px;
     height: 60px;
     border: 1px solid #000000;
