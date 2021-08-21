@@ -9,9 +9,8 @@ import './App.css'
 function App() {
   const [isLogin, setIsLogin] = useState<boolean>(false)
 
-  // localStorage에 저장된 로그인 상태를 조회
   useEffect(() => {
-    localStorage.setItem('login', String(isLogin))
+    setIsLogin(localStorage.getItem('login') === 'true')
   }, [])
 
   return (
