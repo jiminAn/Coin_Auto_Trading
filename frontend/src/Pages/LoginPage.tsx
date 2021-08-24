@@ -20,7 +20,7 @@ function useInput(defaultValue: string) {
 }
 
 async function login(userInfo: any) {
-    return fetch('http://localhost:5000/login', {
+    return fetch('http://localhost:5000/', {
         method: 'POST',
         body: JSON.stringify(userInfo)
     })
