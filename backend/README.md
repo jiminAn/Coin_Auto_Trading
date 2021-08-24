@@ -22,7 +22,7 @@
       - ClientAsset.py
     - `./db`      # DB data 업데이트
       - Update.py
-    - `./crawling.  # 웹 크롤링
+    - `./crawling`  # 웹 크롤링
       - CrawledInfo.py 
       - WebCrawler.py
       - tickernames.txt
