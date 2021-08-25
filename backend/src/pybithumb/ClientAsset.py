@@ -1,6 +1,11 @@
 import pybithumb
-from collections import defaultdict
+import time
+import logging
 
+from collections import defaultdict
+from .ApiConnect import Connect
+from .RealTimeWebsocketProcess import RealTimeWebsocketProcess
+from tqdm import tqdm
 
 class ClientAsset:
     """
@@ -9,16 +14,23 @@ class ClientAsset:
     _ticker_dict = defaultdict(list)
     _client_api = None
 
-    def __init__(self, connect):
+    def __init__(self, connect: Connect):
         """
         inquire all tickers and save Client's asset information
         """
+
+        # connect to public, private API
         self._client_api = connect
+        self._ticker_dict = defaultdict(list)
+
+        logging.info("Checking valid tickers (possesed tickers)...")
         tickers = pybithumb.get_tickers()
-        for ticker in tickers:
+        for ticker in tqdm(tickers):
             balance = self._client_api.get_bithumb().get_balance(ticker)
             if balance[0] > 0.0:
                 self._ticker_dict[ticker].append(balance)
+
+        # self._websocket_process = RealTimeWebsocketProcess(self.get_ticker())
 
     def get_ticker(self):
         """

@@ -3,18 +3,18 @@ import datetime
 import time
 from collections import defaultdict
 from .bestk import findk
-from .pybithumb.ApiConnect import Connect
-from .pybithumb.ClientAsset import ClientAsset
+# from .pybithumb.ApiConnect import Connect
+# from .pybithumb.ClientAsset import ClientAsset
 
 
 class BitcoinAuto():
-    def __init__(self):
+    def __init__(self, connect, clientasset):
         """
         Initialize Objects and Variables
         """
         # Objects
-        self.connect = Connect()
-        self.clientasset = ClientAsset(self.connect)
+        self.clientasset = clientasset
+        self.connect = connect
 
         # Variables
         self._now = datetime.datetime.now() # 현재 시간
@@ -24,6 +24,7 @@ class BitcoinAuto():
         self._target_price = dict() # 각 코인의 타겟가 (딕셔너리로 수정 예정)
         self._bithumb = self.connect.get_bithumb() # 빗썸 객체
         self._my_tickers = self.clientasset.get_ticker() # 내가 가지고 있는 Ticker
+
 
 
     def get_target_price(self, ticker, k):
