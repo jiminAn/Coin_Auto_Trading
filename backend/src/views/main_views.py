@@ -14,8 +14,5 @@ def index():
 def login(): # get method에 대한 처리
     if request.method == 'POST':
         print(request.form["publicKey"], request.form["privateKey"])
-
-    else:
-        print(request.method)
-
+        return "This is Post"
     return "test"
