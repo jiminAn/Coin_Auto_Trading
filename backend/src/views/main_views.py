@@ -13,6 +13,6 @@ def index():
 @bp.route('/login', methods=['GET', 'POST']) # 여기서 빗썸 객체를 front에게 보내게하면 어떨까?
 def login(): # get method에 대한 처리
     if request.method == 'POST':
-        print(request.form["publicKey"], request.form["privateKey"])
+        print(request.get_data()) # b'{"publicKey":"admin","privateKey":"admin"}'
         return "This is Post"
     return "test"
