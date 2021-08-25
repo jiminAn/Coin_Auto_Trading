@@ -20,7 +20,7 @@ function useInput(defaultValue: string) {
 }
 
 async function login(userInfo: any) {
-    return fetch('http://localhost:5000/', {
+    return fetch('http://localhost:5000/login', {
         method: 'POST',
         body: JSON.stringify(userInfo)
     })
@@ -57,11 +57,11 @@ function LoginPage() {
     return (
         <div className='loginContainer'>
             <LoginInfo />
-            <form>
+            <form method='POST' onSubmit={ onSubmit }>
                 <input type='password' placeholder='public API key를 입력해주세요.' className='apiInput' {...publicKey}/><br/>
                 <input type='password' placeholder='private API key를 입력해주세요.' className='apiInput' {...privateKey}/>
+                <button type='submit'>Login</button>
             </form>
-            <button type='submit' onClick={ onSubmit }>Login</button>
             <FindingAPIKey />
         </div>
     )
