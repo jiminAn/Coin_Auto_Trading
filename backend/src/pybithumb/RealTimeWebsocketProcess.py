@@ -1,17 +1,10 @@
 from collections import defaultdict
-<<<<<<< HEAD
-from ApiConnect import Connect
-from multiprocessing import Process
-from tqdm import tqdm # for progress bar
-import multiprocessing as mp
-import pybithumb
-=======
+
 # from src.ApiConnect import Connect
 from multiprocessing import Process
 from tqdm import tqdm # for progress bar
 import multiprocessing as mp
 # import pybithumb
->>>>>>> test-websocket
 import logging
 import time
 import sys
@@ -48,12 +41,7 @@ class RealTimeWebsocketProcess(Process):
         self.q = {"ticker": mp.Queue(1000), "transaction": mp.Queue(1000), "orderbookdepth": mp.Queue(1000)}
         self._connect_websockets()
 
-<<<<<<< HEAD
-        # start process
-        self.start()
-=======
         self.run()
->>>>>>> test-websocket
 
     def run(self) -> None:
         """
@@ -70,16 +58,11 @@ class RealTimeWebsocketProcess(Process):
 
         while True:
             if self.q["ticker"]:
-<<<<<<< HEAD
-                for type in self.types:
-                    print(type, '\n', self.q[type].get())
-=======
                 data = self.q['ticker'].get()
                 # for tickers in client.tickers:
 
                 if data['content']['symbol'] == 'DOGE_KRW':
                     print(data)
->>>>>>> test-websocket
 
             time.sleep(0.1)
 
