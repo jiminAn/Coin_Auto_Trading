@@ -24,21 +24,13 @@ async function login(userInfo: any) {
         method: 'POST',
         body: JSON.stringify(userInfo)
     })
-    .then(data => data.json())
+    .then(data => data.text()) // 받아온 데이터를 처리하는 구문
+    // .then(data => data.json())
 }
 
 function LoginPage() {
     const publicKey = useInput('')
     const privateKey = useInput('')
-
-    // const onClick = () => {
-    //     if(publicKey.value === 'admin' && privateKey.value === 'admin') {
-    //         localStorage.setItem('login', 'true')   
-    //         window.location.href = '/'     
-    //     } else {
-    //         alert('로그인 실패')
-    //     }
-    // }
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
@@ -46,10 +38,13 @@ function LoginPage() {
             publicKey: publicKey.value,
             privateKey: privateKey.value
         })
+        console.log(response)
+        // 받아온 response에 대한 처리 후 페이지 이동
         if(publicKey.value === 'admin' && privateKey.value === 'admin') {
             localStorage.setItem('login', 'true')
             window.location.href = '/'
         } else {
+            // 모달 창으로 구현할 것인가 ?
             alert('error')
         }
     }
