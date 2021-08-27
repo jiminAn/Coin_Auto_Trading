@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-shadow */
 import React, { useState } from 'react'
 import LoginInfo from 'Components/LoginPage/LoginInfo'
 import FindingAPIKey from 'Components/LoginPage/FindingAPIKey'
@@ -58,8 +55,10 @@ function LoginPage() {
         <div className='loginContainer'>
             <LoginInfo />
             <form onSubmit={ onSubmit }>
-                <input type='password' placeholder='public API key를 입력해주세요.' className='apiInput' {...publicKey}/><br/>
-                <input type='password' placeholder='private API key를 입력해주세요.' className='apiInput' {...privateKey}/>
+                <input type='password' placeholder='public API key를 입력해주세요.' className='apiInput'
+                       value={ publicKey.value } onChange={ publicKey.onChange }/><br/>
+                <input type='password' placeholder='private API key를 입력해주세요.' className='apiInput'
+                       value={ privateKey.value } onChange={ privateKey.onChange }/>
                 <button type='submit'>Login</button>
             </form>
             <FindingAPIKey />
