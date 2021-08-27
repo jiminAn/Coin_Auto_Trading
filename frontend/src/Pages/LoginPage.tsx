@@ -6,6 +6,11 @@ import LoginInfo from 'Components/LoginPage/LoginInfo'
 import FindingAPIKey from 'Components/LoginPage/FindingAPIKey'
 import './LoginPage.css'
 
+interface apiKey {
+    publicKey: string;
+    privateKey: string;
+}
+
 function useInput(defaultValue: string) {
     const [value, setValue] = useState<string>(defaultValue)
 
@@ -19,7 +24,7 @@ function useInput(defaultValue: string) {
     return { value, onChange }
 }
 
-async function login(userInfo: any) {
+async function login(userInfo: apiKey) {
     return fetch('http://localhost:5000/login', {
         method: 'POST',
         body: JSON.stringify(userInfo)
@@ -38,13 +43,13 @@ function LoginPage() {
             publicKey: publicKey.value,
             privateKey: privateKey.value
         })
-        console.log(response)
+        // console.log(response)
         // 받아온 response에 대한 처리 후 페이지 이동
         if(publicKey.value === 'admin' && privateKey.value === 'admin') {
             localStorage.setItem('login', 'true')
             window.location.href = '/'
         } else {
-            // 모달 창으로 구현할 것인가 ?
+            // DISCUSS :: 모달 창으로 구현할 것인가 ?
             alert('error')
         }
     }
@@ -52,7 +57,7 @@ function LoginPage() {
     return (
         <div className='loginContainer'>
             <LoginInfo />
-            <form method='POST' onSubmit={ onSubmit }>
+            <form onSubmit={ onSubmit }>
                 <input type='password' placeholder='public API key를 입력해주세요.' className='apiInput' {...publicKey}/><br/>
                 <input type='password' placeholder='private API key를 입력해주세요.' className='apiInput' {...privateKey}/>
                 <button type='submit'>Login</button>
