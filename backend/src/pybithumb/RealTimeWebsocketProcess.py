@@ -41,7 +41,7 @@ class RealTimeWebsocketProcess(Process):
         self.q = {"ticker": mp.Queue(1000), "transaction": mp.Queue(1000), "orderbookdepth": mp.Queue(1000)}
         self._connect_websockets()
 
-        self.run()
+        self.start()
 
     def run(self) -> None:
         """
