@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import HomePage from 'Pages/HomePage'
 import LoginPage from 'Pages/LoginPage'
 import GlobalNavigationBar from 'Components/GlobalNavigationBar/GlobalNavigationBar'
 import './App.css'
+import NotFound from 'Pages/NotFound'
 
 function App() {
   const [isLogin, setIsLogin] = useState<boolean>(false)
@@ -21,12 +22,14 @@ function App() {
       <GlobalNavigationBar />
       <div className='contents'>
         { !isMobile ?
-          <>
+          <Switch>
             { !isLogin ? 
-              <Route path='/' component={LoginPage} /> : 
-              <Route path='/' component={HomePage} /> 
+              <Route path='/' component={ LoginPage } /> : 
+              <Route path='/' component={ HomePage } /> 
             }
-          </> :
+            <Route component={ NotFound } />
+          </Switch> :
+          // TODO 1 :: mobile 페이지 코드 구현
           <div>mobile</div>
         }
       </div>
