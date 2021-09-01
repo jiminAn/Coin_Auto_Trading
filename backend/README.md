@@ -15,7 +15,7 @@
     - `./domain`                          # http 관련
       - `./main`                       
         - _ _ init _ _.py        # model 가져오기
-    - `./model`                           # DB table 정의  
+    - `./model`                           # DB table 정의 및 DB관련 모듈   
       - models.py : Coin, Client 테이블 컬럼 및 제약 지정   
       - Update.py : Coin, Client 테이블의 데이터 업데이트 관련 모듈      
     - `./pybithumb`   # bithumb api 관련 모듈 정의
