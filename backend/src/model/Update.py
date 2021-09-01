@@ -99,3 +99,5 @@ if __name__ == "__main__":
     # CRUD + 예외 처리
     dt = DB.searchDatetime(Coin,date)
     DB.delete(dt)  # 매달 1일 삭제
+
+    
