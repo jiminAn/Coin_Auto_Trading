@@ -24,7 +24,7 @@ function SalesContainer() {
                 <input type='number'placeholder='원' className='inputSales'/>
             </div>
             <div className='buttonContainer'>
-                <button type='button'>손절 정보 설정</button>
+                <button type='button' className='requestBtn'>손절 정보 설정</button>
             </div>
         </div>
     )
