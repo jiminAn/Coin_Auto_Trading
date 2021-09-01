@@ -11,12 +11,20 @@ from datetime import datetime
 import pybithumb
 
 class UpdateDB:
-
+    """
+    Search, Update, Delete Coin & Client table
+    """
     def __init__(self):
+        """
+        initialize ticker dictionary and connect client api
+        """
         self._tickers = create_ticker_name_dict()
         self._client = Connect()
 
     def updateCoinInfo(self):
+        """
+        Insert Coin information for every AM 00:00
+        """
         for ticker, ko_name in self._tickers.items():
             infos = pybithumb.get_market_detail(ticker)
             open, high, low, close, volume = infos
@@ -29,6 +37,9 @@ class UpdateDB:
             db.session.commit()
 
     def updateClientAssetInfo(self, ticker, quantity, buy_price, fee):
+        """
+        Insert Client asset information for every sell & buy
+        """
         client_api = self._client.get_con_key() # client connect key
         buy_time = datetime.now()
         ticker_time = client_api + str(buy_time) # PK : client connect key + ticker
@@ -42,33 +53,49 @@ class UpdateDB:
         db.session.add(client)
         db.session.commit()
 
-    def delete(self, data):
-        if not data: # 비어있는 sequence는 False
+    def delete(self, pk_list):
+        """
+        Delete rows in Primary Key list
+        :return: success(True) / fail(False)
+        """
+        if not pk_list:
             return False
         else:
-            for row in data:
+            for row in pk_list:
                 db.session.delete(row)
                 db.session.commit()
             return True
 
-    def search_ticker(self, Table, ticker):
-        rows = Table.query.filter(Table.ticker == ticker).all()
-        print(rows)
-        return rows
+    def searchTicker(self, table, ticker):
+        """
+        get Primary Key from each table filter with ticker
+        :return: Primary Key(List)
+        """
+        pk_list = table.query.filter(table.ticker == ticker).all()
+        return pk_list
 
-    def search_name(self, Table, name):
-        rows = Table.query.filter(Table.name == name).all()
-        return rows
+    def searchName(self, table, name):
+        """
+        get Primary Key from each table filter with name
+        :return: Primary Key(List)
+        """
+        pk_list = table.query.filter(table.name == name).all()
+        return pk_list
 
-    def search_datetime(self, Table, datetime):
-        rows = Table.query.filter(Table.datetime.like('%'+datetime+'%')).all()
-        return rows
+    def searchDatetime(self, table, datetime):
+        """
+        get Primary Key from each table filter with datetime
+        :return: Primary Key(List)
+        """
+        pk_list = table.query.filter(table.datetime.like('%'+datetime+'%')).all()
+        return pk_list
+
 
 if __name__ == "__main__":
     DB = UpdateDB()
-    DB.updateCoinInfo()
-    date = '2021-08-29'
-    name = '리플'
+    #DB.updateCoinInfo()
+    date = '2021-09-01'
+
     # CRUD + 예외 처리
-    dt = DB.search_name(Coin,name)
-    DB.deleteAll(dt)  # 매달 1일 삭제
+    dt = DB.searchDatetime(Coin,date)
+    DB.delete(dt)  # 매달 1일 삭제
