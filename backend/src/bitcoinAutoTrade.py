@@ -1,10 +1,8 @@
-import pybithumb
 import datetime
 import time
-from collections import defaultdict
 from .bestk import findk
-from .pybithumb.ApiConnect import Connect
 from .pybithumb.ClientAsset import ClientAsset
+from src.model.Update import *
 from flask_cors import CORS
 
 
