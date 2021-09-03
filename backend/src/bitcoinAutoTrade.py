@@ -5,6 +5,7 @@ from collections import defaultdict
 from .bestk import findk
 from .pybithumb.ApiConnect import Connect
 from .pybithumb.ClientAsset import ClientAsset
+from flask_cors import CORS
 
 
 class BitcoinAuto():

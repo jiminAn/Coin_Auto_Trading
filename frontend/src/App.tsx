@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { Route } from 'react-router-dom' 
+import { Route, Switch } from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
 import HomePage from 'Pages/HomePage'
 import LoginPage from 'Pages/LoginPage'
+import NotFound from 'Pages/NotFound'
 import GlobalNavigationBar from 'Components/GlobalNavigationBar/GlobalNavigationBar'
 import './App.css'
 
-// NOTICE :: 백엔드 구현 전까지 백엔드와 통신이 필요한 부분은 localStorage로 대체
-
 function App() {
   const [isLogin, setIsLogin] = useState<boolean>(false)
-
+  const isMobile = useMediaQuery({
+    query: '(max-width: 920px)'
+  })
+  
   useEffect(() => {
     setIsLogin(localStorage.getItem('login') === 'true')
   }, [])
@@ -18,9 +21,16 @@ function App() {
     <div className='App'>
       <GlobalNavigationBar />
       <div className='contents'>
-        { !isLogin ? 
-          <Route path='/' component={LoginPage} /> : 
-          <Route path='/' component={HomePage} /> 
+        { !isMobile ?
+          <Switch>
+            { !isLogin ? 
+              <Route path='/' component={ LoginPage } /> : 
+              <Route path='/' component={ HomePage } /> 
+            }
+            <Route component={ NotFound } />
+          </Switch> :
+          // TODO 1 :: mobile 페이지 코드 구현
+          <div>mobile</div>
         }
       </div>
     </div>

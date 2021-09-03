@@ -41,6 +41,8 @@ li {
 }
 
 .menu {
-    margin: 0 5px 0 5px;
+    margin: 0 1% 0 1%;
+    max-width: 60px;
+    width: 100%;
 }
 

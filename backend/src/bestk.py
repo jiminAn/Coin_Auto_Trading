@@ -20,7 +20,6 @@ class findk:
         return ror
 
 
-
     def get_max_ror_k(self):
         """
         가장 높은 수익률을 기록한 k값을 반환하는 함수
