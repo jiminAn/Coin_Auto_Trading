@@ -3,9 +3,9 @@ import { Route, Switch } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import HomePage from 'Pages/HomePage'
 import LoginPage from 'Pages/LoginPage'
+import NotFound from 'Pages/NotFound'
 import GlobalNavigationBar from 'Components/GlobalNavigationBar/GlobalNavigationBar'
 import './App.css'
-import NotFound from 'Pages/NotFound'
 
 function App() {
   const [isLogin, setIsLogin] = useState<boolean>(false)
