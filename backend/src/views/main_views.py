@@ -1,10 +1,16 @@
+<<<<<<< HEAD
 from flask import Blueprint, url_for, request
 from werkzeug.utils import redirect
 import pybithumb
+=======
+from flask import Blueprint, url_for
+from werkzeug.utils import redirect
+>>>>>>> feature/websocket
 
 bp = Blueprint('main', __name__, url_prefix='/')
 
 
+<<<<<<< HEAD
 @bp.route('/', methods=['GET', 'POST'])
 def index():
     return redirect(url_for('.login')) # get
@@ -23,3 +29,8 @@ def login(): # get method에 대한 처리
         print(request.get_data()) # b'{"publicKey":"admin","privateKey":"admin"}'
         return "This is Post" # 프론트 엔드로 이 정보가 전송됩니다.
     return "test"
+=======
+@bp.route('/')
+def index():
+    return redirect(url_for('coin.start'))
+>>>>>>> feature/websocket
