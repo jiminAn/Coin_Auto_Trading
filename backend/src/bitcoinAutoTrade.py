@@ -5,7 +5,6 @@ from .pybithumb.ClientAsset import ClientAsset
 from src.model.Update import *
 from flask_cors import CORS
 
-
 class BitcoinAuto():
     def __init__(self):
         """
