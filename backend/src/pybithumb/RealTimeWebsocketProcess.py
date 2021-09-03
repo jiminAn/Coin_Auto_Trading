@@ -50,13 +50,14 @@ class RealTimeWebsocketProcess():
                 for type in self.__types:
                     print(type, '\n', self._q[type].get())
         """
-
+        ws_tickers = [ticker + '_KRW' for ticker in self._tickers]
+        print(ws_tickers)
         while True:
             if self._q["ticker"]:
                 data = self._q['ticker'].get()
                 # for tickers in client.tickers:
 
-                if data['content']['symbol'] == 'DOGE_KRW':  # DB에 있는 ticker 불러와서 읽어들이게 수정
+                if data['content']['symbol'] in ws_tickers:
                     print(data)
 
             time.sleep(0.1)

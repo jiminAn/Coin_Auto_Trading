@@ -5,6 +5,6 @@ from pybithumb import Bithumb
 app = create_app("dev")
 
 if __name__ == '__main__':
-	websocket = RealTimeWebsocketProcess(Bithumb.get_tickers())
+	# websocket = RealTimeWebsocketProcess(Bithumb.get_tickers())
 
 	app.run()
