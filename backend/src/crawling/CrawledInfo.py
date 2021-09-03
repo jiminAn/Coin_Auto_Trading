@@ -9,24 +9,20 @@ def create_ticker_name_dict():
     :return: tickers['ticker'] = name
     """
     cnt = 0
-    limit = 20
+    limit = 20 # the limited number of tickers
     tickers = defaultdict()
-    PATH = '/Users/anjimin/git/Coin_Auto_Trading/backend/src/cralwing'
-    with open(PATH + '/tickernames_250.txt', 'r') as f:
+    with open('../tickernames.txt', 'r', encoding= 'utf-8') as f:
         for line in f.readlines():
             cnt += 1
             ticker = re.findall('[a-zA-Z].*',line)[0]
             ko_name = line.replace(ticker,'').strip()
-            #print(ticker, ':', ko_name) # for CHECKING
-
+            
             tickers[ticker] = ko_name
             if cnt == limit:
                 break
 
     return tickers
 
-
-
 if __name__ == "__main__":
-    tickers_ko_naming = create_ticker_name_dict()
-    pp.pprint(tickers_ko_naming)
+     tickers_ko_naming = create_ticker_name_dict()
+     pp.pprint(tickers_ko_naming)

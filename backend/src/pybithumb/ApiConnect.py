@@ -11,7 +11,7 @@ class Connect :
         """
         initialize connect key & secret key
         """
-        with open("./key.txt", "r") as f:
+        with open("../key.txt", "r") as f:
             self._con_key = f.readline().strip()
             self._sec_key = f.readline().strip()
 

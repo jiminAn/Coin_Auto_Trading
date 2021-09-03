@@ -16,7 +16,7 @@ class ClientAsset:
         self._client_api = connect
         tickers = pybithumb.get_tickers()
         for ticker in tickers:
-            balance = self._client_api.get_bithumb().get_balance(ticker)
+            balance = self._client_api.get_balance(ticker)
             if balance[0] > 0.0:
                 self._ticker_dict[ticker].append(balance)
 

@@ -1,10 +1,8 @@
-import pybithumb
 import datetime
 import time
-from collections import defaultdict
 from .bestk import findk
-from .pybithumb.ApiConnect import Connect
 from .pybithumb.ClientAsset import ClientAsset
+from src.model.Update import *
 
 
 class BitcoinAuto():
@@ -15,6 +13,7 @@ class BitcoinAuto():
         # Objects
         self.connect = Connect()
         self.clientasset = ClientAsset(self.connect)
+        self.db = UpdateDB()
 
         # Variables
         self._now = datetime.datetime.now() # 현재 시간
@@ -39,7 +38,7 @@ class BitcoinAuto():
         yesterday_high = yesterday['high']
         yesterday_low = yesterday['low']
         target = today_open + (yesterday_high - yesterday_low) * k
-        return round(target, 1)
+        return target
 
     def buy_crypto_currency(self, ticker):
         """
@@ -53,6 +52,8 @@ class BitcoinAuto():
         unit = krw / float(sell_price)
         tmp = self._bithumb.buy_market_order(ticker, unit)
         if isinstance(tmp, tuple):
+            fee = self._connect.get_trading_fee(ticker)
+            self.db.updateClientAssetInfo(ticker, unit, pybithumb.get_ohlcv(ticker), fee) # update + unit
             print("정상적으로 매수")
         else:
             print("Error Code", tmp['status'], ":", tmp['message'])
@@ -68,6 +69,8 @@ class BitcoinAuto():
         unit = self._bithumb.get_balance(ticker)[0]
         tmp = self._bithumb.sell_market_order(ticker, unit)
         if isinstance(tmp, tuple):
+            fee = self._connect.get_trading_fee(ticker)
+            self.db.updateClientAssetInfo(ticker, -unit, pybithumb.get_ohlcv(ticker), fee) # update - unit
             print("정상적으로 매도")
         else:
             print("Error Code", tmp['status'], ":", tmp['message'])
@@ -91,8 +94,9 @@ class BitcoinAuto():
         """
         for ticker in tickers:
             current_price = pybithumb.get_current_price(ticker)
-            print("Ticker :", ticker,"\nCurrent Price :" , current_price, "\nTarget Price :", self._target_price[ticker],
-                  "\n5일 간 이동평균 : " ,self._ma5[ticker], "\nMoney :" , self._bithumb.get_balance(ticker)[2], "\n")
+            print("Ticker :", ticker,", Current Price :" , current_price, ", Target Price :", self._target_price[ticker],
+                  "5일 간 이동평균" ,self._ma5[ticker], ", Money :" , self._bithumb.get_balance(ticker)[2])
+
             if (current_price > self._target_price[ticker]) and (current_price > self._ma5[ticker]):
                 self.buy_crypto_currency(ticker)
 
