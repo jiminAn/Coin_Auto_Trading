@@ -16,7 +16,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
-class RealTimeWebsocketProcess():
+class RealTimeWebsocketProcess:
     """
     connecting real time websocket processed
     If you want to know information of each type's content please visit below website

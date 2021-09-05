@@ -1,8 +1,8 @@
-from src.model.models import Client, Coin
-from src.database import db
-from src.crawling.CrawledInfo import *
-from src.pybithumb.ApiConnect import *
-from src import create_app
+from ..model.models import Client, Coin
+from ..database import db
+from ..crawling.CrawledInfo import *
+from ..pybithumb.ApiConnect import *
+from ...main import create_app
 
 app = create_app("dev")
 app.app_context().push()
