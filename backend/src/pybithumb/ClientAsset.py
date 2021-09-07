@@ -25,9 +25,8 @@ class ClientAsset:
 
         logging.info("Checking valid tickers (possesed tickers)...")
         tickers = pybithumb.get_tickers()
-        for ticker in tqdm(tickers):
+        for ticker in tickers:
             balance = self._client_api.get_bithumb().get_balance(ticker)
-
             if balance[0] > 0.0:
                 self._ticker_dict[ticker].append(balance)
 

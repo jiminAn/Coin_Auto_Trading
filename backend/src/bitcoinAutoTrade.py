@@ -53,10 +53,11 @@ class BitcoinAuto():
         sell_price = orderbook['asks'][0]['price']
         unit = krw / float(sell_price)
         tmp = self._bithumb.buy_market_order(ticker, unit)
-        if isinstance(tmp, tuple):
-            print("정상적으로 매수")
-        else:
-            print("Error Code", tmp['status'], ":", tmp['message'])
+        print(ticker, unit, tmp)
+        # if isinstance(tmp, tuple):
+        #     print("정상적으로 매수")
+        # else:
+        #     print("Error Code", tmp['status'], ":", tmp['message'])
 
 
 
@@ -68,11 +69,13 @@ class BitcoinAuto():
         """
         unit = self._bithumb.get_balance(ticker)[0]
         tmp = self._bithumb.sell_market_order(ticker, unit)
-        if isinstance(tmp, tuple):
-            print("정상적으로 매도")
-        else:
-            print("Error Code", tmp['status'], ":", tmp['message'])
+        print(ticker, unit, tmp)
 
+        # if isinstance(tmp, tuple):
+        #     print("정상적으로 매도")
+        # else:
+        #     print("Error Code", tmp['status'], ":", tmp['message'])
+        # print()
     def get_yesterday_ma5(self, ticker):
         """
         거래일별로 5일 이동평균을 계산한 후 조회일 기준으로 전일의 5일 이동평균 값을 반환하는 함수
@@ -94,7 +97,8 @@ class BitcoinAuto():
             current_price = pybithumb.get_current_price(ticker)
             print("Ticker :", ticker,"\nCurrent Price :" , current_price, "\nTarget Price :", self._target_price[ticker],
                   "\n5일 간 이동평균 : " ,self._ma5[ticker], "\nMoney :" , self._bithumb.get_balance(ticker)[2], "\n")
-            if (current_price > self._target_price[ticker]) and (current_price > self._ma5[ticker]):
+            if current_price > self._target_price[ticker]:
+                    # and (current_price > self._ma5[ticker]):
                 self.buy_crypto_currency(ticker)
 
     def sell_by_condition(self, tickers):

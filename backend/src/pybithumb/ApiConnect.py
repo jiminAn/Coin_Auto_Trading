@@ -53,6 +53,7 @@ class Connect:
         """
 
         recv_data = pybithumb.Bithumb(self._con_key, self._sec_key).get_balance("BTC")
+
         if not isinstance(recv_data, tuple):
             if recv_data["message"] == "Invalid Apikey":
                 return False
