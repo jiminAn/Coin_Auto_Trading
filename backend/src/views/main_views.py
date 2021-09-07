@@ -1,36 +1,67 @@
-<<<<<<< HEAD
-from flask import Blueprint, url_for, request
+from flask import Blueprint, url_for, request, jsonify
 from werkzeug.utils import redirect
-import pybithumb
-=======
-from flask import Blueprint, url_for
-from werkzeug.utils import redirect
->>>>>>> feature/websocket
+from flask import Blueprint
+from ..pybithumb.ApiConnect import Connect
+from ..pybithumb.ClientAsset import ClientAsset
+from ..pybithumb.RealTimeWebsocketProcess import RealTimeWebsocketProcess
+from ..bitcoinAutoTrade import BitcoinAuto
+import multiprocessing
+from collections import defaultdict
 
 bp = Blueprint('main', __name__, url_prefix='/')
+connect = Connect()
 
 
-<<<<<<< HEAD
-@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/')
 def index():
-    return redirect(url_for('.login')) # get
+    return redirect(url_for('coin.start'))
 
 
-@bp.route('/login', methods=['GET', 'POST']) # 여기서 빗썸 객체를 front에게 보내게하면 어떨까?
-def login(): # get method에 대한 처리
+# @bp.route('/', methods=['GET', 'POST'])
+# def index():
+#     return redirect(url_for('.login')) # get
+
+
+@bp.route('/login', methods=['GET', 'POST'])
+def login():  # get method에 대한 처리
     """
     get publicKey and privateKey from front-end post request
     :return: connecting object
     """
     if request.method == 'POST':
-        # b'{"publicKey":"admin","privateKey":"admin"}' bytes 타입으로 프론트엔드에서 백엔드로 요청 전송
-        # 이 구문을 수정해서 백엔드 전체에서 사용해야 합니다.(key가 필요한 모든 부분에 대해서)
-        # 이 구문에 대해서 API key 유효성 검사를 한 후 유효할 경우와 그렇지 않은 경우에 대해서 프론트엔드에 객체를 return해주면 될 것 같습니다.
-        print(request.get_data()) # b'{"publicKey":"admin","privateKey":"admin"}'
-        return "This is Post" # 프론트 엔드로 이 정보가 전송됩니다.
-    return "test"
-=======
-@bp.route('/')
-def index():
-    return redirect(url_for('coin.start'))
->>>>>>> feature/websocket
+        con_key = request.form.get('publicKey')
+        sec_key = request.form.get('privateKey')
+
+        connect.log_in(con_key, sec_key)
+        if connect.is_api_key_valid():
+            return jsonify(status="200", validation=True)
+        return jsonify(status="200", validation=False)
+
+
+@bp.route('/coin')
+def coin():
+    if request.method == 'GET':
+        args = request.args.keys()
+        print(args)
+        ret = defaultdict(int)
+        for arg in args:
+            ret[arg] = "aa"
+
+        return jsonify(ret)
+
+
+@bp.route('coin/start/')
+def start():
+    if request.method == 'GET':
+        client_asset = ClientAsset(connect)
+        # websocket = RealTimeWebsocketProcess(client_asset.get_ticker())
+
+        coin = BitcoinAuto(connect, client_asset)
+        p1 = multiprocessing.Process(name="Sub", target=multiprocessing_start, args=(coin,))
+        p1.start()
+
+        return "test"
+
+
+def multiprocessing_start(coin):
+    coin.auto_start()
