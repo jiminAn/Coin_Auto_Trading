@@ -90,14 +90,33 @@ class UpdateDB:
         pk_list = table.query.filter(table.datetime.like('%'+datetime+'%')).all()
         return pk_list
 
+    def get_client_asset(self,client_api):
+        client_asset_info = []
+        dt = defaultdict(None)
+        info_list = db.session.query(Client.name, Client.ticker, Client.buy_price, Client.buy_time
+                                     , Client.quantity, Client.fee).filter_by(client_api=client_api).all()
+        for info in info_list:
+            name, ticker, buy_price, buy_time, quantity, fee = info
+            dt["name"] = name
+            dt["ticker"] = ticker
+            dt["buy_price"] = buy_price
+            dt["buy_time"] = buy_time
+            dt["quantity"] = quantity
+            dt["fee"] = fee
+            client_asset_info.append(dt)
+
+        return client_asset_info
 
 if __name__ == "__main__":
     DB = UpdateDB()
     #DB.updateCoinInfo()
-    date = '2021-09-01'
-
-    # CRUD + 예외 처리
-    dt = DB.searchDatetime(Coin,date)
-    DB.delete(dt)  # 매달 1일 삭제
+    #date = '2021-09-01'
+    #DB.updateClientAssetInfo('BTC', 1.1, 5132163.0, 1.1)
+    #DB.updateClientAssetInfo('DOGE', 2.1, 2163.0, 1.1)
+    #DB.updateClientAssetInfo('EOS', 10.1, 63163.0, 1.1)
+    DB.get_client_asset("con_key")
+    # CURD + 예외 처리
+    #dt = DB.searchDatetime(Coin,date)
+    #DB.delete(dt)  # 매달 1일 삭제
 
     
