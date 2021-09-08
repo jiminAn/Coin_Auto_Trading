@@ -21,10 +21,23 @@ class BitcoinAuto():
         self._mid = datetime.datetime(self._now.year, self._now.month, self._now.day) + datetime.timedelta(days=1) # 다음 날
         self._ma5 = dict() # 각 코인의 5일간의 이동평균
         self._k = dict() # 각 코인의 최적의 k 값 (딕셔너리로 수정 예정)
+        self._minimum_order=self.init_minimum_order()
         self._target_price = dict() # 각 코인의 타겟가 (딕셔너리로 수정 예정)
         self._bithumb = self.connect.get_bithumb() # 빗썸 객체
         self._my_tickers = self.clientasset.get_ticker() # 내가 가지고 있는 Ticker
 
+
+    def init_minimum_order(self):
+        cnt,val=0,10
+        ret = defaultdict(int)
+        while True:
+            if cnt >=7:
+                break
+            ret[cnt]=val
+            if cnt>=1:
+                val/=10
+            cnt+=1
+        return ret
 
 
     def get_target_price(self, ticker, k):
@@ -42,6 +55,23 @@ class BitcoinAuto():
         target = today_open + (yesterday_high - yesterday_low) * k
         return round(target, 1)
 
+
+    def get_minimum_orders_key(self, sell_price):
+        if sell_price<100:
+            return 1
+        elif 100<=sell_price<1000:
+            return 2
+        elif 1000<=sell_price<10000:
+            return 3
+        elif 10000<=sell_price<100000:
+            return 4
+        elif 100000<=sell_price<1000000:
+            return 5
+        else:
+            return 6
+
+
+
     def buy_crypto_currency(self, ticker):
         """
         실제 매수가 일어나는 함수
@@ -49,17 +79,20 @@ class BitcoinAuto():
         :return: None
         """
         krw = self._bithumb.get_balance(ticker)[2]
+        if krw <500:
+            print("돈이 500원 이하입니다.")
+            return
         orderbook = pybithumb.get_orderbook(ticker)
         sell_price = orderbook['asks'][0]['price']
-        unit = krw / float(sell_price)
-        tmp = self._bithumb.buy_market_order(ticker, unit)
-        print(ticker, unit, tmp)
+        unit = float(format(krw / float(sell_price), '.6f'))
+
+        if unit < self._minimum_order[self.get_minimum_orders_key(sell_price)]:
+            print("주문 가능 금액을 초과했습니다.")
+
         # if isinstance(tmp, tuple):
         #     print("정상적으로 매수")
         # else:
         #     print("Error Code", tmp['status'], ":", tmp['message'])
-
-
 
     def sell_crypto_currency(self, ticker):
         """
