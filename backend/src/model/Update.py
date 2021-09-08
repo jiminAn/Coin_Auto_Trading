@@ -1,11 +1,13 @@
-from src.model.models import Client, Coin
-from src.database import db
-from src.crawling.CrawledInfo import *
-from src.pybithumb.ApiConnect import *
-from src import create_app
+from collections import defaultdict
 
-app = create_app("dev")
-app.app_context().push()
+from backend.src import create_app, db
+from backend.src.crawling.CrawledInfo import create_ticker_name_dict
+from backend.src.model.models import Coin, Client
+from backend.src.pybithumb.ApiConnect import Connect
+
+# main에서  bp를 돌리기 위해서는 해당 부분 주석처리해야 함
+#app = create_app("dev")
+#app.app_context().push()
 
 from datetime import datetime
 import pybithumb
@@ -40,7 +42,8 @@ class UpdateDB:
         """
         Insert Client asset information for every sell & buy
         """
-        client_api = self._client.get_con_key() # client connect key
+        client_api = "1e1f0025831be87f41ca6c3710af876d"
+        #client_api = self._client.get_con_key() # client connect key
         buy_time = datetime.now()
         ticker_time = client_api + str(buy_time) # PK : client connect key + ticker
         name = self._tickers[ticker] # ticker's korean name
@@ -111,10 +114,10 @@ if __name__ == "__main__":
     DB = UpdateDB()
     #DB.updateCoinInfo()
     #date = '2021-09-01'
-    #DB.updateClientAssetInfo('BTC', 1.1, 5132163.0, 1.1)
-    #DB.updateClientAssetInfo('DOGE', 2.1, 2163.0, 1.1)
-    #DB.updateClientAssetInfo('EOS', 10.1, 63163.0, 1.1)
-    DB.get_client_asset("con_key")
+    DB.updateClientAssetInfo('BTC', 1.1, 5132163.0, 1.1)
+    DB.updateClientAssetInfo('DOGE', 2.1, 2163.0, 1.1)
+    DB.updateClientAssetInfo('EOS', 10.1, 63163.0, 1.1)
+    print(DB.get_client_asset("1e1f0025831be87f41ca6c3710af876d"))
     # CURD + 예외 처리
     #dt = DB.searchDatetime(Coin,date)
     #DB.delete(dt)  # 매달 1일 삭제

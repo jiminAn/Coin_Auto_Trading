@@ -46,8 +46,14 @@ def login(): # get method에 대한 처리
 def coin():
     if request.method == 'GET': # back -> front
         api_dict = request.args
-        for api_type, api in api_dict.items():
-            print(api_type, api)
+        for key, value in api_dict.items():
+            api_key = key
+            api_value = value
+
+        client_assets = db.get_client_asset(client_api=api_value)
+
+        return jsonify(client_assets)
+
 
         #api_type = request.args.keys() # get User's publicKey(ConnectKey
 
