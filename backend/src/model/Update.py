@@ -95,11 +95,11 @@ class UpdateDB:
 
     def get_client_asset(self,client_api):
         client_asset_info = []
-        dt = defaultdict(None)
         info_list = db.session.query(Client.name, Client.ticker, Client.buy_price, Client.buy_time
                                      , Client.quantity, Client.fee).filter_by(client_api=client_api).all()
         for info in info_list:
             name, ticker, buy_price, buy_time, quantity, fee = info
+            dt = {}
             dt["name"] = name
             dt["ticker"] = ticker
             dt["buy_price"] = buy_price
