@@ -1,0 +1,13 @@
+.chartItemContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+    margin: 1% 2% 1% 2%;
+}
+
+.chartItem {
+    flex-wrap: wrap;
+    width: 100%;
+}
