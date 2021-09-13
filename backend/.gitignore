@@ -2,4 +2,4 @@ Pipfile
 README.md
 main.py
 migrations
-
+*.pyc
