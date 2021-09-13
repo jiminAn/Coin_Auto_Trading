@@ -26,8 +26,7 @@ async function login(userInfo: apiKey) {
         method: 'POST',
         body: JSON.stringify(userInfo)
     })
-    .then(data => data.text()) // 받아온 데이터를 처리하는 구문
-    // .then(data => data.json())
+    .then(data => data.json())
 }
 
 function LoginPage() {
@@ -40,12 +39,13 @@ function LoginPage() {
             publicKey: publicKey.value,
             privateKey: privateKey.value
         })
-        // console.log(response)
+
         // 받아온 response에 대한 처리 후 페이지 이동
-        if(publicKey.value === 'admin' && privateKey.value === 'admin') {
-            localStorage.setItem('login', 'true')
+        if(response.validation) {
+            sessionStorage.setItem('login', response.validation)
             window.location.href = '/'
         } else {
+            sessionStorage.setItem('login', response.validation)
             // DISCUSS :: 모달 창으로 구현할 것인가 ?
             alert('error')
         }
