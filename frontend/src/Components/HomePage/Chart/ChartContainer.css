@@ -3,3 +3,9 @@
     border-radius: 5px;
     width: 60%;
 }
+
+.chartTitle {
+    font-size: 120%;
+    font-weight: bold;
+    margin: 2% 0% 2% 0%;
+}
