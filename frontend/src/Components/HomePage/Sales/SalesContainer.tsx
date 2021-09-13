@@ -6,12 +6,14 @@ function SalesContainer() {
         <div className='salesContainer'>
             <div className='salesTitle'>주문 설정</div>
             <div className='salesInfoContainer coinInfo'>
-                <span>코인 이름(from server)</span>
-                <span>현재 가격 변동률(from server)</span>
+                {/* from server */}
+                <span>Coin Name</span> 
+                <span>Current Price</span>
             </div>
             <div className='salesInfoContainer aspectInfo'>
                 <span>추정 수익률</span>
-                <span>추정률 값(from server)</span>
+                {/* from server */}
+                <span>추정률 값</span>
             </div>
             <div className='salesItemContainer'>
                 <div className='salesItemTitle'>매도 손절율</div>
