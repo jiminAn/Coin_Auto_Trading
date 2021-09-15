@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react'
 import './ChartContainer.css'
+import ChartContents from './ChartContents'
 import ChartItem from './ChartItem'
 
 interface CoinInfo {
@@ -22,7 +23,7 @@ function ChartContainer({ coins }: Coins) {
             <div className='chartContainer'>
                 <div className='chartTitle'>나의 보유 자산</div>
                 <div className='chartItems'>
-                    <ChartItem key="classifier" buyPrice="Buy Price" buyTime="Buy Time" fee="Fee" name="Name" quantity="Quantity" ticker="ticker" />
+                    <ChartContents />
                     { coins.map((coin) => (
                         <ChartItem key={coin.ticker} buyPrice={coin.buy_price} buyTime={coin.buy_time} fee={coin.fee} name={coin.name} quantity={coin.quantity} ticker={coin.ticker} />
                     ))}

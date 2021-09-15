@@ -12,7 +12,7 @@ from ..pybithumb.ClientAsset import ClientAsset
 
 
 from ..pybithumb.RealTimeWebsocketProcess import RealTimeWebsocketProcess
-
+import json
 
 bp = Blueprint('main', __name__, url_prefix='/')
 connect = Connect()
@@ -54,13 +54,9 @@ def login():  # get method에 대한 처리
 @bp.route('/coin')
 def coin():
     if request.method == 'GET': # back -> front
-        api_dict = request.args
-        for key, value in api_dict.items():
-            api_key = key
-            api_value = value
+        api_value = connect.get_con_key()
 
         client_assets = db.get_client_asset(client_api=api_value)
-
         return jsonify(client_assets)
 
 
