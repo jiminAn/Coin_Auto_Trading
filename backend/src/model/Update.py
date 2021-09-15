@@ -40,25 +40,28 @@ class UpdateDB:
 
     def updateClientAssetInfo(self, ticker, quantity, buy_price, fee):
         """
-        Insert Client asset information for every sell & buy
+        Insert Client asset information for every sell and buy
+        :param ticker: buying or selling ticker eng name
+        :param quantity: buying or selling quantity
+        :param buy_price:buying or selling price
+        :param fee: buying or selling fee
         """
-        client_api = "1e1f0025831be87f41ca6c3710af876d"
-        #client_api = self._client.get_con_key() # client connect key
+        client_api = self._client.get_con_key() # client connect key
         buy_time = datetime.now()
         ticker_time = client_api + str(buy_time) # PK : client connect key + ticker
         name = self._tickers[ticker] # ticker's korean name
-        #hoding_krw 보유원화 잔고는 보류
 
-
+        # insert client's asset information
         client = Client(client_api=client_api, ticker_time=ticker_time, name=name, ticker=ticker,
                         buy_price=buy_price, buy_time=buy_time, quantity=quantity, fee=fee)
-
+        # db add & commit
         db.session.add(client)
         db.session.commit()
 
     def delete(self, pk_list):
         """
         Delete rows in Primary Key list
+        :param pk_list: primary keys(list)
         :return: success(True) / fail(False)
         """
         if not pk_list:
@@ -72,6 +75,8 @@ class UpdateDB:
     def searchTicker(self, table, ticker):
         """
         get Primary Key from each table filter with ticker
+        :param table: Name of table
+        :param ticker: ticker name
         :return: Primary Key(List)
         """
         pk_list = table.query.filter(table.ticker == ticker).all()
@@ -80,6 +85,8 @@ class UpdateDB:
     def searchName(self, table, name):
         """
         get Primary Key from each table filter with name
+        :param table: Name of table
+        :param name: ticker name
         :return: Primary Key(List)
         """
         pk_list = table.query.filter(table.name == name).all()
@@ -88,12 +95,19 @@ class UpdateDB:
     def searchDatetime(self, table, datetime):
         """
         get Primary Key from each table filter with datetime
+        :param table: Name of table
+        :param datetime: date time
         :return: Primary Key(List)
         """
         pk_list = table.query.filter(table.datetime.like('%'+datetime+'%')).all()
         return pk_list
 
     def get_client_asset(self,client_api):
+        """
+        get the client's asset
+        :param client_api: connect key
+        :return: client's asset information
+        """
         client_asset_info = []
         info_list = db.session.query(Client.name, Client.ticker, Client.buy_price, Client.buy_time
                                      , Client.quantity, Client.fee).filter_by(client_api=client_api).all()
@@ -111,13 +125,14 @@ class UpdateDB:
         return client_asset_info
 
 if __name__ == "__main__":
+    #for TEST
     DB = UpdateDB()
     #DB.updateCoinInfo()
     #date = '2021-09-01'
-    DB.updateClientAssetInfo('BTC', 1.1, 5132163.0, 1.1)
-    DB.updateClientAssetInfo('DOGE', 2.1, 2163.0, 1.1)
-    DB.updateClientAssetInfo('EOS', 10.1, 63163.0, 1.1)
-    print(DB.get_client_asset("1e1f0025831be87f41ca6c3710af876d"))
+    #DB.updateClientAssetInfo('BTC', 1.1, 5132163.0, 1.1)
+    #DB.updateClientAssetInfo('DOGE', 2.1, 2163.0, 1.1)
+    #DB.updateClientAssetInfo('EOS', 10.1, 63163.0, 1.1)
+    #print(DB.get_client_asset("1e1f0025831be87f41ca6c3710af876d"))
     # CURD + 예외 처리
     #dt = DB.searchDatetime(Coin,date)
     #DB.delete(dt)  # 매달 1일 삭제
