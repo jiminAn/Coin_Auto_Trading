@@ -56,12 +56,29 @@ class RealTimeWebsocketProcess():
         while True:
             if self._q["ticker"]:
                 data = self._q['ticker'].get()
-                # for tickers in client.tickers:
 
                 if data['content']['symbol'] in ws_tickers:
-                    print(data)
+                    lowPrice = data['content']['lowPrice']              # 저가
+                    highPrice = data['content']['highPrice']            # 고가
+                    value = data['content']['value']                    # 누적 거래금액
+                    prevClosePrice = data['content']['prevClosePrice']  # 전일 종가
+                    chgRate = data['content']['chgRate']                # 변동률
+                    chgAmt = data['content']['chgAmt']                  # 변동 금액
+                    date = data['content']['date']                      # 일자
+                    _time = data['content']['time']                     # 시간
 
-            time.sleep(0.1)
+                print(f"코인 종류:      {data['content']['symbol']}",
+                      f"저가:         {lowPrice}원",
+                      f"고가:         {highPrice}원",
+                      f"누적 거래 금액:  {round(float(value))}원",
+                      f"전일 종가:      {prevClosePrice}원",
+                      f"변동률:        {chgRate}%",
+                      f"변동 금액:      {chgAmt}원",
+                      f"현재가:        {int(prevClosePrice) + int(chgAmt)}원",
+                      '\n',
+                      sep="\n"
+                      )
+
 
     def request_types_info(self):
         """
@@ -100,7 +117,7 @@ class RealTimeWebsocketProcess():
             data = {
                 "type": type,
                 'symbols': symbols,
-                'tickTypes': ["1H"]
+                'tickTypes': ["MID"]
             }
             await websocket.send(json.dumps(data))
 
