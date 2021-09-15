@@ -15,19 +15,18 @@ class Connect:
     """
 
     def __init__(self):
+        """
+        intialize secrete key and connect key to empty string
+        """
         self._sec_key = ""
         self._con_key = ""
-        # with open('src/key.txt', "r") as f:
-        #     self._con_key = f.readline().strip()
-        #     self._sec_key = f.readline().strip()
-
-        # if not self.is_api_key_valid():
-        #     logging.error("Key is not valid")
-        #     raise ConnectionError
-        # else:
-        #     logging.info(f"Login private API successfully")
 
     def log_in(self, con_key, sec_key):
+        """
+        Log in with client's connect key and secrete key
+        :param con_key: connect key(Str)
+        :parma sec_key: secrete key(Str)
+        """
         self._con_key = con_key
         self._sec_key = sec_key
 
@@ -47,8 +46,8 @@ class Connect:
 
     def is_api_key_valid(self):
         """
-        bithumb api에서 따로 validation 함수를 제공하지 않음
-        balance data를 요청하고 이에 대한 에러 코드를 확인하여 validation을 함
+        validate the api key
+        :return: Invalid APIkey(False)/ valud APIkey(True)
         """
 
         recv_data = pybithumb.Bithumb(self._con_key, self._sec_key).get_balance("BTC")
