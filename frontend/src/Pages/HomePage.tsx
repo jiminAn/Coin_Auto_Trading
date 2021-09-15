@@ -3,7 +3,6 @@ import './HomePage.css'
 import ChartContainer from 'Components/HomePage/Chart/ChartContainer'
 import SalesContainer from 'Components/HomePage/Sales/SalesContainer'
 
-// 보유하고 있는 coin 정보를 받아온다.
 async function getCoins() {
     return fetch('http://localhost:5000/coin')
     .then(data => data.json())
@@ -27,8 +26,8 @@ function HomePage() {
     // console.log(coins)
     return (
         <div className='homeContainer'>
-            <ChartContainer coins={ coins }/>
             <SalesContainer />
+            <ChartContainer coins={ coins }/>
         </div>
     )
 }
