@@ -5,10 +5,6 @@ from backend.src.crawling.CrawledInfo import create_ticker_name_dict
 from backend.src.model.models import Coin, Client
 from backend.src.pybithumb.ApiConnect import Connect
 
-# main에서  bp를 돌리기 위해서는 해당 부분 주석처리해야 함
-#app = create_app("dev")
-#app.app_context().push()
-
 from datetime import datetime
 import pybithumb
 
@@ -22,7 +18,8 @@ class UpdateDB:
         """
         self._tickers = create_ticker_name_dict()
         self._client = Connect()
-
+        self._app = create_app("dev")
+        
     def updateCoinInfo(self):
         """
         Insert Coin information for every AM 00:00
