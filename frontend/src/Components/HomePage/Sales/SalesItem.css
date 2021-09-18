@@ -1,0 +1,13 @@
+.salesItemContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+    margin: 2% 0% 2% 0%;
+}
+
+.salesItem {
+    flex-wrap: wrap;
+    width: 100%;
+}
