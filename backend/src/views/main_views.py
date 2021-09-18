@@ -12,7 +12,7 @@ from ..pybithumb.ClientAsset import ClientAsset
 
 
 from ..pybithumb.RealTimeWebsocketProcess import RealTimeWebsocketProcess
-import json
+
 
 bp = Blueprint('main', __name__, url_prefix='/')
 connect = Connect()
@@ -30,7 +30,6 @@ def index():
 
 
 
-
 @bp.route('/login', methods=['GET', 'POST'])
 def login():  # get method에 대한 처리
     """
@@ -38,17 +37,20 @@ def login():  # get method에 대한 처리
     :return: connecting object
     """
     if request.method == 'POST':
-        #get_data() : 프론트에서 보낸 데이터를 byte type으로 받음. json.load() : byte -> json (dictionary)
-        keys = json.loads(request.get_data().decode('utf-8'))
-        
+        # get_data() : 프론트에서 보낸 데이터를 byte type으로 받음. json.load() : byte -> json (dictionary)
+        # 포스트맨 전용
+        con_key = request.form.get('publicKey')
+        sec_key = request.form.get('privateKey')
 
-        con_key = keys['publicKey']
-        sec_key = keys['privateKey']
-        connect.log_in(con_key,sec_key)
-        print(con_key, sec_key)
+        # keys = json.loads(request.get_data().decode('utf-8'))
+        #
+        # con_key = keys['publicKey']
+        # sec_key = keys['privateKey']
+        connect.log_in(con_key, sec_key)
         if connect.is_api_key_valid():
             return jsonify(status="200", validation=True)
         return jsonify(status="200", validation=False)
+
 
 
 @bp.route('/coin')
