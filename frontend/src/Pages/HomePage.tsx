@@ -14,7 +14,10 @@ async function getCoins() {
 */
 
 function HomePage() {
-    const [coins, setCoins] = useState<any>([{ buyPrice: 0, buyTime: "", fee: 0, name: "", quantity: 0, ticker: ""}])
+    const [coins, setCoins] = useState<any>([{
+        buyPrice: 0, buyTime: "", fee: 0, name: "", quantity: 0, ticker: "",
+        high: 0, low: 0, open: 0, close: 0, volume: 0
+    }])
     const response = async () => {
         setCoins(await getCoins())
     }
@@ -26,7 +29,8 @@ function HomePage() {
     // console.log(coins)
     return (
         <div className='homeContainer'>
-            <SalesContainer />
+            {/* coins정보 전달 */}
+            <SalesContainer prevCoins={ coins }/>
             <ChartContainer coins={ coins }/>
         </div>
     )
