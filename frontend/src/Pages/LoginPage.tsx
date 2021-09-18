@@ -40,12 +40,11 @@ function LoginPage() {
             privateKey: privateKey.value
         })
 
+        sessionStorage.setItem('login', response.validation)
         // 받아온 response에 대한 처리 후 페이지 이동
         if(response.validation) {
-            sessionStorage.setItem('login', response.validation)
             window.location.href = '/'
         } else {
-            sessionStorage.setItem('login', response.validation)
             // DISCUSS :: 모달 창으로 구현할 것인가 ?
             alert('error')
         }
