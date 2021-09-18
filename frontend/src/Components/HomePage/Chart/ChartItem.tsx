@@ -17,21 +17,19 @@ function ChartItem({ buyPrice, buyTime, fee, name, quantity, ticker}: CoinInfo) 
     const time = kstTime[1].split('+')[0] // 20:24:45
 
     return (
-        <>
-            <div className='chartItemContainer'>
-                <div className='chartItem'>
-                    <div className='name'>{ name }</div>
-                    <div className='ticker'>/{ ticker }</div>
-                </div>
-                <div className='chartItem'>{ buyPrice?.toLocaleString('ko-KR') }</div>
-                <div className='chartItem'>{ quantity }</div>
-                <div className='chartItem'>
-                    <div>{ date }</div>
-                    <div>{ time }</div>
-                </div>
-                {/* <div className='chartItem'>{ fee }</div> */}
+        <div className='chartItemContainer'>
+            <div className='chartItem'>
+                <div className='name'>{ name }</div>
+                <div className='ticker'>/{ ticker }</div>
             </div>
-        </>
+            <div className='chartItem'>{ buyPrice?.toLocaleString('ko-KR') }</div>
+            <div className='chartItem'>{ quantity }</div>
+            <div className='chartItem'>
+                <div>{ date }</div>
+                <div>{ time }</div>
+            </div>
+            {/* <div className='chartItem'>{ fee }</div> */}
+        </div>
     )
 }
 
