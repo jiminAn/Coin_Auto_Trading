@@ -117,6 +117,13 @@ class UpdateDB:
             dt["buy_time"] = buy_time
             dt["quantity"] = quantity
             dt["fee"] = fee
+            #additional info(update 24H)
+            coin_detals = pybithumb.get_ohlcv(ticker)
+            dt["open"] = coin_detals['open'][-2]
+            dt["high"] = coin_detals['high'][-2]
+            dt["low"] = coin_detals['low'][-2]
+            dt["close"]= coin_detals['close'][-2]
+            dt["volume"] = coin_detals['volume'][-2]
             client_asset_info.append(dt)
 
         return client_asset_info
