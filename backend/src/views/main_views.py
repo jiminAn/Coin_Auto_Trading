@@ -58,7 +58,7 @@ def coin():
     if request.method == 'GET': # back -> front
         api_value = connect.get_con_key()
 
-        client_assets = db.get_client_asset(client_api=api_value)
+        client_assets = db.getClientAsset(client_api=api_value)
         return jsonify(client_assets)
 
 
