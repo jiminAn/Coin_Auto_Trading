@@ -94,12 +94,12 @@ class UpdateDB:
         get Primary Key from each table filter with datetime
         :param table: Name of table
         :param datetime: date time
-        :return: Primary Key(List)
+        :return: Primary Key(Lst)
         """
         pk_list = table.query.filter(table.datetime.like('%'+datetime+'%')).all()
         return pk_list
 
-    def get_client_asset(self,client_api):
+    def getClientAsset(self,client_api):
         """
         get the client's asset
         :param client_api: connect key
