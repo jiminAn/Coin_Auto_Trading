@@ -1,17 +1,12 @@
 import React, { useEffect , useState } from 'react'
 import './HomePage.css'
 import ChartContainer from 'Components/HomePage/Chart/ChartContainer'
-import SalesContainer from 'Components/HomePage/Sales/SalesContainer'
+import CoinsContainer from 'Components/HomePage/Coins/CoinsContainer'
 
 async function getCoins() {
     return fetch('http://localhost:5000/coin')
     .then(data => data.json())
 }
-
-/* TODO
-    1. 화면 다시 켜질 때 다시 로그인하도록 하는 것 -> sessionStorage 확인
-    2. sales에서 초기값은 가장 먼저 있는 놈으로 뜨도록 설정
-*/
 
 function HomePage() {
     const [coins, setCoins] = useState<any>([{
@@ -30,7 +25,7 @@ function HomePage() {
     return (
         <div className='homeContainer'>
             {/* coins정보 전달 */}
-            <SalesContainer prevCoins={ coins }/>
+            <CoinsContainer coins={ coins } />
             <ChartContainer coins={ coins }/>
         </div>
     )
