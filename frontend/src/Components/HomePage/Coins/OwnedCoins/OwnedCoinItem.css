@@ -1,4 +1,4 @@
-.chartItemContainer {
+.ownedCoinItemContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -7,7 +7,7 @@
     margin: 2% 0% 2% 0%;
 }
 
-.chartItem {
+.ownedCoinItem {
     flex-wrap: wrap;
     width: 100%;
 }

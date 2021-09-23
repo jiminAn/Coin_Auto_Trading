@@ -1,4 +1,4 @@
-.salesItemContainer {
+.coinInfoContentsContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -7,7 +7,7 @@
     margin: 2% 0% 2% 0%;
 }
 
-.salesItem {
-    flex-wrap: wrap;
+.coinInfoContent {
+    font-weight: bold;
     width: 100%;
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment-timezone'
-import './ChartItem.css'
+import './OwnedCoinItem.css'
 
 interface CoinInfo {
     buyPrice?: number; // 구매가
@@ -11,26 +11,25 @@ interface CoinInfo {
     ticker?: string; // 코인 약어
 }
 
-function ChartItem({ buyPrice, buyTime, fee, name, quantity, ticker}: CoinInfo) {
+function OwnedCoinItem({ buyPrice, buyTime, fee, name, quantity, ticker}: CoinInfo) {
     const kstTime = moment(buyTime).tz('Asia/Seoul').format().split('T')
     const date = kstTime[0] // 2021-09-08
     const time = kstTime[1].split('+')[0] // 20:24:45
 
     return (
-        <div className='chartItemContainer'>
-            <div className='chartItem'>
+        <div className='ownedCoinItemContainer'>
+            <div className='ownedCoinItem'>
                 <div className='name'>{ name }</div>
                 <div className='ticker'>/{ ticker }</div>
             </div>
-            <div className='chartItem'>{ buyPrice?.toLocaleString('ko-KR') }</div>
-            <div className='chartItem'>{ quantity }</div>
-            <div className='chartItem'>
+            <div className='ownedCoinItem'>{ buyPrice?.toLocaleString('ko-KR') }</div>
+            <div className='ownedCoinItem'>{ quantity }</div>
+            <div className='ownedCoinItem'>
                 <div>{ date }</div>
                 <div>{ time }</div>
             </div>
-            {/* <div className='chartItem'>{ fee }</div> */}
         </div>
     )
 }
 
-export default ChartItem
+export default OwnedCoinItem
