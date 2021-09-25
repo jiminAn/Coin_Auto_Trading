@@ -137,7 +137,8 @@ class RealTimeWebsocketProcess():
         :param symbols: data symbols
         """
         self._alive[type] = True
-        self._aloop = asyncio.get_event_loop()
+        self._aloop = asyncio.new_event_loop()
+        asyncio.set_event_loop(self._aloop)
         self._aloop.run_until_complete(self.connect_websocket(type, symbols))
 
     def get_type_info(self, type, ws_tickers):
