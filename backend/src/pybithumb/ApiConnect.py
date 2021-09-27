@@ -4,7 +4,6 @@ import os
 
 """
 pybithumb.Bithumb 함수들
-
 https://github.com/sharebook-kr/pybithumb/blob/master/pybithumb/client.py
 """
 
