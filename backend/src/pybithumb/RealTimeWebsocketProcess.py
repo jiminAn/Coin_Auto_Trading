@@ -10,10 +10,11 @@ import time
 import sys
 import websockets
 import asyncio
+import datetime
 import json
-
 logging.basicConfig(stream=sys.stdout, level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
 
 
 class RealTimeWebsocketProcess():
@@ -78,6 +79,20 @@ class RealTimeWebsocketProcess():
                       '\n',
                       sep="\n"
                       )
+    def get_data(self):
+        data = self._q['ticker'].get()
+        ws_tickers = [ticker + '_KRW' for ticker in self._tickers]
+        if data['content']['symbol'] in ws_tickers:
+            value = data['content']['value']  # 누적 거래금액
+            prevClosePrice = data['content']['prevClosePrice']  # 전일 종가
+            chgRate = data['content']['chgRate']  # 변동률
+            chgAmt = data['content']['chgAmt']  # 변동 금액
+            cur_price = int(prevClosePrice) + int(chgAmt)
+
+            coin_info = {"time":datetime.now().strftime("%Y-%m-%d %H:%M:%S"),"value":value, "chgRate":chgRate, "chgAmt":chgAmt, "cur_price":cur_price}
+
+            return coin_info
+
 
 
     def request_types_info(self):
@@ -138,8 +153,8 @@ class RealTimeWebsocketProcess():
         """
         self._alive[type] = True
         self._aloop = asyncio.new_event_loop()
-        asyncio.set_event_loop(self._aloop)
-        self._aloop.run_until_complete(self.connect_websocket(type, symbols))
+        #asyncio.set_event_loop(self._aloop)
+        #self._aloop.run_until_complete(self.connect_websocket(type, symbols))
 
     def get_type_info(self, type, ws_tickers):
         """
@@ -153,8 +168,9 @@ class RealTimeWebsocketProcess():
         """
         get the type of tickers
         """
-        self._ws_ticker_process = Process(name="ticker", target=self.run)
-        self._ws_ticker_process.start()
+        #self._ws_ticker_process = Process(name="ticker", target=self.run)
+        #self._ws_ticker_process.start()
+        pass
 
     def terminate(self):
         """
@@ -165,5 +181,6 @@ class RealTimeWebsocketProcess():
 
 
 
-if __name__ == "__main__":
-    websocket_process = RealTimeWebsocketProcess(["BTC", "ETH"])
+#if __name__ == "__main__":
+#    websocket_process = RealTimeWebsocketProcess(["BTC"])
+
