@@ -79,6 +79,7 @@ class RealTimeWebsocketProcess():
                       '\n',
                       sep="\n"
                       )
+
     def get_data(self):
         data = self._q['ticker'].get()
         ws_tickers = [ticker + '_KRW' for ticker in self._tickers]
@@ -89,7 +90,7 @@ class RealTimeWebsocketProcess():
             chgAmt = data['content']['chgAmt']  # 변동 금액
             cur_price = int(prevClosePrice) + int(chgAmt)
 
-            coin_info = {"time":datetime.now().strftime("%Y-%m-%d %H:%M:%S"),"value":value, "chgRate":chgRate, "chgAmt":chgAmt, "cur_price":cur_price}
+            coin_info = {"value":value, "chgRate":chgRate, "chgAmt":chgAmt, "cur_price":cur_price}
 
             return coin_info
 
@@ -153,8 +154,8 @@ class RealTimeWebsocketProcess():
         """
         self._alive[type] = True
         self._aloop = asyncio.new_event_loop()
-        #asyncio.set_event_loop(self._aloop)
-        #self._aloop.run_until_complete(self.connect_websocket(type, symbols))
+        asyncio.set_event_loop(self._aloop)
+        self._aloop.run_until_complete(self.connect_websocket(type, symbols))
 
     def get_type_info(self, type, ws_tickers):
         """
@@ -183,4 +184,3 @@ class RealTimeWebsocketProcess():
 
 #if __name__ == "__main__":
 #    websocket_process = RealTimeWebsocketProcess(["BTC"])
-
