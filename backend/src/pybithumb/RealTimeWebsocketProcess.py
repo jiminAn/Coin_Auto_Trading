@@ -10,27 +10,29 @@ import time
 import sys
 import websockets
 import asyncio
+import datetime
 import json
-
 logging.basicConfig(stream=sys.stdout, level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
-class RealTimeWebsocketProcess:
+class RealTimeWebsocketProcess():
+
     """
     connecting real time websocket processed
-    If you want to know information of each type's content please visit below website
+    If you want to know information of each type's content, please visit the below website
     https://apidocs.bithumb.com/docs/websocket_public
     """
 
     def __init__(self, tickers: list):
         """
-        ticker: tickers the client possessed
-        example: websocket_process = RealtimeWebsocketProcess(["BTC", "ETH"])
+        set the client's assets and connecting websocket
+        :param tickers: tickers the client possessed
+        example: websocket_process = RealTimeWebsocketProcess(["BTC", "ETH"])
         """
 
         # tickers possessed by client
-        self._tickers = tickers  # for RUN CHECKING
+        self._tickers = tickers
 
         # connecting websockets
         self._types = ["ticker", "transaction", "orderbookdepth"]
@@ -41,10 +43,10 @@ class RealTimeWebsocketProcess:
 
     def run(self) -> None:
         """
-        0.1초 간격으로 queue에 각 websockets으로 부터 받아온 data가 있으면 이를 가져옵니다.
-        websocket의 type의 종류에는 "ticker(현재가)", "transaction(체결)", "orderbookdepth(변경호가)"
-        의 data를 받아옵니다.
-        필요하신 종류의 type이 있다면 self._q[type].get() 과 같이 data를 받아올 수 있습니다.
+        Every 0.1 second, if data in the queue from websocket, bring it
+        Type of websocket data: ticker(current price), transaction(contract), orderbookdepth
+
+        if you need a specific type, you can get data using by 'self._q[type].get()
         Usage:
             if self._q["ticker"] and self._q["transaction"] and self._q["orderbookdepth"]:
                 for type in self.__types:
@@ -55,14 +57,49 @@ class RealTimeWebsocketProcess:
         while True:
             if self._q["ticker"]:
                 data = self._q['ticker'].get()
-                # for tickers in client.tickers:
 
                 if data['content']['symbol'] in ws_tickers:
-                    print(data)
+                    lowPrice = data['content']['lowPrice']              # 저가
+                    highPrice = data['content']['highPrice']            # 고가
+                    value = data['content']['value']                    # 누적 거래금액
+                    prevClosePrice = data['content']['prevClosePrice']  # 전일 종가
+                    chgRate = data['content']['chgRate']                # 변동률
+                    chgAmt = data['content']['chgAmt']                  # 변동 금액
+                    date = data['content']['date']                      # 일자
+                    _time = data['content']['time']                     # 시간
 
-            time.sleep(0.1)
+                print(f"코인 종류:      {data['content']['symbol']}",
+                      f"저가:         {lowPrice}원",
+                      f"고가:         {highPrice}원",
+                      f"누적 거래 금액:  {round(float(value))}원",
+                      f"전일 종가:      {prevClosePrice}원",
+                      f"변동률:        {chgRate}%",
+                      f"변동 금액:      {chgAmt}원",
+                      f"현재가:        {int(prevClosePrice) + int(chgAmt)}원",
+                      '\n',
+                      sep="\n"
+                      )
+
+    def get_data(self):
+        data = self._q['ticker'].get()
+        ws_tickers = [ticker + '_KRW' for ticker in self._tickers]
+        if data['content']['symbol'] in ws_tickers:
+            value = data['content']['value']  # 누적 거래금액
+            prevClosePrice = data['content']['prevClosePrice']  # 전일 종가
+            chgRate = data['content']['chgRate']  # 변동률
+            chgAmt = data['content']['chgAmt']  # 변동 금액
+            cur_price = int(prevClosePrice) + int(chgAmt)
+
+            coin_info = {"value":value, "chgRate":chgRate, "chgAmt":chgAmt, "cur_price":cur_price}
+
+            return coin_info
+
+
 
     def request_types_info(self):
+        """
+        inform the type of request
+        """
         logging.info("Connecting websockets for possesed coins...")
 
         # pybithumb supports only KRW market
@@ -78,6 +115,9 @@ class RealTimeWebsocketProcess:
 
     async def connect_websocket(self, type, symbols):
         """
+        connect websocket
+        :param type: data type
+        :param symbols: data symbols
         original code:
             https://github.com/sharebook-kr/pybithumb/blob/master/pybithumb/websocket.py
         """
@@ -93,7 +133,7 @@ class RealTimeWebsocketProcess:
             data = {
                 "type": type,
                 'symbols': symbols,
-                'tickTypes': ["1H"]
+                'tickTypes': ["MID"]
             }
             await websocket.send(json.dumps(data))
 
@@ -107,18 +147,40 @@ class RealTimeWebsocketProcess:
                 self._q[type].put(json.loads(recv_data))
 
     def start_websocket(self, type, symbols):
+        """
+        start websocket
+        :param type: data type
+        :param symbols: data symbols
+        """
         self._alive[type] = True
-        self._aloop = asyncio.get_event_loop()
+        self._aloop = asyncio.new_event_loop()
+        asyncio.set_event_loop(self._aloop)
         self._aloop.run_until_complete(self.connect_websocket(type, symbols))
 
-    # MultiProcessing 실행 함수
     def get_type_info(self, type, ws_tickers):
+        """
+        get the type of information
+        :param type: data type
+        :param ws_tickers: websocket tickers
+        """
         self.start_websocket(type, ws_tickers)
 
     def get_tikcer_info(self):
-        self._ws_ticker_process = Process(name="ticker", target=self.run)
-        self._ws_ticker_process.start()
+        """
+        get the type of tickers
+        """
+        #self._ws_ticker_process = Process(name="ticker", target=self.run)
+        #self._ws_ticker_process.start()
+        pass
 
     def terminate(self):
+        """
+        terminate the processing
+        """
         for type in self._types:
             self._alive[type] = False
+
+
+
+#if __name__ == "__main__":
+#    websocket_process = RealTimeWebsocketProcess(["BTC"])

@@ -3,8 +3,7 @@ import datetime
 import time
 from collections import defaultdict
 from .bestk import findk
-# from .pybithumb.ApiConnect import Connect
-# from .pybithumb.ClientAsset import ClientAsset
+from  backend.main import socketio
 
 
 class BitcoinAuto():
@@ -70,8 +69,7 @@ class BitcoinAuto():
         else:
             return 6
 
-
-
+    # @socketio.on('my event')
     def buy_crypto_currency(self, ticker):
         """
         실제 매수가 일어나는 함수
