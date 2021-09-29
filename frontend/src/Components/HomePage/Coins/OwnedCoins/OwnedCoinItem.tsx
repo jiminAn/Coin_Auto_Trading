@@ -9,15 +9,20 @@ interface CoinInfo {
     name?: string; // 코인 이름(KR)
     quantity?: number; // 보유 자산
     ticker?: string; // 코인 약어
+    setTicker?: any; // setting
 }
 
-function OwnedCoinItem({ buyPrice, buyTime, fee, name, quantity, ticker}: CoinInfo) {
+function OwnedCoinItem({ buyPrice, buyTime, fee, name, quantity, ticker, setTicker}: CoinInfo) {
     const kstTime = moment(buyTime).tz('Asia/Seoul').format().split('T')
     const date = kstTime[0] // 2021-09-08
     const time = kstTime[1].split('+')[0] // 20:24:45
 
+    const onClick = () => {
+        setTicker(ticker)
+    }
+
     return (
-        <div className='ownedCoinItemContainer'>
+        <div className='ownedCoinItemContainer' onClick={ onClick }>
             <div className='ownedCoinItem'>
                 <div className='name'>{ name }</div>
                 <div className='ticker'>/{ ticker }</div>

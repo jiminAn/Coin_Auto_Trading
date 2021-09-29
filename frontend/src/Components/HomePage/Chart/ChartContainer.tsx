@@ -1,8 +1,7 @@
 /* eslint-disable camelcase */
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import moment from 'moment-timezone'
 import './ChartContainer.css'
-// import ChartContents from './ChartContents'
-// import ChartItem from './ChartItem'
 
 interface CoinInfo {
     buy_price?: number;
@@ -13,22 +12,20 @@ interface CoinInfo {
     ticker?: string;
 }
 
-interface Coins {
-    coins: [CoinInfo]
-}
-
-function ChartContainer({ coins }: Coins) {
+function ChartContainer({ buy_price, buy_time, fee, name, quantity, ticker }: CoinInfo) {
+    const kstTime = moment(buy_time).tz('Asia/Seoul').format().split('T')
+    const date = kstTime[0] // 2021-09-08
+    const time = kstTime[1].split('+')[0] // 20:24:45
+    // TODO :: 디자인 수정
     return (
         <>
             <div className='chartContainer'>
-                <div className='chartTitle'>나의 보유 자산</div>
-                <div className='chartItems'>
-                    row 정보를 받아서 코인 정보를 보이도록 설정
-                    {/* <ChartContents />
-                    { coins.map((coin) => (
-                        <ChartItem key={coin.ticker} buyPrice={coin.buy_price} buyTime={coin.buy_time} fee={coin.fee} name={coin.name} quantity={coin.quantity} ticker={coin.ticker} />
-                    ))} */}
-                </div>
+                <div className='chartTitle'>{ ticker }</div>
+                <div className='chartTitle'>{ buy_price?.toLocaleString('ko-KR') }</div>
+                <div className='chartTitle'>{ date } { time }</div>
+                <div className='chartTitle'>{ fee }</div>
+                <div className='chartTitle'>{ name }</div>
+                <div className='chartTitle'>{ quantity }</div>
             </div>
         </>
     )
