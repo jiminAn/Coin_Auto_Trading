@@ -54,7 +54,6 @@ function SalesContainer({ coins }: Coins) {
 
     return (
         <div className='coinsContainer'>
-            {/* TODO :: 클릭되었음을 나타내도록 디자인 적용 */}
             <div className='tabContainer'>
                 <button type='button' className={ owned } onClick={ ownedClickListener }>나의 보유 자산 정보</button>
                 <button type='button' className={ realTime } onClick={ realTimeClickListener }>실시간 코인 정보</button>
