@@ -29,25 +29,35 @@ interface Coins {
     coins: [CoinInfo]
 }
 
+const ACTIVEBTN = 'tabBtn'
+const DEACTIVEBTN = 'tabBtn deactiveBtn'
+
 function SalesContainer({ coins }: Coins) {
     const [isOwned, setIsOwned] = useState<boolean>(true)
     const [isRealTime, setIsRealTime] = useState<boolean>(false)
+    const [owned, setOwned] = useState<string>(ACTIVEBTN)
+    const [realTime, setRealTime] = useState<string>(DEACTIVEBTN)
 
     const ownedClickListener = () => {
         setIsOwned(true)
+        setOwned(ACTIVEBTN)
         setIsRealTime(false)
+        setRealTime(DEACTIVEBTN)
     }
 
     const realTimeClickListener = () => {
         setIsOwned(false)
+        setOwned(DEACTIVEBTN)
         setIsRealTime(true)
+        setRealTime(ACTIVEBTN)
     }
 
     return (
         <div className='coinsContainer'>
+            {/* TODO :: 클릭되었음을 나타내도록 디자인 적용 */}
             <div className='tabContainer'>
-                <button type='button' className='tabBtn' onClick={ ownedClickListener }>나의 보유 자산 정보</button>
-                <button type='button' className='tabBtn' onClick={ realTimeClickListener }>실시간 코인 정보</button>
+                <button type='button' className={ owned } onClick={ ownedClickListener }>나의 보유 자산 정보</button>
+                <button type='button' className={ realTime } onClick={ realTimeClickListener }>실시간 코인 정보</button>
             </div>
             { isOwned ?
                 <div className='coinInfoContainer'>
