@@ -5,6 +5,8 @@ from flask import Blueprint, url_for, request, jsonify, Response
 from werkzeug.utils import redirect
 from flask import Blueprint
 
+from ..model.Update import UpdateDB
+
 from ..pybithumb.ApiConnect import Connect
 from ..pybithumb.ClientAsset import ClientAsset
 from ..pybithumb.RealTimeWebsocketProcess import RealTimeWebsocketProcess
@@ -14,6 +16,7 @@ from collections import defaultdict
 
 bp = Blueprint('main', __name__, url_prefix='/')
 connect = Connect()
+db = UpdateDB()
 
 
 @bp.route('/')
@@ -33,8 +36,13 @@ def login():  # get method에 대한 처리
     :return: connecting object
     """
     if request.method == 'POST':
-        con_key = request.form.get('publicKey')
-        sec_key = request.form.get('privateKey')
+        # postman
+        # con_key = request.form.get('publicKey')
+        # sec_key = request.form.get('privateKey')
+
+        # frontend
+        keys = json.loads(request.get_data().decode('utf-8'))
+        con_key, sec_key = keys['publicKey'], keys['privateKey']
 
         connect.log_in(con_key, sec_key)
         if connect.is_api_key_valid():
@@ -45,13 +53,18 @@ def login():  # get method에 대한 처리
 @bp.route('/coin')
 def coin():
     if request.method == 'GET':
-        args = request.args.keys()
-        print(args)
-        ret = defaultdict(int)
-        for arg in args:
-            ret[arg] = "aa"
+        # args = request.args.keys()
+        # print(args)
+        # ret = defaultdict(int)
+        # for arg in args:
+        #     ret[arg] = "aa"
 
-        return jsonify(ret)
+        # return jsonify(ret)
+        
+        api_value = connect.get_con_key()
+
+        client_assets = db.getClientAsset(client_api=api_value)
+        return jsonify(client_assets)
 
 
 @bp.route('coin/start/')
