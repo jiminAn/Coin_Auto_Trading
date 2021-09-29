@@ -58,7 +58,7 @@ function LoginPage() {
                        value={ publicKey.value } onChange={ publicKey.onChange }/><br/>
                 <input type='password' placeholder='private API key를 입력해주세요.' className='apiInput'
                        value={ privateKey.value } onChange={ privateKey.onChange }/>
-                <button type='submit'>Login</button>
+                <button type='submit' className='loginBtn'>Login</button>
             </form>
             <FindingAPIKey />
         </div>
