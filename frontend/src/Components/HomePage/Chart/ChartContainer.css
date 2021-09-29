@@ -1,5 +1,18 @@
 .chartContainer {
     border: 1px solid #c4c4c4;
     border-radius: 5px;
-    width: 60%;
+    width: 38%;
+    padding: 2% 0% 2% 0%;
+}
+
+.chartTitle {
+    font-size: 120%;
+    font-weight: bold;
+    margin: 2% 0% 2% 0%;
+}
+
+.chartItems {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }

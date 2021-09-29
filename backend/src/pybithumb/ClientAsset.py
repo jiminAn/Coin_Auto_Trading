@@ -31,7 +31,6 @@ class ClientAsset:
             if balance[0] > 0.0:
                 self._ticker_dict[ticker].append(balance)
 
-        # self._websocket_process = RealTimeWebsocketProcess(self.get_ticker())
 
     def get_ticker(self):
         """
