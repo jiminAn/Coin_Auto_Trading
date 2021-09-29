@@ -6,7 +6,6 @@ from werkzeug.utils import redirect
 from flask import Blueprint
 
 from ..model.Update import UpdateDB
-
 from ..pybithumb.ApiConnect import Connect
 from ..pybithumb.ClientAsset import ClientAsset
 from ..pybithumb.RealTimeWebsocketProcess import RealTimeWebsocketProcess
@@ -22,12 +21,6 @@ db = UpdateDB()
 @bp.route('/')
 def index():
     return redirect(url_for('coin.start'))
-
-
-# @bp.route('/', methods=['GET', 'POST'])
-# def index():
-#     return redirect(url_for('.login')) # get
-
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():  # get method에 대한 처리
@@ -67,17 +60,17 @@ def coin():
         return jsonify(client_assets)
 
 
-@bp.route('coin/start/')
-def start():
-    if request.method == 'GET':
-        client_asset = ClientAsset(connect)
-        # websocket = RealTimeWebsocketProcess(client_asset.get_ticker())
+# @bp.route('coin/start/')
+# def start():
+#     if request.method == 'GET':
+#         client_asset = ClientAsset(connect)
+#         # websocket = RealTimeWebsocketProcess(client_asset.get_ticker())
 
-        coin = BitcoinAuto(connect, client_asset)
-        p1 = multiprocessing.Process(name="Sub", target=multiprocessing_start, args=(coin,))
-        p1.start()
+#         coin = BitcoinAuto(connect, client_asset)
+#         p1 = multiprocessing.Process(name="Sub", target=multiprocessing_start, args=(coin,))
+#         p1.start()
 
-        return "test"
+#         return "test"
 
 def generate_random_data():
     websocket_process = RealTimeWebsocketProcess(["BTC"])
