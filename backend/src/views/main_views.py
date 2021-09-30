@@ -15,6 +15,8 @@ from collections import defaultdict
 
 bp = Blueprint('main', __name__, url_prefix='/')
 connect = Connect()
+c_asset = None
+asset_list = None
 db = UpdateDB()
 websocket_process = None
 
@@ -39,7 +41,11 @@ def login():  # get method에 대한 처리
         con_key, sec_key = keys['publicKey'], keys['privateKey']
         '''
         connect.log_in(con_key, sec_key)
+
         if connect.is_api_key_valid():
+            global c_asset, asset_list
+            c_asset = ClientAsset(connect)
+            asset_list = c_asset.get_ticker()
             return jsonify(status="200", validation=True)
         return jsonify(status="200", validation=False)
 
@@ -66,15 +72,13 @@ def coin():
 
 #         return "test"
 
-@bp.route('/coin/test')
+@bp.route('/coin/test') # 개인이 가지고있는 코인 정보
 def coin_test():
-    global websocket_process
-    if websocket_process == None:
-        websocket_process = RealTimeWebsocketProcess(["BTC"])
+    global websocket_process, c_asset, asset_list
+    if asset_list != c_asset.get_ticker():
+        websocket_process = RealTimeWebsocketProcess(asset_list)
 
     if request.method == 'GET':
-        print(websocket_process.get_data())
-        #return jsonify({1:1})
         return jsonify(websocket_process.get_data())
 
 '''
