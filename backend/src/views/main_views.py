@@ -30,30 +30,24 @@ def login():  # get method에 대한 처리
     """
     if request.method == 'POST':
         # postman
-        # con_key = request.form.get('publicKey')
-        # sec_key = request.form.get('privateKey')
+        con_key = request.form.get('publicKey')
+        sec_key = request.form.get('privateKey')
 
         # frontend
+        '''
         keys = json.loads(request.get_data().decode('utf-8'))
         con_key, sec_key = keys['publicKey'], keys['privateKey']
-
+        '''
         connect.log_in(con_key, sec_key)
         if connect.is_api_key_valid():
             return jsonify(status="200", validation=True)
         return jsonify(status="200", validation=False)
 
 
+
 @bp.route('/coin')
 def coin():
     if request.method == 'GET':
-        # args = request.args.keys()
-        # print(args)
-        # ret = defaultdict(int)
-        # for arg in args:
-        #     ret[arg] = "aa"
-
-        # return jsonify(ret)
-        
         api_value = connect.get_con_key()
 
         client_assets = db.getClientAsset(client_api=api_value)
@@ -72,11 +66,20 @@ def coin():
 
 #         return "test"
 
+@bp.route('/coin/test')
+def coin_test():
+    websocket_process = RealTimeWebsocketProcess(["BTC"])
+    if request.method == 'GET':
+        print(websocket_process.get_data())
+        #return jsonify({1:1})
+        return jsonify(websocket_process.get_data())
+
+'''
 def generate_random_data():
     websocket_process = RealTimeWebsocketProcess(["BTC"])
     while True:
-        json_data = json.dumps(websocket_process.get_data())
-        yield f"data:{json_data}\n\n"
+        json_data = json.dumps(c)
+        yield f"data:{json_data}"
         print(json_data)
         time.sleep(2)
 
@@ -85,7 +88,7 @@ def generate_random_data():
 @bp.route('coin/test/')
 def chart_data():
     return Response(generate_random_data(), mimetype="text/event-stream")
-
+'''
 
 def multiprocessing_start(coin):
     coin.auto_start()
