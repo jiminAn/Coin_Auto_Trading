@@ -83,16 +83,20 @@ class RealTimeWebsocketProcess():
     def get_data(self):
         data = self._q['ticker'].get()
         ws_tickers = [ticker + '_KRW' for ticker in self._tickers]
-        if data['content']['symbol'] in ws_tickers:
-            value = data['content']['value']  # 누적 거래금액
-            prevClosePrice = data['content']['prevClosePrice']  # 전일 종가
-            chgRate = data['content']['chgRate']  # 변동률
-            chgAmt = data['content']['chgAmt']  # 변동 금액
-            cur_price = int(float(prevClosePrice)) + int(float(chgAmt))
+        coin_list = []
+        for ws_ticker in ws_tickers:
+            if data['content']['symbol'] in ws_ticker:
+                ticker = data['content']['symbol'] # 코인 이
+                accu_price = data['content']['value']  # 누적 거래금액
+                prevClosePrice = data['content']['prevClosePrice']  # 전일 종가
+                chgRate = data['content']['chgRate']  # 변동률
+                chgAmt = data['content']['chgAmt']  # 변동 금액
+                cur_price = int(float(prevClosePrice)) + int(float(chgAmt))
 
-            coin_info = {"value":value, "chgRate":chgRate, "chgAmt":chgAmt, "cur_price":cur_price}
+                coin_info = {"ticker":ticker, "accu_price":accu_price, "chg_rate":chgRate, "chg_amt":chgAmt, "cur_price":cur_price}
+                coin_list.append(coin_info)
 
-            return coin_info
+        return coin_list
 
 
 
