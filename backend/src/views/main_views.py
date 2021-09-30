@@ -16,7 +16,7 @@ from collections import defaultdict
 bp = Blueprint('main', __name__, url_prefix='/')
 connect = Connect()
 db = UpdateDB()
-
+websocket_process = None
 
 @bp.route('/')
 def index():
@@ -68,7 +68,10 @@ def coin():
 
 @bp.route('/coin/test')
 def coin_test():
-    websocket_process = RealTimeWebsocketProcess(["BTC"])
+    global websocket_process
+    if websocket_process == None:
+        websocket_process = RealTimeWebsocketProcess(["BTC"])
+
     if request.method == 'GET':
         print(websocket_process.get_data())
         #return jsonify({1:1})
