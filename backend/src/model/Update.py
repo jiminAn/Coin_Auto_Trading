@@ -99,7 +99,7 @@ class UpdateDB:
         pk_list = table.query.filter(table.datetime.like('%'+datetime+'%')).all()
         return pk_list
 
-    def getClientAsset(self,clientApi):
+    def getClientAsset(self,client_api):
         """
         get the client's asset
         :param client_api: connect key
@@ -107,7 +107,7 @@ class UpdateDB:
         """
         clientAssetInfo = []
         infoList = db.session.query(Client.name, Client.ticker, Client.buy_price, Client.buy_time
-                                     , Client.quantity, Client.fee).filter_by(client_api=clientApi).all()
+                                     , Client.quantity, Client.fee).filter_by(client_api=client_api).all()
 
         if not infoList:
             return [{'name': "", 'ticker': "", 'buy_price': 0, 'buy_time': "", 'quantity': 0, 'fee': 0,
