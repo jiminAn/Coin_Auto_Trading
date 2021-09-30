@@ -9,6 +9,7 @@ from ..model.Update import UpdateDB
 from ..pybithumb.ApiConnect import Connect
 from ..pybithumb.ClientAsset import ClientAsset
 from ..pybithumb.RealTimeWebsocketProcess import RealTimeWebsocketProcess
+from ..crawling.CrawledInfo import *
 from ..bitcoinAutoTrade import BitcoinAuto
 import multiprocessing
 from collections import defaultdict
@@ -18,7 +19,9 @@ connect = Connect()
 c_asset = None
 asset_list = None
 db = UpdateDB()
-websocket_process = None
+websocket_client_process = None
+tickers_info = create_ticker_name_dict()
+websocket_process = RealTimeWebsocketProcess([ticker for ticker in tickers_info.keys()])
 
 @bp.route('/')
 def index():
@@ -43,10 +46,10 @@ def login():  # get method에 대한 처리
         connect.log_in(con_key, sec_key)
 
         if connect.is_api_key_valid():
-            global c_asset, asset_list, websocket_process
+            global c_asset, asset_list, websocket_client_process
             c_asset = ClientAsset(connect)
             asset_list = c_asset.get_ticker()
-            websocket_process = RealTimeWebsocketProcess(asset_list)
+            websocket_client_process = RealTimeWebsocketProcess(asset_list)
             return jsonify(status="200", validation=True)
         return jsonify(status="200", validation=False)
 
@@ -73,30 +76,25 @@ def coin():
 
 #         return "test"
 
-@bp.route('/coin/test') # 개인이 가지고있는 코인 정보
-def coin_test():
-    global websocket_process, c_asset, asset_list
+@bp.route('/coin/clientassets') # 개인이 가지고있는 코인 정보달 전달
+def coin_clientassets():
+    global websocket_client_process, c_asset, asset_list
     if asset_list != c_asset.get_ticker():
-        websocket_process = RealTimeWebsocketProcess(asset_list)
+        websocket_client_process = RealTimeWebsocketProcess(asset_list)
 
     if request.method == 'GET':
-        return jsonify(websocket_process.get_data())
-
-'''
-def generate_random_data():
-    websocket_process = RealTimeWebsocketProcess(["BTC"])
-    while True:
-        json_data = json.dumps(c)
-        yield f"data:{json_data}"
-        print(json_data)
-        time.sleep(2)
+        return jsonify(websocket_client_process.get_data())
 
 
+@bp.route('/coin/tickers_20') # 상위 20개 코인 정보 전달
+def coin_tickers():
+    global websocket_process
+    if websocket_process == None:
+        websocket_process = RealTimeWebsocketProcess([ticker for ticker in tickers_info.keys()])
 
-@bp.route('coin/test/')
-def chart_data():
-    return Response(generate_random_data(), mimetype="text/event-stream")
-'''
+    if request.method == 'GET':
+        return jsonify(websocket_client_process.get_data())
+
 
 def multiprocessing_start(coin):
     coin.auto_start()
