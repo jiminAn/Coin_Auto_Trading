@@ -1,5 +1,4 @@
 __init__.py
 config.py
 database.py
-model
 pybo.db
