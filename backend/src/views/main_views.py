@@ -43,9 +43,10 @@ def login():  # get method에 대한 처리
         connect.log_in(con_key, sec_key)
 
         if connect.is_api_key_valid():
-            global c_asset, asset_list
+            global c_asset, asset_list, websocket_process
             c_asset = ClientAsset(connect)
             asset_list = c_asset.get_ticker()
+            websocket_process = RealTimeWebsocketProcess(asset_list)
             return jsonify(status="200", validation=True)
         return jsonify(status="200", validation=False)
 

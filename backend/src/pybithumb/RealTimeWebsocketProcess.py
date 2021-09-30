@@ -88,7 +88,7 @@ class RealTimeWebsocketProcess():
             prevClosePrice = data['content']['prevClosePrice']  # 전일 종가
             chgRate = data['content']['chgRate']  # 변동률
             chgAmt = data['content']['chgAmt']  # 변동 금액
-            cur_price = int(prevClosePrice) + int(chgAmt)
+            cur_price = int(float(prevClosePrice)) + int(float(chgAmt))
 
             coin_info = {"value":value, "chgRate":chgRate, "chgAmt":chgAmt, "cur_price":cur_price}
 
