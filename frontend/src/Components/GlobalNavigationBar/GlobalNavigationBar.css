@@ -46,3 +46,16 @@ li {
     width: 100%;
 }
 
+.tradingBtn {
+    width: 27%;
+    font-size: 100%;
+    margin: 0;
+    border-radius: 6%;
+}
+
+.quit {
+    background: gray;
+    color: #FFFFFF;
+    font-weight: bold;
+    border: 1px solid gray;
+}

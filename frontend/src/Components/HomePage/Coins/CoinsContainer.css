@@ -17,6 +17,14 @@
     font-size: 110%;
     margin: 0;
     margin-right: 1%;
+    
+}
+
+.deactiveBtn {
+    background: gray;
+    color: #FFFFFF;
+    font-weight: bold;
+    border: 1px solid gray;
 }
 
 .coinInfoContainer {
