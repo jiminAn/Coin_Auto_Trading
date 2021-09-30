@@ -99,21 +99,21 @@ class UpdateDB:
         pk_list = table.query.filter(table.datetime.like('%'+datetime+'%')).all()
         return pk_list
 
-    def getClientAsset(self,client_api):
+    def getClientAsset(self,clientApi):
         """
         get the client's asset
         :param client_api: connect key
         :return: client's asset information
         """
-        client_asset_info = []
-        info_list = db.session.query(Client.name, Client.ticker, Client.buy_price, Client.buy_time
-                                     , Client.quantity, Client.fee).filter_by(client_api=client_api).all()
+        clientAssetInfo = []
+        infoList = db.session.query(Client.name, Client.ticker, Client.buy_price, Client.buy_time
+                                     , Client.quantity, Client.fee).filter_by(client_api=clientApi).all()
 
-        if not info_list:
+        if not infoList:
             return [{'name': "", 'ticker': "", 'buy_price': 0, 'buy_time': "", 'quantity': 0, 'fee': 0,
                      'open': 0, 'high': 0, 'low': 0, 'close': 0, 'volume': 0}]
         else :
-            for info in info_list:
+            for info in infoList:
                 name, ticker, buy_price, buy_time, quantity, fee = info
                 dt = {}
                 dt["name"] = name
@@ -129,8 +129,8 @@ class UpdateDB:
                 dt["low"] = coin_detals['low'][-2]
                 dt["close"]= coin_detals['close'][-2]
                 dt["volume"] = coin_detals['volume'][-2]
-                client_asset_info.append(dt)
-        return client_asset_info
+                clientAssetInfo.append(dt)
+        return clientAssetInfo
 
     def getTickersInfo(self, datetime):
         """
