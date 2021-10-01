@@ -21,7 +21,7 @@ asset_list = None
 db = UpdateDB()
 websocket_client_process = None
 tickers_info = create_ticker_name_dict()
-websocket_process = RealTimeWebsocketProcess([ticker for ticker in tickers_info.keys()])
+
 
 @bp.route('/')
 def index():
@@ -46,10 +46,11 @@ def login():  # get method에 대한 처리
         connect.log_in(con_key, sec_key)
 
         if connect.is_api_key_valid():
-            global c_asset, asset_list, websocket_client_process
+            global c_asset, asset_list, websocket_client_process, websocket_process
             c_asset = ClientAsset(connect)
             asset_list = c_asset.get_ticker()
             websocket_client_process = RealTimeWebsocketProcess(asset_list)
+            websocket_process = RealTimeWebsocketProcess([ticker for ticker in tickers_info.keys()])
             return jsonify(status="200", validation=True)
         return jsonify(status="200", validation=False)
 
@@ -79,7 +80,9 @@ def coin():
 @bp.route('/coin/clientassets') # 개인이 가지고있는 코인 정보달 전달
 def coin_clientassets():
     global websocket_client_process, c_asset, asset_list
+    print(asset_list, c_asset.get_ticker())
     if asset_list != c_asset.get_ticker():
+
         websocket_client_process = RealTimeWebsocketProcess(asset_list)
 
     if request.method == 'GET':
@@ -93,7 +96,7 @@ def coin_tickers():
         websocket_process = RealTimeWebsocketProcess([ticker for ticker in tickers_info.keys()])
 
     if request.method == 'GET':
-        return jsonify(websocket_client_process.get_data())
+        return jsonify(websocket_process.get_data())
 
 
 def multiprocessing_start(coin):

@@ -45,7 +45,6 @@ class RealTimeWebsocketProcess():
         """
         Every 0.1 second, if data in the queue from websocket, bring it
         Type of websocket data: ticker(current price), transaction(contract), orderbookdepth
-
         if you need a specific type, you can get data using by 'self._q[type].get()
         Usage:
             if self._q["ticker"] and self._q["transaction"] and self._q["orderbookdepth"]:
@@ -81,22 +80,19 @@ class RealTimeWebsocketProcess():
                       )
 
     def get_data(self):
-        data = self._q['ticker'].get()
-        ws_tickers = [ticker + '_KRW' for ticker in self._tickers]
-        coin_list = []
-        for ws_ticker in ws_tickers:
-            if data['content']['symbol'] in ws_ticker:
-                ticker = data['content']['symbol'] # 코인 이
-                accu_price = data['content']['value']  # 누적 거래금액
-                prevClosePrice = data['content']['prevClosePrice']  # 전일 종가
-                chgRate = data['content']['chgRate']  # 변동률
-                chgAmt = data['content']['chgAmt']  # 변동 금액
-                cur_price = int(float(prevClosePrice)) + int(float(chgAmt))
+        coin_info=defaultdict(dict)
 
-                coin_info = {"ticker":ticker, "accu_price":accu_price, "chg_rate":chgRate, "chg_amt":chgAmt, "cur_price":cur_price}
-                coin_list.append(coin_info)
+        while not self._q['ticker'].empty():
+            data = self._q['ticker'].get()
+            value = data['content']['value']  # 누적 거래금액
+            prevClosePrice = data['content']['prevClosePrice']  # 전일 종가
+            chgRate = data['content']['chgRate']  # 변동률
+            chgAmt = data['content']['chgAmt']  # 변동 금액
+            cur_price = int(float(prevClosePrice)) + int(float(chgAmt))
+            symbol = data['content']['symbol']
+            coin_info[symbol] = {"ticker" : symbol, "value":value, "chgRate":chgRate, "chgAmt":chgAmt, "cur_price":cur_price}
 
-        return coin_list
+        return coin_info
 
 
 
@@ -183,8 +179,3 @@ class RealTimeWebsocketProcess():
         """
         for type in self._types:
             self._alive[type] = False
-
-
-
-#if __name__ == "__main__":
-#    websocket_process = RealTimeWebsocketProcess(["BTC"])
