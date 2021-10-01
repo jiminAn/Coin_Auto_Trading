@@ -4,7 +4,7 @@ import time
 from flask import Blueprint, url_for, request, jsonify, Response
 from werkzeug.utils import redirect
 from flask import Blueprint
-
+from datetime import date, timedelta
 from ..model.Update import UpdateDB
 from ..pybithumb.ApiConnect import Connect
 from ..pybithumb.ClientAsset import ClientAsset
@@ -96,7 +96,14 @@ def coin_tickers():
         websocket_process = RealTimeWebsocketProcess([ticker for ticker in tickers_info.keys()])
 
     if request.method == 'GET':
-        return jsonify(websocket_process.get_data())
+        return jsonify(websocket_process.get_data());
+
+@bp.route('/coin/tickers_db') # 상위 20개 코인 정보 전달
+def coin_tickers_db():
+    yesterday = date.today() - timedelta(1)
+    if request.method == 'GET':
+        tickers_info = db.getTickersInfo(datetime=yesterday.strftime('%Y-%m-%d'))
+        return jsonify(tickers_info)
 
 
 def multiprocessing_start(coin):
