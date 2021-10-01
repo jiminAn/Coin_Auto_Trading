@@ -13,6 +13,7 @@ interface CoinInfo {
 }
 
 function ChartContainer({ buy_price, buy_time, fee, name, quantity, ticker }: CoinInfo) {
+    // TODO :: 비어 있는 객체를 받았을 때 처리
     const kstTime = moment(buy_time).tz('Asia/Seoul').format().split('T')
     const date = kstTime[0] // 2021-09-08
     const time = kstTime[1].split('+')[0] // 20:24:45

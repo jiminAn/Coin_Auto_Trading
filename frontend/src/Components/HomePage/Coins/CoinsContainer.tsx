@@ -56,7 +56,7 @@ function SalesContainer({ coins }: Coins) {
     }
 
     useEffect(() => {
-        console.log(ticker)
+        // console.log(ticker)
     }, [ticker])
 
     return (

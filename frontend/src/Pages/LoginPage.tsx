@@ -21,6 +21,7 @@ function useInput(defaultValue: string) {
     return { value, onChange }
 }
 
+// TODO :: 불러오는 동안 로딩 중임을 표시할 수 있는 화면 만들기
 async function login(userInfo: apiKey) {
     return fetch('http://localhost:5000/login', {
         method: 'POST',

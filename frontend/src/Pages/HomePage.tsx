@@ -12,8 +12,7 @@ function HomePage() {
         buyPrice: 0, buyTime: "", fee: 0, name: "", quantity: 0, ticker: "",
         high: 0, low: 0, open: 0, close: 0, volume: 0
     }])
-    // const [ws, setWs] = useState<WebSocket>(new WebSocket('ws:localost:5000/coin/test'))
-
+    
     const response = async () => {
         setCoins(await getCoins())
     }
@@ -25,11 +24,11 @@ function HomePage() {
         // }
     }, [])
 
-    // console.log(coins)
+    console.log(coins)
     return (
         <>
             <div className='homeContainer'>
-                {/* coins정보 전달 */}
+                {/* TODO :: 보유 코인과 상위 20개 coins정보 전달 */}
                 <CoinsContainer coins={ coins } />
             </div>
             <div>자동 거래 로그 컴포넌트</div>
