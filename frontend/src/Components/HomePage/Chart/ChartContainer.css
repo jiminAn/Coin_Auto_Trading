@@ -2,7 +2,8 @@
     border: 1px solid #c4c4c4;
     border-radius: 5px;
     width: 28%;
-    padding: 2% 0% 2% 0%;
+    height: max-content;
+    padding: 1% 0% 1% 0%;
 }
 
 .chartTitle {
