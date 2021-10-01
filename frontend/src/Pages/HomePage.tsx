@@ -22,7 +22,6 @@ async function getTop20RealTimeCoins() {
     .then(data => data.json())
 }
 
-// TODO :: 계속해서 실시간 붙은 애들 호출 -> 새로고침 버튼 만들기
 function HomePage() {
     const [ownedCoins, setOwnedCoins] = useState<any>([{}])
     const [ownedRTCoins, setOwnedRTCoins] = useState<any>({})
@@ -31,19 +30,25 @@ function HomePage() {
     
     const response = async () => {
         setOwnedCoins(await getOwnedCoins())
-        setOwnedRTCoins(await getOwnedRealTimeCoins())
         setTop20Coins(await getTop20Coins())
+    }
+    
+    const rtResponse = async () => {
+        setOwnedRTCoins(await getOwnedRealTimeCoins())
         setTop20RTCoins(await getTop20RealTimeCoins())
     }
 
     useEffect(() => {
         response()
+        setInterval(() => {
+            rtResponse()
+        }, 10_000)
     }, [])
 
     // console.log(ownedCoins)
-    // console.log(realTimeOwnedCoins)
+    // console.log(ownedRTCoins)
     // console.log(top20Coins)
-    // console.log(realTimeTop20Coins)
+    // console.log(top20RTCoins)
     return (
         <>
             <div className='homeContainer'>
