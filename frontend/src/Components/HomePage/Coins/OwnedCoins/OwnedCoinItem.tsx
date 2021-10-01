@@ -10,24 +10,31 @@ interface CoinInfo {
     name?: string; // 코인 이름(KR)
     quantity?: number; // 보유 자산
     ticker?: string; // 코인 약어
-    setTicker?: any; // setting
+    // 클릭 시 세부정보
+    setTicker?: any; 
+
 }
 
-function OwnedCoinItem({ buyPrice, buyTime, fee, name, quantity, ticker, setTicker}: CoinInfo) {
-    // TODO :: 예외처리 -> ""가 넘어왔을 때 예외 처리 필요 -> 없을 때 렌더링되는 값이 다르도록
+function OwnedCoinItem({ buyPrice, buyTime, fee, name, quantity, ticker, setTicker }: CoinInfo) {
+    // DEBT :: 예외처리 -> ""가 넘어왔을 때 예외 처리 필요 -> 없을 때 렌더링되는 값이 다르도록
     let date = ""
     let time = ""
     if(buyTime !== "") {
         const kstTime = moment(buyTime).tz('Asia/Seoul').format().split('T')
         date = kstTime[0] // 2021-09-08
         time = kstTime[1].split('+')[0] // 20:24:45
+    } else {
+        return (
+            <div>값 없음</div> // TODO :: 꾸미기
+        )
     }
-    const onClick = () => {
+
+    const onClickListener = () => {
         setTicker(ticker)
     }
 
     return (
-        <div className='ownedCoinItemContainer' onClick={ onClick }>
+        <div className='ownedCoinItemContainer' onClick={ onClickListener }>
             <div className='ownedCoinItem'>
                 <div className='name'>{ name }</div>
                 <div className='ticker'>/{ ticker }</div>
