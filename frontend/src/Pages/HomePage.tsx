@@ -22,17 +22,18 @@ async function getTop20RealTimeCoins() {
     .then(data => data.json())
 }
 
+// TODO :: 계속해서 실시간 붙은 애들 호출 -> 새로고침 버튼 만들기
 function HomePage() {
     const [ownedCoins, setOwnedCoins] = useState<any>([{}])
-    const [realTimeOwnedCoins, setRTOwnedCoins] = useState<any>({})
+    const [ownedRTCoins, setOwnedRTCoins] = useState<any>({})
     const [top20Coins, setTop20Coins] = useState<any>([{}])
-    const [realTimeTop20Coins, setRTTop20Coins] = useState<any>({})
+    const [top20RTCoins, setTop20RTCoins] = useState<any>({})
     
     const response = async () => {
         setOwnedCoins(await getOwnedCoins())
-        setRTOwnedCoins(await getOwnedRealTimeCoins())
+        setOwnedRTCoins(await getOwnedRealTimeCoins())
         setTop20Coins(await getTop20Coins())
-        setRTTop20Coins(await getTop20RealTimeCoins())
+        setTop20RTCoins(await getTop20RealTimeCoins())
     }
 
     useEffect(() => {
@@ -46,8 +47,8 @@ function HomePage() {
     return (
         <>
             <div className='homeContainer'>
-                <CoinsContainer ownedCoins={ ownedCoins } ownedRTCoins={ realTimeOwnedCoins } 
-                                top20Coins={ top20Coins } top20RTCoins={ realTimeTop20Coins }
+                <CoinsContainer ownedCoins={ ownedCoins } ownedRTCoins={ ownedRTCoins } 
+                                top20Coins={ top20Coins } top20RTCoins={ top20RTCoins }
                 />
             </div>
             {/* TODO :: 자동 거래 로그 컴포넌트 작성 */}
