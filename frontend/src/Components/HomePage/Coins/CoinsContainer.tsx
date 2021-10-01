@@ -6,10 +6,10 @@ import CoinInfoContents from 'Components/HomePage/Coins/CoinsInfo/CoinInfoConten
 import CoinInfoItem from 'Components/HomePage/Coins/CoinsInfo/CoinInfoItem'
 import OwnedCoinContents from 'Components/HomePage/Coins/OwnedCoins/OwnedCoinContents'
 import OwnedCoinItem from 'Components/HomePage/Coins/OwnedCoins/OwnedCoinItem'
+import RTCoinItem from './RTCoins/RTCoinItem'
 
-// NOTICE :: 상위 20개 코인 정보 대한 처리는 추후에 생각
-// 보유 코인 정보
-interface CoinInfo {
+// 보유 코인 정보(고정)
+interface OwnedCoinInfo {
     // 공통 정보
     name?: string;
     ticker?: string;
@@ -26,67 +26,108 @@ interface CoinInfo {
     quantity?: number; // 보유 자산
 }
 
+// 상위 20개 코인 정보(고정)
+interface Top20CoinInfo {
+    // 공통 정보
+    name?: string;
+    ticker?: string;
+    // 코인 정보
+    open?: number;
+    close?: number;
+    low?: number;
+    high?: number;
+    volume?: number;
+    // 나의 보유 코인 정보
+    datetime?: string; // 구매 시점
+}
+
 interface Coins {
-    coins: [CoinInfo]
+    ownedCoins: [OwnedCoinInfo]
+    ownedRTCoins: any;
+    top20Coins: [Top20CoinInfo]
+    top20RTCoins: any;
 }
 
 const ACTIVEBTN = 'tabBtn'
 const DEACTIVEBTN = 'tabBtn deactiveBtn'
 
-function SalesContainer({ coins }: Coins) {
+function SalesContainer({ ownedCoins, ownedRTCoins, top20Coins, top20RTCoins }: Coins) {
     const [isOwned, setIsOwned] = useState<boolean>(true)
-    const [isRealTime, setIsRealTime] = useState<boolean>(false)
     const [owned, setOwned] = useState<string>(ACTIVEBTN)
     const [realTime, setRealTime] = useState<string>(DEACTIVEBTN)
     const [ticker, setTicker] = useState<string>('default')
+    
+    useEffect(() => {
+        // console.log(ticker)
+    }, [ticker])
 
-    // click 하면 state 저장, ChartContainer에 전달
     const ownedClickListener = () => {
         setIsOwned(true)
         setOwned(ACTIVEBTN)
-        setIsRealTime(false)
         setRealTime(DEACTIVEBTN)
     }
 
     const realTimeClickListener = () => {
         setIsOwned(false)
         setOwned(DEACTIVEBTN)
-        setIsRealTime(true)
         setRealTime(ACTIVEBTN)
     }
-
-    useEffect(() => {
-        // console.log(ticker)
-    }, [ticker])
 
     return (
         <>
             <div className='coinsContainer'>
                 <div className='tabContainer'>
                     <button type='button' className={ owned } onClick={ ownedClickListener }>나의 보유 자산 정보</button>
-                    <button type='button' className={ realTime } onClick={ realTimeClickListener }>실시간 코인 정보</button>
+                    <button type='button' className={ realTime } onClick={ realTimeClickListener }>코인 시장 현황(20개)</button>
                 </div>
                 { isOwned ?
                     <div className='coinInfoContainer'>
                         <OwnedCoinContents />
-                        { coins.map((coin) => (
-                            <OwnedCoinItem key={coin.ticker} buyPrice={coin.buy_price} buyTime={coin.buy_time} fee={coin.fee} name={coin.name} quantity={coin.quantity} ticker={coin.ticker} setTicker={ setTicker }/>
-                        ))}
-                    </div> : <div/> 
-                }
-                { isRealTime ?
+                        { ownedCoins.map((coin) => {
+                            const { buy_price, buy_time, fee, name, quantity, ticker } = coin
+                            const rtTicker = `${ ticker }_KRW` // _KRW 빠질 예정
+                            const rtInfo = ownedRTCoins[rtTicker]
+
+                            // console.log(ownedRTCoins)
+
+                            return (
+                                <div className='ownedCoinContainer' key={ticker}>
+                                    <OwnedCoinItem buyPrice={buy_price} buyTime={buy_time} fee={fee} name={name} quantity={quantity} ticker={ticker} setTicker={ setTicker }/>
+                                    <RTCoinItem rtCoin={ rtInfo }/>
+                                </div>
+                            )
+                        })}
+                    </div> : 
                     <div className='coinInfoContainer'>
                         <CoinInfoContents />
-                        { coins.map((coin) => (
-                            <CoinInfoItem key={coin.ticker} name={coin.name} ticker={coin.ticker} open={coin.open} close={coin.close} high={coin.high} low={coin.low} volume={coin.volume}/>
-                        ))}
-                    </div> : <div/>    
+                        { top20Coins.map((coin) => { // top20 코인 항목 저장
+                            const { name, ticker, open, close, high, low, volume } = coin
+                            const rtTicker = `${ ticker }_KRW`
+                            const rtInfo = top20RTCoins[rtTicker]
+
+                            // console.log(rtInfo)
+
+                            // DEBT :: 고정된 크기의 scollView로 변경
+                            return (
+                                <div className='ownedCoinContainer' key={ticker}>
+                                    <CoinInfoItem key={ticker} name={name} ticker={ticker} open={open} close={close} high={high} low={low} volume={coin.volume} setTicker={ setTicker }/>
+                                    <RTCoinItem rtCoin={ rtInfo }/>
+                                </div>
+                            )
+                        })}
+                    </div>
                 }
             </div>
-            {/* TODO :: default일 때 처리 필요 */}
-            { coins.filter((coin) => coin.ticker === ticker).map((coin) => (
-                <ChartContainer key={coin.ticker} buy_price={coin.buy_price} buy_time={coin.buy_time} fee={coin.fee} name={coin.name} quantity={coin.quantity} ticker={coin.ticker} />
-            ))
+            {/* DEBT :: default일 때 처리 필요, 스크롤 중앙에 위치하도록 위치 조정 */}
+            {/* TODO :: ChartContainer 디자인 */}
+            { isOwned ? 
+                ownedCoins.filter((coin) => coin.ticker === ticker).map((coin) => (
+                    <ChartContainer key={coin.ticker} buy_price={coin.buy_price} buy_time={coin.buy_time} fee={coin.fee} name={coin.name} quantity={coin.quantity} ticker={coin.ticker}
+                                    open={coin.open} close={coin.close} high={coin.high} low={coin.low} volume={coin.volume}/>
+                )) :
+                top20Coins.filter((coin) => coin.ticker === ticker).map((coin) => (
+                    <ChartContainer key={coin.ticker} buy_price={ 0 } buy_time={coin.datetime} fee={ 0 } name={coin.name} quantity={ 0 } ticker={coin.ticker} />
+                ))
             }
         </>
     )

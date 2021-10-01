@@ -34,3 +34,8 @@
     border: 1px solid #c4c4c4;
     border-radius: 5px;
 }
+
+.ownedCoinContainer {
+    border: 1px solid #c4c4c4;
+    margin: 1%;
+}
