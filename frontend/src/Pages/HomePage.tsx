@@ -2,35 +2,55 @@ import React, { useEffect , useState } from 'react'
 import './HomePage.css'
 import CoinsContainer from 'Components/HomePage/Coins/CoinsContainer'
 
-async function getCoins() {
+async function getOwnedCoins() {
     return fetch('http://localhost:5000/coin')
     .then(data => data.json())
 }
 
+async function getOwnedRealTimeCoins() {
+    return fetch('http://localhost:5000/coin/clientassets')
+    .then(data => data.json())
+}
+
+async function getTop20Coins() {
+    return fetch('http://localhost:5000/coin/tickers_db')
+    .then(data => data.json())
+}
+
+async function getTop20RealTimeCoins() {
+    return fetch('http://localhost:5000/coin/tickers_20')
+    .then(data => data.json())
+}
+
 function HomePage() {
-    const [coins, setCoins] = useState<any>([{
-        buyPrice: 0, buyTime: "", fee: 0, name: "", quantity: 0, ticker: "",
-        high: 0, low: 0, open: 0, close: 0, volume: 0
-    }])
+    const [ownedCoins, setOwnedCoins] = useState<any>([{}])
+    const [realTimeOwnedCoins, setRTOwnedCoins] = useState<any>({})
+    const [top20Coins, setTop20Coins] = useState<any>([{}])
+    const [realTimeTop20Coins, setRTTop20Coins] = useState<any>({})
     
     const response = async () => {
-        setCoins(await getCoins())
+        setOwnedCoins(await getOwnedCoins())
+        setRTOwnedCoins(await getOwnedRealTimeCoins())
+        setTop20Coins(await getTop20Coins())
+        setRTTop20Coins(await getTop20RealTimeCoins())
     }
 
     useEffect(() => {
         response()
-        // ws.onopen = () => {
-        //     console.log('connected !')
-        // }
     }, [])
 
-    console.log(coins)
+    // console.log(ownedCoins)
+    // console.log(realTimeOwnedCoins)
+    // console.log(top20Coins)
+    // console.log(realTimeTop20Coins)
     return (
         <>
             <div className='homeContainer'>
-                {/* TODO :: 보유 코인과 상위 20개 coins정보 전달 */}
-                <CoinsContainer coins={ coins } />
+                <CoinsContainer ownedCoins={ ownedCoins } ownedRTCoins={ realTimeOwnedCoins } 
+                                top20Coins={ top20Coins } top20RTCoins={ realTimeTop20Coins }
+                />
             </div>
+            {/* TODO :: 자동 거래 로그 컴포넌트 작성 */}
             <div>자동 거래 로그 컴포넌트</div>
         </>
     )
