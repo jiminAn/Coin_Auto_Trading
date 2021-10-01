@@ -4,7 +4,9 @@ import time
 from collections import defaultdict
 from .bestk import findk
 # from .pybithumb.ApiConnect import Connect
-# from .pybithumb.ClientAsset import ClientAsset
+
+from .pybithumb.ClientAsset import ClientAsset
+from .model import *
 
 
 class BitcoinAuto():
@@ -15,7 +17,8 @@ class BitcoinAuto():
         # Objects
         self.clientasset = clientasset
         self.connect = connect
-
+        self.db = UpdateDB()
+        
         # Variables
         self._now = datetime.datetime.now() # 현재 시간
         self._mid = datetime.datetime(self._now.year, self._now.month, self._now.day) + datetime.timedelta(days=1) # 다음 날
@@ -54,6 +57,8 @@ class BitcoinAuto():
         unit = krw / float(sell_price)
         tmp = self._bithumb.buy_market_order(ticker, unit)
         if isinstance(tmp, tuple):
+            fee = self._connect.get_trading_fee(ticker)
+            self.db.updateClientAssetInfo(ticker, unit, pybithumb.get_ohlcv(ticker), fee)
             print("정상적으로 매수")
         else:
             print("Error Code", tmp['status'], ":", tmp['message'])
@@ -69,6 +74,8 @@ class BitcoinAuto():
         unit = self._bithumb.get_balance(ticker)[0]
         tmp = self._bithumb.sell_market_order(ticker, unit)
         if isinstance(tmp, tuple):
+            fee = self._connect.get_trading_fee(ticker)
+            self.db.updateClientAssetInfo(ticker, -unit, pybithumb.get_ohlcv(ticker), fee)
             print("정상적으로 매도")
         else:
             print("Error Code", tmp['status'], ":", tmp['message'])
