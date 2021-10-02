@@ -14,6 +14,8 @@ import datetime
 import json
 logging.basicConfig(stream=sys.stdout, level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+coin_info = defaultdict(dict)
+asset_info = defaultdict(dict)
 
 
 
@@ -79,17 +81,32 @@ class RealTimeWebsocketProcess():
                       sep="\n"
                       )
 
-    def get_data(self):
-        coin_info=defaultdict(dict)
+    def get_asset_data(self):
+        global asset_info
 
         while not self._q['ticker'].empty():
             data = self._q['ticker'].get()
-            value = data['content']['value']  # 누적 거래금액
-            prevClosePrice = data['content']['prevClosePrice']  # 전일 종가
-            chgRate = data['content']['chgRate']  # 변동률
-            chgAmt = data['content']['chgAmt']  # 변동 금액
-            cur_price = int(float(prevClosePrice)) + int(float(chgAmt))
-            symbol = data['content']['symbol']
+            value = float(data['content']['value'])  # 누적 거래금액
+            prevClosePrice = float(data['content']['prevClosePrice'])  # 전일 종가
+            chgRate = float(data['content']['chgRate'])  # 변동률
+            chgAmt = float(data['content']['chgAmt']) # 변동 금액
+            cur_price = int(prevClosePrice) + int(chgAmt)
+            symbol = data['content']['symbol'][:-4]
+            asset_info[symbol] = {"ticker" : symbol, "value":value, "chgRate":chgRate, "chgAmt":chgAmt, "cur_price":cur_price}
+
+        return asset_info
+
+    def get_coin_data(self):
+        global coin_info
+
+        while not self._q['ticker'].empty():
+            data = self._q['ticker'].get()
+            value = float(data['content']['value'])  # 누적 거래금액
+            prevClosePrice = float(data['content']['prevClosePrice'])  # 전일 종가
+            chgRate = float(data['content']['chgRate'])  # 변동률
+            chgAmt = float(data['content']['chgAmt']) # 변동 금액
+            cur_price = int(prevClosePrice) + int(chgAmt)
+            symbol = data['content']['symbol'][:-4]
             coin_info[symbol] = {"ticker" : symbol, "value":value, "chgRate":chgRate, "chgAmt":chgAmt, "cur_price":cur_price}
 
         return coin_info

@@ -86,7 +86,7 @@ def coin_clientassets():
         websocket_client_process = RealTimeWebsocketProcess(asset_list)
 
     if request.method == 'GET':
-        return jsonify(websocket_client_process.get_data())
+        return jsonify(websocket_client_process.get_asset_data())
 
 
 @bp.route('/coin/tickers_20') # 상위 20개 코인 정보 전달
@@ -96,7 +96,7 @@ def coin_tickers():
         websocket_process = RealTimeWebsocketProcess([ticker for ticker in tickers_info.keys()])
 
     if request.method == 'GET':
-        return jsonify(websocket_process.get_data());
+        return jsonify(websocket_process.get_coin_data());
 
 @bp.route('/coin/tickers_db') # 상위 20개 코인 정보 전달
 def coin_tickers_db():
