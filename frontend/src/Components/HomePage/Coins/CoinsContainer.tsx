@@ -85,8 +85,7 @@ function SalesContainer({ ownedCoins, ownedRTCoins, top20Coins, top20RTCoins }: 
                         <OwnedCoinContents />
                         { ownedCoins.map((coin) => {
                             const { buy_price, buy_time, fee, name, quantity, ticker } = coin
-                            const rtTicker = `${ ticker }_KRW` // _KRW 빠질 예정
-                            const rtInfo = ownedRTCoins[rtTicker]
+                            const rtInfo = ownedRTCoins[ticker!]
 
                             // console.log(ownedRTCoins)
 
@@ -102,8 +101,7 @@ function SalesContainer({ ownedCoins, ownedRTCoins, top20Coins, top20RTCoins }: 
                         <CoinInfoContents />
                         { top20Coins.map((coin) => { // top20 코인 항목 저장
                             const { name, ticker, open, close, high, low, volume } = coin
-                            const rtTicker = `${ ticker }_KRW`
-                            const rtInfo = top20RTCoins[rtTicker]
+                            const rtInfo = top20RTCoins[ticker!]
 
                             // console.log(rtInfo)
 

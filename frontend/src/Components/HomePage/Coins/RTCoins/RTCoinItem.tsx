@@ -19,7 +19,7 @@ function RTCoinItem({ rtCoin }: RTCoinProps) {
     if(rtCoin === undefined) {
         return (
             <div className='ownedRTCoinContainer'>
-                <div className='ownedRTCoinItem'>해당 코인 정보를 불러올 수 없습니다.</div>
+                <div className='ownedRTCoinItem'>해당 코인 정보를 불러오는 중입니다.</div>
             </div>
         )
     }
