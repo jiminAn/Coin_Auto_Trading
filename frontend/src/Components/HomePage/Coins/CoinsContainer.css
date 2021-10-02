@@ -1,0 +1,41 @@
+.coinsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    padding: 0% 0% 2% 0%;
+}
+
+.tabContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.tabBtn {
+    width: 25%;
+    height: 50px;
+    font-size: 110%;
+    margin: 0;
+    margin-right: 1%;
+    
+}
+
+.deactiveBtn {
+    background: gray;
+    color: #FFFFFF;
+    font-weight: bold;
+    border: 1px solid gray;
+}
+
+.coinInfoContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+}
+
+.ownedCoinContainer {
+    border: 1px solid #c4c4c4;
+    margin: 1%;
+}

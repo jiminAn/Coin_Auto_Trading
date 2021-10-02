@@ -2,4 +2,7 @@ Pipfile
 README.md
 main.py
 migrations
-
+*.pyc
+__pycache__/
+.idea/
+venv/

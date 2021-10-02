@@ -1,4 +1,5 @@
-from src.database import db
+from backend.src import db
+
 
 class Coin(db.Model):
     name = db.Column(db.String(128), nullable=False)

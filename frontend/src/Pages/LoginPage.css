@@ -21,14 +21,17 @@
 }
 
 button {
+    background: #1EC17E;
+    color: #FFFFFF;
+    font-weight: bold;
+    border: 1px solid #1EC17E;
+}
+
+.loginBtn {
     width: 400px;
     height: 65px;
-    background: #1EC17E;
-    border: 1px solid #1EC17E;
     border-radius: 12px;
     font-size: 22px;
-    font-weight: bold;
-    color: #FFFFFF;
     margin: 2% 0 5% 0;
 }
 

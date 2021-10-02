@@ -14,7 +14,7 @@ function App() {
   })
   
   useEffect(() => {
-    setIsLogin(localStorage.getItem('login') === 'true')
+    setIsLogin(sessionStorage.getItem('login') === 'true')
   }, [])
 
   return (

@@ -1,6 +1,8 @@
 # main.py
 from flask_cors import  CORS
-from src import create_app
+
+from backend.src import create_app
+
 app = create_app("dev")
 CORS(app)
 
