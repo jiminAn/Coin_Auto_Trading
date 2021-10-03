@@ -16,8 +16,8 @@ class BitcoinAuto():
         # Objects
         self.clientasset = clientasset
         self.connect = connect
-        self.db = UpdateDB()
-        
+        # self.db = UpdateDB()
+
         # Variables
         self._now = datetime.datetime.now() # 현재 시간
         self._mid = datetime.datetime(self._now.year, self._now.month, self._now.day) + datetime.timedelta(days=1) # 다음 날
@@ -93,8 +93,8 @@ class BitcoinAuto():
             return
 
         self._bithumb.buy_market_order(ticker, unit)
-        fee = self._bithumb.get_trading_fee(ticker)
-        # self.db.updateClientAssetInfo(ticker, unit, pybithumb.get_ohlcv(ticker), fee)
+        fee = self._bithumb.get_trading_fee(ticker)        # self.db.updateClientAssetInfo(ticker, unit, pybithumb.get_ohlcv(ticker), fee)
+
 
 
     def sell_crypto_currency(self, ticker):
@@ -241,6 +241,7 @@ class BitcoinAuto():
 
         while True:
             try:
+                print(1)
                 self.sell_by_condition(self._my_tickers)
                 self.buy_by_condition(self._my_tickers)
 

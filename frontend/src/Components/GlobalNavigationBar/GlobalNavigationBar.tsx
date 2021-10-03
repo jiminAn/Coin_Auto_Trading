@@ -4,17 +4,17 @@ import './GlobalNavigationBar.css'
 // 거래 시작 주소
 async function startTrading(flag: string) {
     return fetch('http://localhost:5000/coin/start', {
-        method: 'GET',
-        body: flag
+        // method: 'GET',
+        // body: flag
     })
-    // .then(data => data.json())
+    .then(data => data.json())
 }
 
 // 거래 취소 주소
 async function quitTrading(flag: string) {
     return fetch('http://localhost:5000/coin/start', {
-        method: 'GET',
-        body: flag
+        // method: 'GET',
+        // body: flag
     })
 }
 
@@ -26,8 +26,8 @@ function GlobalNavigationBar() {
         if(isStart) console.log('거래를 시작합니다.')
         else console.log('거래를 종료합니다.')
         // NOTICE :: 서버 작업 완료 시 주석 해제
-        // if(isStart) await startTrading(isStart.toString())
-        // else await quitTrading(isStart.toString())
+        if(isStart) await startTrading(isStart.toString())
+        else await quitTrading(isStart.toString())
 
         setIsStart(!isStart)
     }

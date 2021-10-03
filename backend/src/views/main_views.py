@@ -1,3 +1,4 @@
+import signal
 
 from flask import Blueprint, url_for, request, jsonify
 from sqlalchemy.dialects.mysql import json
@@ -13,6 +14,7 @@ from ..bitcoinAutoTrade import BitcoinAuto
 import multiprocessing
 from collections import defaultdict
 import json
+import os
 
 bp = Blueprint('main', __name__, url_prefix='/')
 connect = Connect()
@@ -22,6 +24,7 @@ db = UpdateDB()
 websocket_client_process = None
 tickers_info = create_ticker_name_dict()
 coins = None
+p1 = None
 
 @bp.route('/')
 def index():
@@ -36,15 +39,14 @@ def login():  # get method에 대한 처리
     """
     if request.method == 'POST':
         # postman
-        # con_key = request.form.get('publicKey')
-        # sec_key = request.form.get('privateKey')
+        con_key = request.form.get('publicKey')
+        sec_key = request.form.get('privateKey')
 
         # frontend
-        keys = json.loads(request.get_data().decode('utf-8'))
-        con_key, sec_key = keys['publicKey'], keys['privateKey']
+        # keys = json.loads(request.get_data().decode('utf-8'))
+        # con_key, sec_key = keys['publicKey'], keys['privateKey']
 
         connect.log_in(con_key, sec_key)
-        print(connect)
         if connect.is_api_key_valid():
             global c_asset, asset_list, websocket_client_process, websocket_process
             c_asset = ClientAsset(connect)
@@ -64,12 +66,12 @@ def coin():
         return jsonify(client_assets)
 
 
-@bp.route('coin/start/')
+@bp.route('/coin/start/')
 def start():
-    global coins, c_asset
+    global coins, c_asset,p1
     if request.method == 'GET':
         if not coins:
-            print("객체 생성")
+            print("자동매매 시작")
             coins = BitcoinAuto(connect, c_asset)
             p1 = multiprocessing.Process(name="Sub", target=multiprocessing_start, args=(coins,))
             p1.start()
@@ -81,8 +83,10 @@ def start():
                 lines = f.readlines()
                 for line in lines:
                     keys = line.strip().split("|")  # 줄 끝의 줄 바꿈 문자를 제거한다.
-                    logs['log'].append(keys)
-
+                    logs['log'].append(''.join(keys))
+            print("자동매매 종료")
+            os.kill(p1.pid, 9) # 자동매매 종료
+            coins = None
             return logs
 
 
