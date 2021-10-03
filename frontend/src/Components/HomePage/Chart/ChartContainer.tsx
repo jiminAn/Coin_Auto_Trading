@@ -3,8 +3,11 @@
 import React, { useState, useEffect } from 'react'
 import moment from 'moment-timezone'
 import './ChartContainer.css'
+import ChartItem from './ChartItem'
 
 interface CoinInfo {
+    // 보유 코인인지, 상위 코인인지
+    type?: 'owned' | 'top';
     // 공통 정보
     name?: string;
     ticker?: string;
@@ -21,9 +24,9 @@ interface CoinInfo {
     quantity?: number; // 보유 자산
 }
 
-function ChartContainer({ buy_price, buy_time, fee, name, quantity, ticker,
+function ChartContainer({ type, buy_price, buy_time, fee, name, quantity, ticker,
                           open, close, low, high, volume }: CoinInfo) {
-    // TODO :: 비어 있는 객체를 받았을 때 처리(임시처리되어있음)
+
     let date = ""
     let time = ""
     if(buy_time !== "") {
@@ -31,23 +34,30 @@ function ChartContainer({ buy_price, buy_time, fee, name, quantity, ticker,
         date = kstTime[0] // 2021-09-08
         time = kstTime[1].split('+')[0] // 20:24:45
     } else {
-        return <div>값 없음</div> // TODO :: 확인해보기
+        return <div>값 없음</div>
     }
-    // TODO :: 디자인 수정
+
     return (
         <>
             <div className='chartContainer'>
-                <div className='chartTitle'>{ ticker }</div>
-                <div className='chartTitle'>{ buy_price?.toLocaleString('ko-KR') }</div>
-                <div className='chartTitle'>{ date } { time }</div>
-                <div className='chartTitle'>{ fee }</div>
-                <div className='chartTitle'>{ name }</div>
-                <div className='chartTitle'>{ quantity }</div>
-                <div className='chartTitle'>{ open?.toLocaleString('ko-KR') }</div>
-                <div className='chartTitle'>{ close?.toLocaleString('ko-KR') }</div>
-                <div className='chartTitle'>{ low?.toLocaleString('ko-KR') }</div>
-                <div className='chartTitle'>{ high?.toLocaleString('ko-KR') }</div>
-                <div className='chartTitle'>{ volume?.toLocaleString('ko-KR') }</div>
+                <div className='chartTitle'>{ name } / { ticker }</div>
+                { type === 'owned' &&
+                    <div className='info'>
+                        <div className='chartSubTitle'>소유 정보</div>
+                        <ChartItem category='구매가(원)' value={ buy_price?.toLocaleString('ko-KR') } />
+                        <ChartItem category='보유 수량' value={ quantity?.toLocaleString('ko-KR') } />
+                        <ChartItem category='구매 일자' value={ `${date} ${time}`} />
+                        <ChartItem category='수수료(원)' value={ fee?.toLocaleString('ko-KR') } />
+                    </div>
+                }
+                <div className='info'>
+                    <div className='chartSubTitle'>전일 코인 정보</div>
+                    <ChartItem category='시가(원)' value={ open?.toLocaleString('ko-KR')  } />
+                    <ChartItem category='종가(원)' value={ close?.toLocaleString('ko-KR') } />
+                    <ChartItem category='저가(원)' value={ low?.toLocaleString('ko-KR') } />
+                    <ChartItem category='고가(원)' value={ high?.toLocaleString('ko-KR') } />
+                    <ChartItem category='거래량' value={ volume?.toLocaleString('ko-KR') } />
+                </div>
             </div>
         </>
     )

@@ -1,0 +1,11 @@
+.chartItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0% 10% 0% 10%;
+    margin: 3% 0% 3% 0%;
+}
+
+.category {
+    font-weight: bold;
+}

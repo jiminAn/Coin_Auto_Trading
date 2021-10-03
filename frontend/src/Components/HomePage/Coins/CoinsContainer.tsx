@@ -117,16 +117,17 @@ function SalesContainer({ ownedCoins, ownedRTCoins, top20Coins, top20RTCoins }: 
                 }
             </div>
             {/* DEBT :: default일 때 처리 필요, 스크롤 중앙에 위치하도록 위치 조정 */}
-            {/* TODO :: ChartContainer 디자인 */}
             { isOwned ? 
                 ownedCoins.filter((coin) => coin.ticker === ticker).map((coin) => (
-                    <ChartContainer key={coin.ticker} buy_price={coin.buy_price} buy_time={coin.buy_time} fee={coin.fee} name={coin.name} quantity={coin.quantity} ticker={coin.ticker}
+                    <ChartContainer type='owned' key={coin.ticker} buy_price={coin.buy_price} buy_time={coin.buy_time} fee={coin.fee} name={coin.name} quantity={coin.quantity} ticker={coin.ticker}
                                     open={coin.open} close={coin.close} high={coin.high} low={coin.low} volume={coin.volume}/>
                 )) :
                 top20Coins.filter((coin) => coin.ticker === ticker).map((coin) => (
-                    <ChartContainer key={coin.ticker} buy_price={ 0 } buy_time={coin.datetime} fee={ 0 } name={coin.name} quantity={ 0 } ticker={coin.ticker} />
+                    <ChartContainer key={coin.ticker} buy_time={coin.datetime} name={coin.name} ticker={coin.ticker} 
+                                    open={coin.open} close={coin.close} high={coin.high} low={coin.low} volume={coin.volume}/>
                 ))
             }
+            {/* 거래 로그 기록 이동 */}
         </>
     )
 }
