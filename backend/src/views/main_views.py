@@ -1,7 +1,5 @@
-import json
-from datetime import time
-import time
-from flask import Blueprint, url_for, request, jsonify, Response
+
+from flask import Blueprint, url_for, request, jsonify
 from werkzeug.utils import redirect
 from flask import Blueprint
 from datetime import date, timedelta
@@ -21,7 +19,7 @@ asset_list = None
 db = UpdateDB()
 websocket_client_process = None
 tickers_info = create_ticker_name_dict()
-
+coins = None
 
 @bp.route('/')
 def index():
@@ -65,17 +63,26 @@ def coin():
         return jsonify(client_assets)
 
 
-# @bp.route('coin/start/')
-# def start():
-#     if request.method == 'GET':
-#         client_asset = ClientAsset(connect)
-#         # websocket = RealTimeWebsocketProcess(client_asset.get_ticker())
+@bp.route('coin/start/')
+def start():
+    global coins, c_asset
+    if request.method == 'GET':
+        if not coins:
+            print("객체 생성")
+            coins = BitcoinAuto(connect, c_asset)
+            p1 = multiprocessing.Process(name="Sub", target=multiprocessing_start, args=(coins,))
+            p1.start()
+            return {'status': "Auto"}
 
-#         coin = BitcoinAuto(connect, client_asset)
-#         p1 = multiprocessing.Process(name="Sub", target=multiprocessing_start, args=(coin,))
-#         p1.start()
+        else:
+            logs = defaultdict(list)
+            with open("src/log.txt", "r") as f:
+                lines = f.readlines()
+                for line in lines:
+                    keys = line.strip().split("|")  # 줄 끝의 줄 바꿈 문자를 제거한다.
+                    logs['log'].append(keys)
 
-#         return "test"
+            return logs
 
 @bp.route('/coin/clientassets') # 개인이 가지고있는 코인 정보달 전달
 def coin_clientassets():
@@ -103,8 +110,9 @@ def coin_tickers_db():
     yesterday = date.today() - timedelta(1)
     if request.method == 'GET':
         tickers_info = db.getTickersInfo(datetime=yesterday.strftime('%Y-%m-%d'))
+
         return jsonify(tickers_info)
 
 
-def multiprocessing_start(coin):
-    coin.auto_start()
+def multiprocessing_start(coins):
+    coins.auto_start()
