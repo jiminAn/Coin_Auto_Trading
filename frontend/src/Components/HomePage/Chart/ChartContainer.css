@@ -1,10 +1,11 @@
-.chartContainer {
-    border: 1px solid #c4c4c4;
-    border-radius: 5px;
+.additionalInfoContainer {
     width: 28%;
     height: max-content;
     padding: 1% 0% 1% 0%;
-    margin-top: 5%;
+}
+
+.chartContainer {
+    border: 1px solid #c4c4c4;
 }
 
 .chartTitle, .chartSubTitle{

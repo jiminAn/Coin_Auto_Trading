@@ -1,7 +1,6 @@
 import React, { useEffect , useState } from 'react'
 import './HomePage.css'
 import CoinsContainer from 'Components/HomePage/Coins/CoinsContainer'
-import TradingLogs from 'Components/HomePage/Logs/TradingLogs'
 
 interface LogProps {
     value: any;
@@ -59,9 +58,9 @@ function HomePage({ value }: LogProps) {
             <div className='homeContainer'>
                 <CoinsContainer ownedCoins={ ownedCoins } ownedRTCoins={ ownedRTCoins } 
                                 top20Coins={ top20Coins } top20RTCoins={ top20RTCoins }
+                                logs={ value }
                 />
             </div>
-            { value !== undefined && <TradingLogs logs={ value }/>}
         </>
     )
 }
