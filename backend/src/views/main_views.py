@@ -38,6 +38,7 @@ def login():  # get method에 대한 처리
 
         # frontend
         '''
+        import json
         keys = json.loads(request.get_data().decode('utf-8'))
         con_key, sec_key = keys['publicKey'], keys['privateKey']
         '''
@@ -80,7 +81,7 @@ def start():
                 lines = f.readlines()
                 for line in lines:
                     keys = line.strip().split("|")  # 줄 끝의 줄 바꿈 문자를 제거한다.
-                    logs['log'].append(keys)
+                    logs['log'].append(' '.join(keys))
 
             return logs
 
