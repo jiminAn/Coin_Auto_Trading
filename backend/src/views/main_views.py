@@ -112,9 +112,11 @@ def coin_tickers():
 
 @bp.route('/coin/tickers_db') # 상위 20개 코인 정보 전달
 def coin_tickers_db():
-    yesterday = date.today() - timedelta(1)
+    const_day = "2021-09-30"
+    #yesterday = date.today() - timedelta(1)
     if request.method == 'GET':
-        tickers_info = db.getTickersInfo(datetime=yesterday.strftime('%Y-%m-%d'))
+        tickers_info = db.getTickersInfo(datetime=const_day)
+        #tickers_info = db.getTickersInfo(datetime=yesterday.strftime('%Y-%m-%d'))
 
         return jsonify(tickers_info)
 
