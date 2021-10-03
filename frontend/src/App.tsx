@@ -9,6 +9,7 @@ import './App.css'
 
 function App() {
   const [isLogin, setIsLogin] = useState<boolean>(false)
+  const [logs, setLogs] = useState<any>({})
   const isMobile = useMediaQuery({
     query: '(max-width: 920px)'
   })
@@ -17,15 +18,17 @@ function App() {
     setIsLogin(sessionStorage.getItem('login') === 'true')
   }, [])
 
+  // console.log(logs.log)
+
   return (
     <div className='App'>
-      <GlobalNavigationBar />
+      <GlobalNavigationBar setLogs={ setLogs }/>
       <div className='contents'>
         { !isMobile ?
           <Switch>
             { !isLogin ? 
               <Route path='/' component={ LoginPage } /> : 
-              <Route path='/' component={ HomePage } /> 
+              <Route path='/' render={ () => <HomePage value={ logs.log }/> } /> 
             }
             <Route component={ NotFound } />
           </Switch> :

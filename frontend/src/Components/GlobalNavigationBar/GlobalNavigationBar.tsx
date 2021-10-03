@@ -1,34 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import './GlobalNavigationBar.css'
 
+interface LogProps {
+    setLogs?: any;
+}
+
 // 거래 시작 주소
-async function startTrading(flag: string) {
-    return fetch('http://localhost:5000/coin/start', {
-        method: 'GET',
-        body: flag
-    })
-    // .then(data => data.json())
+async function startTrading() {
+    return fetch('http://localhost:5000/coin/start')
+    .then(data => data.json())
 }
 
 // 거래 취소 주소
-async function quitTrading(flag: string) {
-    return fetch('http://localhost:5000/coin/start', {
-        method: 'GET',
-        body: flag
-    })
+async function quitTrading() {
+    return fetch('http://localhost:5000/coin/start')
+    .then(data => data.json())
 }
 
-function GlobalNavigationBar() {
+function GlobalNavigationBar({ setLogs }: LogProps) {
     const [isStart, setIsStart] = useState<boolean>(true)
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
-        if(isStart) console.log('거래를 시작합니다.')
-        else console.log('거래를 종료합니다.')
-        // NOTICE :: 서버 작업 완료 시 주석 해제
-        // if(isStart) await startTrading(isStart.toString())
-        // else await quitTrading(isStart.toString())
-
+        if(isStart) {
+            console.log('거래를 시작합니다.')
+            await startTrading()
+        } else {
+            console.log('거래를 종료합니다.')
+            setLogs(await quitTrading())
+        }
         setIsStart(!isStart)
     }
 
@@ -38,7 +38,6 @@ function GlobalNavigationBar() {
                 <div className='title'>
                     <a href='/' className='logo'>손절이 나의 멘탈을 지킨다.</a>
                 </div>
-                {/* 자동매매 시작 버튼 생성 */}
                 <ul>
                     <li><div className='menu'>자동거래</div></li>
                     <li><div className='menu'>거래소</div></li>
