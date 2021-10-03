@@ -6,6 +6,7 @@ import CoinInfoContents from 'Components/HomePage/Coins/CoinsInfo/CoinInfoConten
 import CoinInfoItem from 'Components/HomePage/Coins/CoinsInfo/CoinInfoItem'
 import OwnedCoinContents from 'Components/HomePage/Coins/OwnedCoins/OwnedCoinContents'
 import OwnedCoinItem from 'Components/HomePage/Coins/OwnedCoins/OwnedCoinItem'
+import TradingLogs from 'Components/HomePage/Logs/TradingLogs'
 import RTCoinItem from './RTCoins/RTCoinItem'
 
 // 보유 코인 정보(고정)
@@ -46,12 +47,13 @@ interface Coins {
     ownedRTCoins: any;
     top20Coins: [Top20CoinInfo]
     top20RTCoins: any;
+    logs?: [string];
 }
 
 const ACTIVEBTN = 'tabBtn'
 const DEACTIVEBTN = 'tabBtn deactiveBtn'
 
-function SalesContainer({ ownedCoins, ownedRTCoins, top20Coins, top20RTCoins }: Coins) {
+function SalesContainer({ ownedCoins, ownedRTCoins, top20Coins, top20RTCoins, logs }: Coins) {
     const [isOwned, setIsOwned] = useState<boolean>(true)
     const [owned, setOwned] = useState<string>(ACTIVEBTN)
     const [realTime, setRealTime] = useState<string>(DEACTIVEBTN)
@@ -117,17 +119,20 @@ function SalesContainer({ ownedCoins, ownedRTCoins, top20Coins, top20RTCoins }: 
                 }
             </div>
             {/* DEBT :: default일 때 처리 필요, 스크롤 중앙에 위치하도록 위치 조정 */}
-            { isOwned ? 
-                ownedCoins.filter((coin) => coin.ticker === ticker).map((coin) => (
-                    <ChartContainer type='owned' key={coin.ticker} buy_price={coin.buy_price} buy_time={coin.buy_time} fee={coin.fee} name={coin.name} quantity={coin.quantity} ticker={coin.ticker}
-                                    open={coin.open} close={coin.close} high={coin.high} low={coin.low} volume={coin.volume}/>
-                )) :
-                top20Coins.filter((coin) => coin.ticker === ticker).map((coin) => (
-                    <ChartContainer key={coin.ticker} buy_time={coin.datetime} name={coin.name} ticker={coin.ticker} 
-                                    open={coin.open} close={coin.close} high={coin.high} low={coin.low} volume={coin.volume}/>
-                ))
-            }
-            {/* 거래 로그 기록 이동 */}
+            <div className='additionalInfoContainer'>
+                { isOwned ? 
+                    ownedCoins.filter((coin) => coin.ticker === ticker).map((coin) => (
+                        <ChartContainer type='owned' key={coin.ticker} buy_price={coin.buy_price} buy_time={coin.buy_time} fee={coin.fee} name={coin.name} quantity={coin.quantity} ticker={coin.ticker}
+                                        open={coin.open} close={coin.close} high={coin.high} low={coin.low} volume={coin.volume}/>
+                    )) :
+                    top20Coins.filter((coin) => coin.ticker === ticker).map((coin) => (
+                        <ChartContainer key={coin.ticker} buy_time={coin.datetime} name={coin.name} ticker={coin.ticker} 
+                                        open={coin.open} close={coin.close} high={coin.high} low={coin.low} volume={coin.volume}/>
+                    ))
+                }
+                {/* 거래 로그 기록 이동 */}
+                { logs !== undefined && <TradingLogs logs={ logs }/>}
+            </div>
         </>
     )
 }

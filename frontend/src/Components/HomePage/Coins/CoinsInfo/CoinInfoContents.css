@@ -4,9 +4,16 @@
     justify-content: space-around;
     align-items: center;
     height: 50px;
-    margin: 2% 0% 2% 0%;
+    margin-top: 2%;
 }
 
+.coinInfoContentsSubContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+}
 .coinInfoContent {
     font-weight: bold;
     width: 100%;
