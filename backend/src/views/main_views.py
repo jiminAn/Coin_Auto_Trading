@@ -20,6 +20,7 @@ db = UpdateDB()
 websocket_client_process = None
 tickers_info = create_ticker_name_dict()
 coins = None
+p1 = None
 
 @bp.route('/')
 def index():
@@ -69,7 +70,7 @@ def start():
     global coins, c_asset,p1
     if request.method == 'GET':
         if not coins:
-            print("객체 생성")
+            print("자동매매 시작")
             coins = BitcoinAuto(connect, c_asset)
             p1 = multiprocessing.Process(name="Sub", target=multiprocessing_start, args=(coins,))
             p1.start()
@@ -83,6 +84,7 @@ def start():
                 for line in lines:
                     keys = line.strip().split("|")  # 줄 끝의 줄 바꿈 문자를 제거한다.
                     logs['log'].append(''.join(keys))
+            print("자동매매 종료")
             os.kill(p1.pid, 9) # 자동매매 종료
             coins = None
             return logs
