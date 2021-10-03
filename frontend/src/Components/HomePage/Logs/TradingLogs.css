@@ -1,0 +1,11 @@
+.logsContainer {
+    width: 60%;
+    border: 1px solid #c4c4c4;
+    margin: 1%;
+    padding: 1%;
+}
+
+.logItem {
+    margin: 1%;
+    text-align: left
+}

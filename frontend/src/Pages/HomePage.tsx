@@ -1,6 +1,11 @@
 import React, { useEffect , useState } from 'react'
 import './HomePage.css'
 import CoinsContainer from 'Components/HomePage/Coins/CoinsContainer'
+import TradingLogs from 'Components/HomePage/Logs/TradingLogs'
+
+interface LogProps {
+    value: any;
+}
 
 async function getOwnedCoins() {
     return fetch('http://localhost:5000/coin')
@@ -22,7 +27,7 @@ async function getTop20RealTimeCoins() {
     .then(data => data.json())
 }
 
-function HomePage() {
+function HomePage({ value }: LogProps) {
     const [ownedCoins, setOwnedCoins] = useState<any>([{}])
     const [ownedRTCoins, setOwnedRTCoins] = useState<any>({})
     const [top20Coins, setTop20Coins] = useState<any>([{}])
@@ -56,8 +61,7 @@ function HomePage() {
                                 top20Coins={ top20Coins } top20RTCoins={ top20RTCoins }
                 />
             </div>
-            {/* TODO :: 자동 거래 로그 컴포넌트 작성 */}
-            <div>자동 거래 로그 컴포넌트</div>
+            { value !== undefined && <TradingLogs logs={ value }/>}
         </>
     )
 }
