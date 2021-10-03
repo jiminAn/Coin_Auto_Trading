@@ -64,15 +64,16 @@ def coin():
         return jsonify(client_assets)
 
 
-@bp.route('coin/start/')
+@bp.route('/coin/start/')
 def start():
-    global coins, c_asset
+    global coins, c_asset,p1
     if request.method == 'GET':
         if not coins:
             print("객체 생성")
             coins = BitcoinAuto(connect, c_asset)
             p1 = multiprocessing.Process(name="Sub", target=multiprocessing_start, args=(coins,))
             p1.start()
+            print(p1.pid)
             return {'status': "Auto"}
 
         else:
@@ -81,8 +82,9 @@ def start():
                 lines = f.readlines()
                 for line in lines:
                     keys = line.strip().split("|")  # 줄 끝의 줄 바꿈 문자를 제거한다.
-                    logs['log'].append(' '.join(keys))
-
+                    logs['log'].append(''.join(keys))
+            os.kill(p1.pid, 9) # 자동매매 종료
+            coins = None
             return logs
 
 @bp.route('/coin/clientassets') # 개인이 가지고있는 코인 정보달 전달
