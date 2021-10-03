@@ -16,7 +16,7 @@ class BitcoinAuto():
         # Objects
         self.clientasset = clientasset
         self.connect = connect
-        # self.db = UpdateDB()
+        self.db = UpdateDB()
         
         # Variables
         self._now = datetime.datetime.now() # 현재 시간
