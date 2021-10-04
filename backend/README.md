@@ -32,4 +32,4 @@
  - .gitignore : git push 시, 무시할 파일 정의
  - Pipfile : 소스, 패키지, dev 패키지, requires 저장 파일
  - main.py : 서버 실행 파일
- - requirements.txt : 
+ - requirements.txt : 라이브러리 버전 
