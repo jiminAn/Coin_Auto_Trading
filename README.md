@@ -6,7 +6,7 @@
 #### 코인자동프로그램 
 <https://github.com/jiminAn/Coin_Auto_Trading>
 
-<br/>
+            
 
 # Role
 
@@ -19,39 +19,39 @@
 | [comeeasy(김준호)](https://github.com/comeeasy) |        백엔드 개발       |  데이터 병렬 처리  |
 
 
-<br/>
+            
 
 # Stack
 - Backend : Flask, Python
 - DataBase : FlaskSQLArchemy
 - Frontend : React, Typescript
-<br>
+          
 
 
 # Website
 
 ### **Login page**
 
-<img src='imgs/login.png' align="left" width=1000>    
+<img src='imgs/login.png' align="center" width=1000>    
    
   
 ### **Main Page**
     
 #### 개인 자산 정보 조회
            
-<img src='imgs/asset_info.png' align="left" width=800>  
+<img src='imgs/asset_info.png' align="center" width=800>  
         
 #### 개인 자산 정보 조회(상세 정보 확인 가능)
       
-<img src='imgs/asset_info_detail.png' align="left" width=800>  
+<img src='imgs/asset_info_detail.png' align="center" width=800>  
          
 #### 코인 실시간 정보
      
-<img src='imgs/coin_info.png' align="left" width=800>  
+<img src='imgs/coin_info.png' align="center" width=800>  
 
 #### 코인자동매매 실행
         
-<img src='imgs/auto_trading.png' align="left" width=800>  
+<img src='imgs/auto_trading.png' align="center" width=800>  
            
 
 
