@@ -22,16 +22,13 @@ tickers_info = create_ticker_name_dict()
 coins = None
 p1 = None
 
-@bp.route('/')
-def index():
-    return redirect(url_for('coin.start'))
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():  # get method에 대한 처리
-    """
-    get publicKey and privateKey from front-end post request
-    :return: connecting object
-    """
+    '''
+    get publicKey and privateKey from front-end post request.
+    :return: connecting object.
+    '''
     if request.method == 'POST':
         # postman
         con_key = request.form.get('publicKey')
@@ -58,6 +55,10 @@ def login():  # get method에 대한 처리
 
 @bp.route('/coin')
 def coin():
+    '''
+    get user asset information from database.
+    :return: User asset information.
+    '''
     if request.method == 'GET':
         api_value = connect.get_con_key()
 
@@ -67,6 +68,10 @@ def coin():
 
 @bp.route('/coin/start/')
 def start():
+    '''
+    start automatic selling.
+    :return: status and dealing logs
+    '''
     global coins, c_asset,p1
     if request.method == 'GET':
         if not coins:
