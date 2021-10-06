@@ -42,7 +42,7 @@
 
 ### 1. /coin : 코인 구매 정보
 
-```json
+```
 {
 	buy_price : number, 구매 가격
 	buy_time : string, 구매 날짜
@@ -60,12 +60,12 @@
 
 ### 2. /coin/clientassets : 보유하고 있는 코인의 실시간 정보
 
-```json
+```
 {
 	ticker : string, ticker명
 	accu_price : float, 누적거래금액
-  chg_rate : float, 변동금액
-  cur_price : float, 현재금액
+  	chg_rate : float, 변동금액
+	cur_price : float, 현재금액
 }
 ```
 
@@ -73,7 +73,7 @@
 
 - 해당하는 코인의 실시간으로 변경되는 값들이 ticker를 key로 하는 json으로 전송됨
 
-```json
+```
 { ticker : ticker_KRW 형태로 명시됨(BTC_KRW)
 	{
 		chgAmt : string(number), 변동금액
@@ -90,7 +90,7 @@
 * 상위 20개 코인의 정보들 배열에 담겨서 전송됨.
 * /coin에서 거래금액, 보유량, 수수료를 제외한 것과 유사
 
-```json
+```
 {
 	close : number, 종가
 	datetime: string, 업데이트 날짜 -> 미사용
