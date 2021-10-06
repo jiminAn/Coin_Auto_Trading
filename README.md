@@ -30,9 +30,9 @@
 
 # Website
 
-#### **Initial Page**
+#### **Login page**
 
-![web1](https://user-images.githubusercontent.com/55044278/92071667-4ab92800-edea-11ea-9a84-1e85bbe9a5e5.png)
+<img src='imgs/login.png' align="right" width=1000>  
 
 <br/>
 
@@ -72,12 +72,7 @@
 : 아래 사진을 클릭하면 유트브에서 기획 영상을 확인할 수 있습니다  
 [![시연영상](https://img.youtube.com/vi/_R1YuHw47Pg/0.jpg)](https://www.youtube.com/watch?v=_R1YuHw47Pg)
 
-# Documentation
 
-**문서 정리**
-
-- [daehoon12(강대훈)](https://github.com/daehoon12)
-- [jiminAn(안지민)](https://github.com/jiminAn)
 
 ------------------------------------
 20200810 글자 추출 코드 작성 (Ver 1.0) , 강대훈    
