@@ -9,6 +9,7 @@
             
 
 # Role
+------------------------------
 
 |     팀원     |                       역할                        |          책임                        |
 | :---------: | :----------------------------------------------: | :---------------------------------: |
@@ -22,6 +23,7 @@
             
 
 # Stack
+----------------------------------
 - Backend : Flask, Python
 - DataBase : FlaskSQLArchemy
 - Frontend : React, Typescript
@@ -29,6 +31,7 @@
 
 
 # Website
+----------------------------
 
 ### **Login Page**
 
@@ -56,6 +59,7 @@
 
 
 # Website Demo Video
+-----------------------------------
 : 아래 사진을 클릭하면 유트브에서 기획 영상을 확인할 수 있습니다  
 [![시연영상](https://img.youtube.com/vi/_R1YuHw47Pg/0.jpg)](https://www.youtube.com/watch?v=_R1YuHw47Pg)
 
