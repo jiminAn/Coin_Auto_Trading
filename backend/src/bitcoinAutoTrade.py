@@ -4,7 +4,6 @@ import time
 from collections import defaultdict
 from .bestk import findk
 import configparser
-
 from .model.Update import UpdateDB
 
 
@@ -13,6 +12,7 @@ class BitcoinAuto():
         """
         Initialize Objects and Variables
         """
+        
         # Objects
         self.clientasset = clientasset
         self.connect = connect
@@ -33,13 +33,14 @@ class BitcoinAuto():
         self._config.read('src/config.ini', encoding='utf-8')
         self._log_path = self._config['PATH']['log']
 
+        
     def get_target_price(self, ticker, k):
-        """
-        목표 매도가를 만드는 함수
-        :param ticker: 사용자의 Ticker
-        :param k: 최적의 k값 
+        '''
+        A function that makes a target selling price.
+        :param ticker: Ticker information that the user has.
+        :param k: The best value of k.
         :return: None
-        """
+        '''
         df = pybithumb.get_ohlcv(ticker)
         yesterday = df.iloc[-2]
         today_open = yesterday['close']
@@ -48,34 +49,13 @@ class BitcoinAuto():
         target = today_open + (yesterday_high - yesterday_low) * k
         return round(target, 1)
 
-    # def buy_crypto_currency(self, ticker):
-    #     """
-    #     실제 매수가 일어나는 함수
-    #     :param ticker: ticker
-    #     :return: None
-    #     """
-    #     krw = self._bithumb.get_balance(ticker)[2]
-    #     orderbook = pybithumb.get_orderbook(ticker)
-    #     sell_price = orderbook['asks'][0]['price']
-    #     unit = krw / float(sell_price)
-    #     tmp = self._bithumb.buy_market_order(ticker, unit)
-    #
-    #
-    #     if isinstance(tmp, tuple):
-    #         fee = self._connect.get_trading_fee(ticker)
-    #         self.db.updateClientAssetInfo(ticker, unit, pybithumb.get_ohlcv(ticker), fee)
-    #         print("정상적으로 매수")
-    #     else:
-    #         print("Error Code", tmp['status'], ":", tmp['message'])
-
-
 
     def buy_crypto_currency(self, ticker):
-        """
-        실제 매수가 일어나는 함수
-        :param ticker: ticker
+        '''
+        Buying coins.
+        :param ticker: Ticker information that the user has.
         :return: None
-        """
+        '''
         krw = self._bithumb.get_balance(ticker)[2]
         print(krw)
         if krw < 500:
@@ -98,11 +78,11 @@ class BitcoinAuto():
 
 
     def sell_crypto_currency(self, ticker):
-        """
-        실제 매도가 일어나는 함수
-        :param ticker: ticker
+        '''
+        Selling coins.
+        :param ticker: Ticker information that the user has.
         :return: None
-        """
+        '''
         unit = self._bithumb.get_balance(ticker)[0]
         tmp = self._bithumb.sell_market_order(ticker, unit)
         if isinstance(tmp, tuple):
@@ -116,68 +96,40 @@ class BitcoinAuto():
                 f.write(self.get_curr_time() + "|" + tmp['status'] + ":" + tmp['message'])
 
 
-    # def sell_crypto_currency(self, ticker):
-    #     """
-    #     실제 매도가 일어나는 함수
-    #     :param ticker: ticker
-    #     :return: None
-    #     """
-    #     unit = self._bithumb.get_balance(ticker)[0]
-    #     tmp = self._bithumb.sell_market_order(ticker, unit)
-    #     if isinstance(tmp, tuple):
-    #         fee = self._bithumb.get_trading_fee(ticker)
-    #         self.db.updateClientAssetInfo(ticker, -unit, pybithumb.get_ohlcv(ticker), fee)
-    #         print("정상적으로 매도")
-    #     else:
-    #         print("Error Code", tmp['status'], ":", tmp['message'])
-
     def get_yesterday_ma5(self, ticker):
-        """
-        거래일별로 5일 이동평균을 계산한 후 조회일 기준으로 전일의 5일 이동평균 값을 반환하는 함수
-        :param ticker: ticker
-        :return: ma[-2] : ticker의 5일 간 이동평균
-        """
+        '''
+        A function that calculates the 5-day moving average
+        for each trading day and returns the 5-day moving average value
+        of the previous day based on the inquiry date.
+        :param ticker: Ticker information that the user has.
+        :return: ma[-2] : Moving average for 5 days.
+        '''
         df = pybithumb.get_ohlcv(ticker)
         close = df['close']
         ma = close.rolling(5).mean()
         return ma[-2]
-
-    # def buy_by_condition(self, tickers):
-    #     """
-    #     개발자가 설정한 매수 조건에 맞추어 비트코인 매수
-    #     :param tickers: 사용자가 가지고 있는 비트코인 정보
-    #     :return: None
-    #     """
-    #     for ticker in tickers:
-    #         current_price = pybithumb.get_current_price(ticker)
-    #         print("Ticker :", ticker,"\nCurrent Price :" , current_price, "\nTarget Price :", self._target_price[ticker],
-    #               "\n5일 간 이동평균 : " ,self._ma5[ticker], "\nMoney :" , self._bithumb.get_balance(ticker)[2], "\n")
-    #         if (current_price > self._target_price[ticker]) and (current_price > self._ma5[ticker]):
-    #             self.buy_crypto_currency(ticker)
+    
 
     def buy_by_condition(self, tickers):
-        """
-        개발자가 설정한 매수 조건에 맞추어 비트코인 매수
-        :param tickers: 사용자가 가지고 있는 비트코인 정보
+        '''
+        Coin purchase according to the purchase conditions set by the developer.
+        :param tickers: ticker information that the user has.
         :return: None
-        """
+        '''
         for ticker in tickers:
             current_price = pybithumb.get_current_price(ticker)
             log_data = {"ticker": ticker, "currentPrice ": current_price, "targetPrice": self._target_price[ticker],
                         "rolling": self._ma5[ticker], "money": self._bithumb.get_balance(ticker)[2]}
 
-            # print("Ticker :", ticker,"\nCurrent Price :" , current_price, "\nTarget Price :", self._target_price[ticker],
-            #       "\n5일 간 이동평균 : " ,self._ma5[ticker], "\nMoney :" , self._bithumb.get_balance(ticker)[2], "\n")
-
             if current_price > self._target_price[ticker]:
                 self.buy_crypto_currency(ticker)
 
     def sell_by_condition(self, tickers):
-        """
-        개발자가 설정한 매도 조건에 맞추어 비트코인 매도
-        :param tickers: 사용자가 가지고 있는 비트코인 정보 
+        '''
+        Selling coin according to the selling conditions set by the developer.
+        :param tickers: ticker information that the user has.
         :return: None
-        """
+        '''
         now = datetime.datetime.now()
         for ticker in tickers:
             if self._mid < now < self._mid + datetime.timedelta(seconds=10):
@@ -189,6 +141,9 @@ class BitcoinAuto():
 
 
     def init_minimum_order(self):
+        '''
+        Find the minimum order amount for ticker.
+        '''
         cnt, val = 0, 10
         ret = defaultdict(int)
         while True:
@@ -202,11 +157,22 @@ class BitcoinAuto():
 
 
     def get_curr_time(self):
+        '''
+        Find the current time.
+        :param tickers: 
+        :return: "%04d/%02d/%02d|%02d:%02d:%02d" % (
+        now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
+        '''
         now = time.localtime()
         return "%04d/%02d/%02d|%02d:%02d:%02d" % (
         now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
 
+    
     def get_minimum_orders_key(self, sell_price):
+        '''
+        Find the minimul order key using the present value.
+        param sell_price : ticker's current price
+        '''
         if sell_price < 100:
             return 1
         elif 100 <= sell_price < 1000:
@@ -222,10 +188,10 @@ class BitcoinAuto():
 
 
     def auto_start(self):
-        """
-        자동매매 코드
+        '''
+        Start autotrading
         :return: None
-        """
+        '''
         with open(self._log_path, "w") as f:
             f.write(self.get_curr_time() + "|Auto Start\n")
 
