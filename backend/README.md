@@ -103,3 +103,37 @@
 }
 ```
 
+
+
+
+## RealTimeWebSocketProess
+-----------
+
+- 실시간으로 데이터를 읽어들이기 위해 아래 `__pybithumb__ API`를 사용
+	- [websocket public 출처]
+    
+- 받고자하는 정보가 "현재가" 이므로, type으로는 `__ticker__`를 사용
+```
+{
+	"type" : "ticker",
+	"content" : {
+		"symbol" : "BTC_KRW",			// 통화코드
+		"tickType" : "24H",					// 변동 기준시간- 30M, 1H, 12H, 24H, MID
+		"date" : "20200129",				// 일자
+		"time" : "121844",					// 시간
+		"openPrice" : "2302",				// 시가
+		"closePrice" : "2317",				// 종가
+		"lowPrice" : "2272",				// 저가
+		"highPrice" : "2344",				// 고가
+		"value" : "2831915078.07065789",	// 누적거래금액
+		"volume" : "1222314.51355788",	// 누적거래량
+		"sellVolume" : "760129.34079004",	// 매도누적거래량
+		"buyVolume" : "462185.17276784",	// 매수누적거래량
+		"prevClosePrice" : "2326",			// 전일종가
+		"chgRate" : "0.65",					// 변동률
+		"chgAmt" : "15",					// 변동금액
+		"volumePower" : "60.80"			// 체결강도
+	}
+}
+```
+
