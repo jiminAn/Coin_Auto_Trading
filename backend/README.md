@@ -109,8 +109,14 @@
 ## RealTimeWebSocketProess
 -----------
 
-- 실시간으로 데이터를 읽어들이기 위해 아래 `__pybithumb__ API`를 사용
-	- [websocket public 출처]
+- 실시간으로 데이터를 읽어들이기 위해 아래 `__pybithumb__ API`를 사용 : [websocket public 출처]
+```
+{
+    ticker : 현재가
+    transactioin : 체결
+    orderbookdepth : 변경호가
+}
+```	
     
 - 받고자하는 정보가 "현재가" 이므로, type으로는 `__ticker__`를 사용
 ```
