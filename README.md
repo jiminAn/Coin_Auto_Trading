@@ -30,9 +30,9 @@
 
 # Website
 
-### **Login page**
+### **Login Page**
 
-<img src='imgs/login.png' align="center" width=1000>    
+<img src='imgs/login.png' align="center" width=800>    
    
   
 ### **Main Page**
