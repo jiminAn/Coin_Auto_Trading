@@ -47,7 +47,7 @@
 	buy_price : number, 구매 가격
 	buy_time : string, 구매 날짜
 	close : number, 종가
-	fee : float, 수수료(?)
+	fee : float, 수수료
 	high : number, 고가
 	low : number, 저가
 	name : string, 코인 이름
