@@ -27,51 +27,33 @@
 - Frontend : React, Typescript
 <br>
 
-<br/>
+
 # Website
 
 ### **Login page**
-<br/>
-<img src='imgs/login.png' align="right" width=1000>  
 
-<br/>
-<br/>
+<img src='imgs/login.png' align="right" width=1000>    
+   
+  
 ### **Main Page**
-<br/>
+    
 #### 개인 자산 정보 조회
-<br/>
+           
 <img src='imgs/asset_info.png' align="right" width=800>  
-
+        
 #### 개인 자산 정보 조회(상세 정보 확인 가능)
-<br/>
+      
 <img src='imgs/asset_info_detail.png' align="right" width=800>  
-
+         
 #### 코인 실시간 정보
-<br/>
+     
 <img src='imgs/coin_info.png' align="right" width=800>  
 
 #### 코인자동매매 실행
-<br/>
+        
 <img src='imgs/auto_trading.png' align="right" width=800>  
+           
 
-
-<br/>
-
-#### Practice Page
-
-![web4](https://user-images.githubusercontent.com/55044278/92071684-5a387100-edea-11ea-95c4-6efa081fc7ab.png)
-
-- 사용자가 선택한 글씨체 중 하나를 골라서 오른쪽 캔버스에 가이드 글씨로 표시
-
-![web5](https://user-images.githubusercontent.com/55044278/92071694-5f95bb80-edea-11ea-87b5-4a30f8f7ec52.png)
-
-- 색깔, 굵기를 조절하여 직접 가이드 글씨 위에 손글씨 작성 가능
-
-![resultweb](https://user-images.githubusercontent.com/55044278/92071705-66243300-edea-11ea-9a02-34d57c1c2fa7.png)
-
-- 사용자가 작성한 손글씨 직접 다운로드 가능
-
-<br/>
 
 # Website Demo Video
 : 아래 사진을 클릭하면 유트브에서 기획 영상을 확인할 수 있습니다  
