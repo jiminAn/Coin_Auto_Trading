@@ -27,30 +27,31 @@
 - Frontend : React, Typescript
 <br>
 
-
+<br/>
 # Website
 
 ### **Login page**
-
+<br/>
 <img src='imgs/login.png' align="right" width=1000>  
 
 <br/>
-
+<br/>
 ### **Main Page**
+<br/>
 #### 개인 자산 정보 조회
-
+<br/>
 <img src='imgs/asset_info.png' align="right" width=800>  
 
 #### 개인 자산 정보 조회(상세 정보 확인 가능)
-
+<br/>
 <img src='imgs/asset_info_detail.png' align="right" width=800>  
 
 #### 코인 실시간 정보
-
+<br/>
 <img src='imgs/coin_info.png' align="right" width=800>  
 
 #### 코인자동매매 실행
-
+<br/>
 <img src='imgs/auto_trading.png' align="right" width=800>  
 
 
