@@ -15,17 +15,17 @@ class UpdateDB:
     """
 
     def __init__(self):
-        """
+        '''
         initialize ticker dictionary and connect client api
-        """
+        '''
         self._tickers = create_ticker_name_dict()
         self._client = Connect()
         self._app = create_app("dev")
 
     def updateCoinInfo(self):
-        """
+        '''
         Insert Coin information for every AM 00:00
-        """
+        '''
         for ticker, ko_name in self._tickers.items():
             infos = pybithumb.get_market_detail(ticker)
             open, high, low, close, volume = infos
@@ -38,13 +38,13 @@ class UpdateDB:
             db.session.commit()
 
     def updateClientAssetInfo(self, ticker, quantity, buy_price, fee):
-        """
+        '''
         Insert Client asset information for every sell and buy
         :param ticker: buying or selling ticker eng name
         :param quantity: buying or selling quantity
         :param buy_price:buying or selling price
         :param fee: buying or selling fee
-        """
+        '''
         client_api = self._client.get_con_key()  # client connect key
         buy_time = datetime.now()
         ticker_time = client_api + str(buy_time)  # PK : client connect key + ticker
@@ -58,11 +58,11 @@ class UpdateDB:
         db.session.commit()
 
     def delete(self, pk_list):
-        """
+        '''
         Delete rows in Primary Key list
         :param pk_list: primary keys(list)
         :return: success(True) / fail(False)
-        """
+        '''
         if not pk_list:
             return False
         else:
@@ -72,41 +72,41 @@ class UpdateDB:
             return True
 
     def searchTicker(self, table, ticker):
-        """
+        '''
         get Primary Key from each table filter with ticker
         :param table: Name of table
         :param ticker: ticker name
         :return: Primary Key(List)
-        """
+        '''
         pk_list = table.query.filter(table.ticker == ticker).all()
         return pk_list
 
     def searchName(self, table, name):
-        """
+        '''
         get Primary Key from each table filter with name
         :param table: Name of table
         :param name: ticker name
         :return: Primary Key(List)
-        """
+        '''
         pk_list = table.query.filter(table.name == name).all()
         return pk_list
 
     def searchDatetime(self, table, datetime):
-        """
+        '''
         get Primary Key from each table filter with datetime
         :param table: Name of table
         :param datetime: date time
         :return: Primary Key(Lst)
-        """
+        '''
         pk_list = table.query.filter(table.datetime.like('%' + datetime + '%')).all()
         return pk_list
 
     def getClientAsset(self, client_api):
-        """
+        '''
         get the client's asset
         :param client_api: connect key
         :return: client's asset information
-        """
+        '''
         clientAssetInfo = []
         infoList = db.session.query(Client.name, Client.ticker, Client.buy_price, Client.buy_time
                                     , Client.quantity, Client.fee).filter_by(client_api=client_api).all()
@@ -135,11 +135,11 @@ class UpdateDB:
         return clientAssetInfo
 
     def getTickersInfo(self, datetime):
-        """
+        '''
         get top 20 coin information
         :param datetime(str):
         :return: top 20 coin information
-        """
+        '''
         tickerInfo = []
         infoList = db.session.query(Coin.name, Coin.ticker, Coin.datetime, Coin.open
                                     , Coin.high, Coin.low, Coin.close, Coin.volume).filter(
