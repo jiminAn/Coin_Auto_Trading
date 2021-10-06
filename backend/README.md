@@ -74,13 +74,13 @@
 - 해당하는 코인의 실시간으로 변경되는 값들이 ticker를 key로 하는 json으로 전송됨
 
 ```
-{ ticker : ticker_KRW 형태로 명시됨(BTC_KRW)
+{ ticker : 
 	{
-		chgAmt : string(number), 변동금액
-		chgRate  : string(float), 변동률
-		cur_price : number, 현재가
+		chgAmt : float, 변동금액
+		chgRate  : float, 변동률
+		cur_price : float, 현재가
 		ticker : string, ticker명
-		value: string(float), 누적거래금액
+		value: float, 누적거래금액
 	}
 }
 ```
