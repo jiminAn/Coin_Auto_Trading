@@ -27,11 +27,11 @@ class RealTimeWebsocketProcess():
     """
 
     def __init__(self, tickers: list):
-        """
+        '''
         set the client's assets and connecting websocket
         :param tickers: tickers the client possessed
         example: websocket_process = RealTimeWebsocketProcess(["BTC", "ETH"])
-        """
+        '''
 
         # tickers possessed by client
         self._tickers = tickers
@@ -44,7 +44,7 @@ class RealTimeWebsocketProcess():
         self.get_tikcer_info()
 
     def run(self) -> None:
-        """
+        '''
         Every 0.1 second, if data in the queue from websocket, bring it
         Type of websocket data: ticker(current price), transaction(contract), orderbookdepth
         if you need a specific type, you can get data using by 'self._q[type].get()
@@ -52,7 +52,7 @@ class RealTimeWebsocketProcess():
             if self._q["ticker"] and self._q["transaction"] and self._q["orderbookdepth"]:
                 for type in self.__types:
                     print(type, '\n', self._q[type].get())
-        """
+        '''
         ws_tickers = [ticker + '_KRW' for ticker in self._tickers]
         print(ws_tickers)
         while True:
@@ -82,6 +82,10 @@ class RealTimeWebsocketProcess():
                       )
 
     def get_asset_data(self):
+        '''
+        load client's asset data in Queue
+        :return: asset_info(list in dictionary)
+        '''
         global asset_info
 
         while not self._q['ticker'].empty():
@@ -97,6 +101,10 @@ class RealTimeWebsocketProcess():
         return asset_info
 
     def get_coin_data(self):
+        '''
+        load coin data in Queue
+        :return: coin_info(list in dictionary)
+        '''
         global coin_info
 
         while not self._q['ticker'].empty():
@@ -114,9 +122,9 @@ class RealTimeWebsocketProcess():
 
 
     def request_types_info(self):
-        """
+        '''
         inform the type of request
-        """
+        '''
         logging.info("Connecting websockets for possesed coins...")
 
         # pybithumb supports only KRW market
@@ -131,13 +139,13 @@ class RealTimeWebsocketProcess():
         logging.info("Websockets are connected successfully")
 
     async def connect_websocket(self, type, symbols):
-        """
+        '''
         connect websocket
         :param type: data type
         :param symbols: data symbols
         original code:
             https://github.com/sharebook-kr/pybithumb/blob/master/pybithumb/websocket.py
-        """
+        '''
 
         uri = "wss://pubwss.bithumb.com/pub/ws"
 
@@ -164,35 +172,35 @@ class RealTimeWebsocketProcess():
                 self._q[type].put(json.loads(recv_data))
 
     def start_websocket(self, type, symbols):
-        """
+        '''
         start websocket
         :param type: data type
         :param symbols: data symbols
-        """
+        '''
         self._alive[type] = True
         self._aloop = asyncio.new_event_loop()
         asyncio.set_event_loop(self._aloop)
         self._aloop.run_until_complete(self.connect_websocket(type, symbols))
 
     def get_type_info(self, type, ws_tickers):
-        """
+        '''
         get the type of information
         :param type: data type
         :param ws_tickers: websocket tickers
-        """
+        '''
         self.start_websocket(type, ws_tickers)
 
     def get_tikcer_info(self):
-        """
+        '''
         get the type of tickers
-        """
+        '''
         #self._ws_ticker_process = Process(name="ticker", target=self.run)
         #self._ws_ticker_process.start()
         pass
 
     def terminate(self):
-        """
+        '''
         terminate the processing
-        """
+        '''
         for type in self._types:
             self._alive[type] = False
