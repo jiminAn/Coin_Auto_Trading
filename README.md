@@ -1,10 +1,10 @@
 # Introduction
 
-#### 2020년 제 14회 공개 SW 개발자 대회 참여 프로젝트 
-<https://www.oss.kr/dev_competition>
+#### 2021 제 4회 KB국민은행 소프트웨어 경진대회
+<http://www.kbsccoding.com/>
 
-#### 손글씨 교정 웹사이트(Hand-Writing Correction Website)
-<https://github.com/jiminAn/hand_writing_correction_website>
+#### 코인자동프로그램 
+<https://github.com/jiminAn/Coin_Auto_Trading>
 
 <br/>
 
@@ -30,25 +30,29 @@
 
 # Website
 
-#### **Login page**
+### **Login page**
 
 <img src='imgs/login.png' align="right" width=1000>  
 
 <br/>
 
-#### **Main Page**
+### **Main Page**
+#### 개인 자산 정보 조회
 
-![web2](https://user-images.githubusercontent.com/55044278/92071672-50af0900-edea-11ea-901b-99cc663cdf00.png) 
+<img src='imgs/asset_info.png' align="right" width=800>  
 
-- 사용자는 캔버스 위에 자신의 손글씨를 작성
+#### 개인 자산 정보 조회(상세 정보 확인 가능)
 
-![web3](https://user-images.githubusercontent.com/55044278/92071680-5573bd00-edea-11ea-8771-2e200cc7b6ca.png)
+<img src='imgs/asset_info_detail.png' align="right" width=800>  
 
-- 손글씨를 작성한 후, Download 버튼을 누르고 원하는 글씨체를 선택
+#### 코인 실시간 정보
 
-![downloadfile](https://user-images.githubusercontent.com/55044278/92071721-72a88b80-edea-11ea-9636-08e414fe5c9a.png)
+<img src='imgs/coin_info.png' align="right" width=800>  
 
-- 사용자는 자신이 쓴 손글씨를 직접 다운로드 가능
+#### 코인자동매매 실행
+
+<img src='imgs/auto_trading.png' align="right" width=800>  
+
 
 <br/>
 
