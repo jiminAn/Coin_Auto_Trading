@@ -56,6 +56,10 @@
         
 <img src='imgs/auto_trading.png' align="center" width=800>  
            
+            
+            
+            
+            
 
 
 # Website Demo Video
