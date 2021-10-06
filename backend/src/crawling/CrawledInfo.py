@@ -5,10 +5,10 @@ import pprint as pp
 import configparser
 
 def create_ticker_name_dict():
-    """
+    '''
     create a dictionary that matches korean ticker's naming
     :return: tickers['ticker'] = name
-    """
+    '''
     cnt = 0
     limit = 20  # the limited number of tickers
     tickers = defaultdict()
