@@ -109,7 +109,7 @@
 ## RealTimeWebSocketProess
 -----------
 
-- 실시간으로 데이터를 읽어들이기 위해 아래 `__pybithumb__ API`를 사용 : [websocket public 출처]
+- 실시간으로 데이터를 읽어들이기 위해 아래 `pybithumb API`를 사용 : [websocket public 출처](https://apidocs.bithumb.com/docs/websocket_public)
 ```
 {
     ticker : 현재가
@@ -118,7 +118,7 @@
 }
 ```	
     
-- 받고자하는 정보가 "현재가" 이므로, type으로는 `__ticker__`를 사용
+- 받고자하는 정보가 "현재가" 이므로, type으로는 `ticker`를 사용
 ```
 {
 	"type" : "ticker",
