@@ -1,13 +1,8 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react'
 import './CoinsContainer.css'
-import ChartContainer from 'Components/HomePage/Chart/ChartContainer'
-import CoinInfoContents from 'Components/HomePage/Coins/CoinsInfo/CoinInfoContents'
-import CoinInfoItem from 'Components/HomePage/Coins/CoinsInfo/CoinInfoItem'
-import OwnedCoinContents from 'Components/HomePage/Coins/OwnedCoins/OwnedCoinContents'
-import OwnedCoinItem from 'Components/HomePage/Coins/OwnedCoins/OwnedCoinItem'
-import TradingLogs from 'Components/HomePage/Logs/TradingLogs'
-import RTCoinItem from './RTCoins/RTCoinItem'
+// TODO :: index.ts 위치 조정
+import { ChartContainer, CoinInfoContents, CoinInfoItem, OwnedCoinContents, OwnedCoinItem, TradingLogs, RTCoinItem } from 'Components/HomePage/index'
 
 // 보유 코인 정보(고정)
 interface OwnedCoinInfo {
@@ -130,7 +125,6 @@ function SalesContainer({ ownedCoins, ownedRTCoins, top20Coins, top20RTCoins, lo
                                         open={coin.open} close={coin.close} high={coin.high} low={coin.low} volume={coin.volume}/>
                     ))
                 }
-                {/* 거래 로그 기록 이동 */}
                 { logs !== undefined && <TradingLogs logs={ logs }/>}
             </div>
         </>
