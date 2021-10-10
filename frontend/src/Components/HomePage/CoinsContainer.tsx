@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react'
 import './CoinsContainer.css'
-// TODO :: index.ts 위치 조정
 import { ChartContainer, CoinInfoContents, CoinInfoItem, OwnedCoinContents, OwnedCoinItem, TradingLogs, RTCoinItem } from 'Components/HomePage'
 
 // 보유 코인 정보(고정)
