@@ -73,6 +73,7 @@ function SalesContainer({ ownedCoins, ownedRTCoins, top20Coins, top20RTCoins, lo
     return (
         <>
             <div className='coinsContainer'>
+                {/* TODO :: tabContainer 모듈화 -> 각 className과 onClick을 props로 전달 */}
                 <div className='tabContainer'>
                     <button type='button' className={ owned } onClick={ ownedClickListener }>나의 보유 자산 정보</button>
                     <button type='button' className={ realTime } onClick={ realTimeClickListener }>코인 시장 현황(20개)</button>
