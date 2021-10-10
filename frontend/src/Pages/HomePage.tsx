@@ -1,6 +1,6 @@
 import React, { useEffect , useState } from 'react'
 import './HomePage.css'
-import CoinsContainer from 'Components/HomePage/Coins/CoinsContainer'
+import CoinsContainer from 'Components/HomePage/CoinsContainer'
 
 interface LogProps {
     value: any;
