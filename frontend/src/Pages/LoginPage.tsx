@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import LoginInfo from 'Components/LoginPage/LoginInfo'
-import FindingAPIKey from 'Components/LoginPage/FindingAPIKey'
+import { LoginInfo, FindingAPIKey } from 'Components/LoginPage'
 import './LoginPage.css'
 
 interface apiKey {
@@ -22,6 +21,7 @@ function useInput(defaultValue: string) {
 }
 
 // TODO :: 불러오는 동안 로딩 중임을 표시할 수 있는 화면 만들기
+//      :: postman에서와 동일한 동작으로 서버에 요청을 보낼 수 있도록 수정하기(fetch 메소드 공부)
 async function login(userInfo: apiKey) {
     return fetch('http://localhost:5000/login', {
         method: 'POST',
