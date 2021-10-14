@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './GlobalNavigationBar.css'
 
-interface LogProps {
-    setLogs?: any;
+interface SetTradingRecordsProps {
+    setTradingRecords?: any;
 }
 
 // 거래 시작 주소
@@ -17,25 +17,28 @@ async function quitTrading() {
     .then(data => data.json())
 }
 
-function GlobalNavigationBar({ setLogs }: LogProps) {
+function GlobalNavigationBar({ setTradingRecords }: SetTradingRecordsProps) {
     const [isStart, setIsStart] = useState<boolean>(true)
 
     const onSubmit = async (e: any) => {
         e.preventDefault()
         if(isStart) {
-            console.log('거래를 시작합니다.')
+            // DEBT :: 사용자가 거래 시작을 알 수 있는 상호작용 필요
+            // console.log('거래를 시작합니다.')
             await startTrading()
         } else {
-            console.log('거래를 종료합니다.')
-            setLogs(await quitTrading())
+            // DEBT :: 사용자가 거래 종료를 알 수 있는 상호작용 필요
+            // console.log('거래를 종료합니다.')
+            // setLogs(await quitTrading())
+            setTradingRecords(await quitTrading())
         }
         setIsStart(!isStart)
     }
 
     return (
-        <div className="NavigationContainer">
+        <div className="navigationContainer">
             <nav>
-                <div className='title'>
+                <div className='serviceTitle'>
                     <a href='/' className='logo'>손절이 나의 멘탈을 지킨다.</a>
                 </div>
                 <ul>

@@ -1,4 +1,4 @@
-.NavigationContainer {
+.navigationContainer {
     position: fixed;
     width: 100%;
     height: 60px;
@@ -15,7 +15,7 @@ nav {
     height: inherit;
 }
 
-.title {
+.serviceTitle {
     font-size: 18px;
     font-weight: bold;
 }
