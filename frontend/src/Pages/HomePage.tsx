@@ -2,8 +2,8 @@ import React, { useEffect , useState } from 'react'
 import './HomePage.css'
 import CoinsContainer from 'Components/HomePage/CoinsContainer'
 
-interface LogProps {
-    value: any;
+interface TradingRecordsProps {
+    tradingRecords: [string];
 }
 
 async function getOwnedCoins() {
@@ -26,7 +26,7 @@ async function getTop20RealTimeCoins() {
     .then(data => data.json())
 }
 
-function HomePage({ value }: LogProps) {
+function HomePage({ tradingRecords }: TradingRecordsProps) {
     const [ownedCoins, setOwnedCoins] = useState<any>([{}])
     const [ownedRTCoins, setOwnedRTCoins] = useState<any>({})
     const [top20Coins, setTop20Coins] = useState<any>([{}])
@@ -58,7 +58,7 @@ function HomePage({ value }: LogProps) {
             <div className='homeContainer'>
                 <CoinsContainer ownedCoins={ ownedCoins } ownedRTCoins={ ownedRTCoins } 
                                 top20Coins={ top20Coins } top20RTCoins={ top20RTCoins }
-                                logs={ value }
+                                tradingRecords={ tradingRecords }
                 />
             </div>
         </>
