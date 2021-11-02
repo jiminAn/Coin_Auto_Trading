@@ -1,9 +1,9 @@
 # Introduction
 
-[2021년 제4회 KB국민은행 소프트웨어 경진대회](http://www.kbsccoding.com/) 프론트엔드 저장소
+[2021년 제4회 KB국민은행 소프트웨어 경진대회](http://www.kbsccoding.com/) 참여 코인 자동 손절 프로젝트 프론트엔드 저장소
 
 ## Stack
-- Frontend : React, Typescript
+- Frontend : React, Typescript, CSS
 
 ## Features
 ### 1. 로그인 기능 구현
@@ -27,3 +27,7 @@
   - 백엔드에서는 작성된 로직에 따라 자동 거래 진행, 로그 기록
 - 거래 종료 버튼 클릭 시 백엔드에 거래 종료 요청 전송(`GET`)
   - 기록된 거래 로그를 받아서 프론트에 표시
+
+### 4. Interactive 디자인
+- '나의 보유 자산 정보' 또는 '코인 시장 현황' 클릭 시 배경색을 통해 활성화-비활성화 여부 표시
+- '거래 시작' 버튼 클릭 시 '종료 버튼'으로 변경되며 배경색 변경
