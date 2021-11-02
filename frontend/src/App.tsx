@@ -1,38 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { useMediaQuery } from 'react-responsive'
 import { HomePage, LoginPage, NotFound } from 'Pages'
 import GlobalNavigationBar from 'Components/GlobalNavigationBar/GlobalNavigationBar'
 import './App.css'
 
 function App() {
   const [isLogin, setIsLogin] = useState<boolean>(false)
-  const [logs, setLogs] = useState<any>({})
-  const isMobile = useMediaQuery({
-    query: '(max-width: 920px)'
-  })
-  
+  // DEBT :: any 타입이 아닌 유효한 타입 이름 지정
+  const [tradingRecords, setTradingRecords] = useState<any>({})
+
+  // DEBT :: 로그인 로직 수정
   useEffect(() => {
     setIsLogin(sessionStorage.getItem('login') === 'true')
   }, [])
 
-  // console.log(logs.log)
+  // console.log(tradingRecords.logs)
 
   return (
     <div className='App'>
-      <GlobalNavigationBar setLogs={ setLogs }/>
-      <div className='contents'>
-        { !isMobile ?
-          <Switch>
-            { !isLogin ? 
-              <Route path='/' component={ LoginPage } /> : 
-              <Route path='/' render={ () => <HomePage value={ logs.log }/> } /> 
-            }
-            <Route component={ NotFound } />
-          </Switch> :
-          // TODO 1 :: mobile 페이지 코드 구현
-          <div>mobile</div>
-        }
+      <GlobalNavigationBar setTradingRecords={ setTradingRecords }/>
+      <div className='applicationMain'>
+        <Switch>
+          { !isLogin ? 
+            <Route exact path='/' component={ LoginPage } /> : 
+            <Route exact path='/' render={ () => <HomePage tradingRecords={ tradingRecords.log }/> } />
+          }
+          <Route component={ NotFound } />
+        </Switch>
       </div>
     </div>
   )
