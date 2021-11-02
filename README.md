@@ -15,7 +15,7 @@
 | :---------: | :----------------------------------------------: | :---------------------------------: |
 |     [daehoon12(강대훈)](https://github.com/daehoon12)  |     PM &#128081;, 백엔드 개발   | 코인자동매매 구현 및 REST API 아키텍처 개발 |
 |  [jiminAn(안지민)](https://github.com/jiminAn)   | 백엔드 개발 | DB 구축 및 REST API 아키텍처 개발   |
-|     [201411108(김한동)](https://github.com/Rudy-009)   | 프론트엔드 개발  | UI디자인 및 프론트엔드 개발 |
+|     [201411108(김한동)](https://github.com/201411108)   | 프론트엔드 개발  | UI디자인 및 프론트엔드 개발 |
 |    [pmsu2007(박민수)](https://github.com/pmsu2007)  |    백엔드 개발  |  DB 모델 설계 및 구축  |
 | [comeeasy(김준호)](https://github.com/comeeasy) |        백엔드 개발       |  데이터 병렬 처리  |
 
